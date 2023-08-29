@@ -1,7 +1,7 @@
 class gameInfo:
     pass # might want to just make a place to store all the info in herer
 
-def drops(level: int, mob: str) -> list:
+def drops(mob: str) -> list:
     """
     very complicated drops
     (the mob level, self.luck, self.mob)
@@ -17,18 +17,7 @@ def drops(level: int, mob: str) -> list:
         case "goblin":
 
             returning = []
-            
-            if level > 40:
-                pass
-            elif level > 30:
-                pass
-            elif level > 20:
-                pass
-            elif level > 10:
-                pass
-            else:
-                pass
-                
+
             for _i in range(luck):
 
                 if not _i: # guaranteed 1
@@ -59,6 +48,7 @@ def drops(level: int, mob: str) -> list:
 
         case _:
             raise Exception("1st: Oh NAHHHHHHHHHHHHHHHHH")
+        
 def counting_drop(list: list, mob: str):
     """
     count em
@@ -182,6 +172,7 @@ def printingInv(inv: dict) -> None:
                 print(f"+ {value[_i]} x {key[_i]}")
                 
     print("+=================+")
+
 def returnMob(hp: int, location: str) -> list:
     import random as r
     from random import randint
@@ -207,17 +198,17 @@ def returnMob(hp: int, location: str) -> list:
             case "goblin":
                 for i in range(5):
                     return [md[0][0], 
-                            md[0][1] + _hp_multi + _hp_multi * 0.5, 
-                            md[0][2] + _attk_mul + _attk_mul * 0.5,
-                            md[0][3] + _attk_mul + _attk_mul * 0.5,
-                            md[0][4] + _def_multi + _def_multi * 0.5]
+                            md[0][1] + hp + hp * 0.5, 
+                            md[0][2] + attk + attk * 0.5,
+                            md[0][3] + attk + attk * 0.5,
+                            md[0][4] + defe + defe * 0.5]
         
             case "slime":
                     return [md[1][0], 
-                            md[1][1] + _hp_multi + _hp_multi * 0.5, 
-                            md[1][2] + _attk_mul + _attk_mul * 0.5,
-                            md[1][3] + _attk_mul + _attk_mul * 0.5,
-                            md[1][4] + _def_multi + _def_multi * 0.5]
+                            md[1][1] + hp + hp * 0.5, 
+                            md[1][2] + attk + attk * 0.5,
+                            md[1][3] + attk + attk * 0.5,
+                            md[1][4] + defe + defe * 0.5]
             case "wolf":
                 pass # work on this later
 
