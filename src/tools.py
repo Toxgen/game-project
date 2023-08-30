@@ -1,5 +1,5 @@
 class gameInfo:
-    pass # might want to just make a place to store all the info in herer
+    pass # might want to use something else besides a class cause it seems like way too overengineered
 
 def drops(mob: str) -> list:
     """
