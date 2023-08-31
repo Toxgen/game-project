@@ -306,7 +306,7 @@ class main:
         print("You have defeated the Goblin!") # akso gotta change this cause u dont always be defeating goblins
 
 
-        preinv = tool.counting_drop(tool.drops(1, mob), mob)
+        preinv = tool.counting_drop(tool.drops(mob), mob)
 
         self.insertingMobDrops(preinv)
         tool.printingDrops(preinv, mob)
@@ -381,7 +381,7 @@ class starting_phase(main):
 
         print("You have defeated the Goblin!")
 
-        preinv = tool.counting_drop(tool.drops(1, self.mob), self.mob)
+        preinv = tool.counting_drop(tool.drops(self.mob), self.mob)
 
         super().insertingMobDrops(preinv, "goblin")
         print("+=====================+",
