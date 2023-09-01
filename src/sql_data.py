@@ -42,16 +42,21 @@ def create_db_connection(host_name, user_name, user_password, db_name):
     return connection
 
 
-def execute_query(connection, query):
+def execute_query(connection, query, commit=False, fetch=False):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
-        connection.commit()
+        if commit:
+            connection.commit()
+
+        if fetch:
+            result = cursor.fetchone()
+
         print("Query successful")
+
+        return result
     except Error as err:
         print(f"Error: '{err}'")
-
-    return connection
 
 
 if __name__ == "__main__":

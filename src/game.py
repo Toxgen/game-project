@@ -16,8 +16,17 @@ class main:
     gold = 0
 
     @staticmethod
-    def sqlParseQuery(connection): # we could use some system to show what to use: ex sqlparsequery(connection, update=False)
-        sql.execute_query(connection=connection, query="""""")
+    def sqlParseQuery(connection,
+                      check=False,
+                      grab=False):
+        if check:
+            query="""
+            select * from stats;""" # add something here
+        
+        if grab:
+            query="""select hp from stats;"""
+
+        return sql.execute_query(connection=connection, query=query, fetch=True)
         
 
     def __init__(self, hp, name):
@@ -311,10 +320,16 @@ class main:
 
 class starting_phase(main):
     def __init__(self):
-        super().__init__(name='')
+        self.hp = 50
+        self.defe = 0
+        self.mob = "goblin"
+        self.inv = {}
+        self.location = "woods"
+
 
     def __repr__(self):
         return "Tutorial!"
+
 
     def start(self) -> list:
         crit = 0
@@ -327,11 +342,13 @@ class starting_phase(main):
             f"Encountered 'Goblin'! || Hp: {__mobHp}, Attk: {mobAttk}, Def: {__mobDefe}, Level: 1")
         print("Type attack to attack your opponent!")
 
-        self.mob = "goblin"
         maxHp = self.hp
         maxMobHp = __mobHp
 
         while True:
+            """
+            when it crits, it doesn't show CRIT!!!
+            """
             self.input = input('> ').lower()
             if self.input in ["attack", "atk", "attk", "q"]:
 
@@ -392,12 +409,12 @@ if __name__ == "__main__":
 
     connection = sql.create_server_connection("localhost", "root", sql.pw)
     connection = sql.create_db_connection("localhost", "root", sql.pw, "rpg_stats")
-    #main.sqlParseQuery(connection)
+    main.sqlParseQuery(connection, grab=True)
 
-    tutorial = starting_phase()
+    # tutorial = starting_phase()
 
-    t.sleep(1)
-    print(tutorial, "=========", sep='\n')
-    _main_return = tutorial.start()
-    main = main(_main_return[0], _main_return[1]) 
-    print("Very cool, now ur ready for ur awesome gameplay")
+    # t.sleep(1)
+    # print(tutorial, "=========", sep='\n')
+    # _main_return = tutorial.start()
+    # main = main(_main_return[0], _main_return[1]) 
+    # print("Very cool, now ur ready for ur awesome gameplay")
