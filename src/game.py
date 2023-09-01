@@ -24,7 +24,7 @@ class main:
             select * from stats;""" # add something here
         
         if grab:
-            query="""select hp from stats;"""
+            query="""select * from stats;"""
 
         return sql.execute_query(connection=connection, query=query, fetch=True)
         
@@ -406,15 +406,23 @@ class starting_phase(main):
         return [self.hp, preinv]
 
 if __name__ == "__main__":
+    
+    try:
 
-    connection = sql.create_server_connection("localhost", "root", sql.pw)
-    connection = sql.create_db_connection("localhost", "root", sql.pw, "rpg_stats")
-    main.sqlParseQuery(connection, grab=True)
+        connection = sql.create_server_connection("localhost", "root", sql.pw)
+        connection = sql.create_db_connection("localhost", "root", sql.pw, "rpg_stats")
+        player_stats = main.sqlParseQuery(connection, grab=True)
 
-    # tutorial = starting_phase()
+        tutorial = starting_phase()
 
-    # t.sleep(1)
-    # print(tutorial, "=========", sep='\n')
-    # _main_return = tutorial.start()
-    # main = main(_main_return[0], _main_return[1]) 
-    # print("Very cool, now ur ready for ur awesome gameplay")
+        t.sleep(1)
+        print(tutorial, "=========", sep='\n')
+        _main_return = tutorial.start()
+        main = main(_main_return[0], _main_return[1]) 
+        print("Very cool, now ur ready for ur awesome gameplay")
+
+    except KeyboardInterrupt:
+        connection.close()
+        quit(KeyboardInterrupt)
+
+    connection.close()
