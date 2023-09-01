@@ -33,7 +33,7 @@ def create_db_connection(host_name, user_name, user_password, db_name):
     return connection
 
 
-def execute_query(connection, query, fetch=False):
+def execute_query(connection, query, fetch=False) -> (tuple | None):
     cursor = connection.cursor()
     try:
         cursor.execute(query)

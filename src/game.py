@@ -6,9 +6,7 @@ import tools as tool
 import sql_data as sql
 
 """
-Tutorial has to return something
-PLEASE SQL WORK
-what is this not registering
+Add something that allows the player to load or del save files
 """
 class main:
 
@@ -16,13 +14,19 @@ class main:
     gold = 0
 
     @staticmethod
-    def sqlParseQuery(connection,
-                      check=False,
-                      grab=False):
-        if check:
-            query="""
-            select * from stats;""" # add something here
-        
+    def sqlQuery(connection,
+                      grab=False,
+                      tut=False):
+        if tut:
+            for i in range: 
+                x = sql.execute_query(connection=connection, 
+                                      query=f"""select exists(select * from stats where id = {i+1});""")
+                if not x:
+                    query=f"""insert into stats (id, name, gold, cc_weap, tut_booean, hp)
+                    values ({i+1}, "", 0, "", null, 100)"""
+                    
+            sql.execute_query(connection=connection, query=query)
+
         if grab:
             query="""select * from stats;"""
 
@@ -320,7 +324,7 @@ class main:
 
 class starting_phase(main):
     def __init__(self):
-        self.hp = 50
+        self.hp = 100
         self.defe = 0
         self.mob = "goblin"
         self.inv = {}
@@ -334,7 +338,7 @@ class starting_phase(main):
     def start(self) -> list:
         crit = 0
 
-        __mobHp = 10
+        __mobHp = 20
         mobAttk = "2 - 3"
         __mobDefe = 0
 
@@ -406,20 +410,21 @@ class starting_phase(main):
         return [self.hp, preinv]
 
 if __name__ == "__main__":
-    
+
     try:
 
         connection = sql.create_server_connection("localhost", "root", sql.pw)
         connection = sql.create_db_connection("localhost", "root", sql.pw, "rpg_stats")
-        player_stats = main.sqlParseQuery(connection, grab=True)
+        player_stats = main.sqlQuery(connection, grab=True)
 
-        tutorial = starting_phase()
+        if not player_stats[4]:
 
-        t.sleep(1)
-        print(tutorial, "=========", sep='\n')
-        _main_return = tutorial.start()
-        main = main(_main_return[0], _main_return[1]) 
-        print("Very cool, now ur ready for ur awesome gameplay")
+             tutorial = starting_phase()
+
+             print(tutorial, "=========", sep='\n')
+             _main_return = tutorial.start()
+             main = main(_main_return[0], _main_return[1])
+             main.sqlQuery(connection, )
 
     except KeyboardInterrupt:
         connection.close()
