@@ -16,15 +16,12 @@ class main:
     gold = 0
 
     @staticmethod
-    def sqlParseQuery(connection):
-        sql.execute_query(connection=connection, query="""
-                          SELECT * FROM stats;
-                          SELECT id FROM stats WHERE id > 3 LIMIT 4;
-                          SELECT FOUND_ROWS();""")
+    def sqlParseQuery(connection): # we could use some system to show what to use: ex sqlparsequery(connection, update=False)
+        sql.execute_query(connection=connection, query="""""")
         
 
-    def __init__(self, name):
-        self.hp = 50
+    def __init__(self, hp, name):
+        self.hp = hp
         self.defe = 0
         self.input = ''
         self.ccWeap = ''
@@ -394,13 +391,13 @@ class starting_phase(main):
 if __name__ == "__main__":
 
     connection = sql.create_server_connection("localhost", "root", sql.pw)
-    sql.create_db_connection("localhost", "root", sql.pw, "rpg_stats")
+    connection = sql.create_db_connection("localhost", "root", sql.pw, "rpg_stats")
     #main.sqlParseQuery(connection)
 
-    main = main("")
     tutorial = starting_phase()
 
     t.sleep(1)
     print(tutorial, "=========", sep='\n')
-    tutorial.start()
-    print("Very cool, now ur ready for ur awesome gameplay") # add some more text after this
+    _main_return = tutorial.start()
+    main = main(_main_return[0], _main_return[1]) 
+    print("Very cool, now ur ready for ur awesome gameplay")
