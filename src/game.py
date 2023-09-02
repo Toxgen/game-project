@@ -16,8 +16,13 @@ potionD = {
 }
 
 all_weapons = {
-    # goblins
+    # goblin
     "goblin_sword": [3, 10, 5, "A wooden, green sword carved by goblins"] # [dmg+, buy, sell, description]
+}
+
+all_armors = {
+    # goblin
+    "goblin_chestplate": [1, ]
 }
 class main:
 
@@ -49,7 +54,6 @@ class main:
         if not __check:
             pass # work on this tmw
         self.hp = hp
-        #self.defe = 0 lets make some armor first then implement this
         self.gold = gold
         self.input = ''
         self.ccWeap = ccWeap
@@ -425,6 +429,7 @@ class starting_phase(main):
         return [self.hp, preinv]
 
 if __name__ == "__main__":
+    t = t.time()
 
     try:
 
@@ -439,7 +444,7 @@ if __name__ == "__main__":
              print(tutorial, "=========", sep='\n')
              _main_return = tutorial.start()
              main = main(_main_return[0], )
-             main.sqlQuery(connection, )
+             main.sqlQuery(connection, autoSend=True) # add something here that updates the data into sql
 
     except KeyboardInterrupt:
         connection.close()

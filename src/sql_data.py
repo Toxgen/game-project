@@ -33,7 +33,11 @@ def create_db_connection(host_name, user_name, user_password, db_name):
     return connection
 
 
-def execute_query(connection, query, fetch=False, noText=False, autoSend=False) -> (tuple | None):
+def execute_query(connection, query, 
+                  ID=1, fetch=False, 
+                  noText=False, autoSend=False, 
+                  adv=False, hp: int = 0, enemyhp: int = 0,
+                  currentEffect: bool = None, mobName: str = "") -> (tuple | None):
     """
     Be careful with noText, it won't show if you made a error !!
     """
@@ -48,7 +52,15 @@ def execute_query(connection, query, fetch=False, noText=False, autoSend=False) 
             print("Query successful")
 
         if autoSend:
-            cursor.execute() # add query that allows it to update to the table based on the ID!!
+            if adv:
+                cursor.execute(f"""update stats
+                                set hp = {hp}, enemyhp = {enemyhp}, mobName = {mobName}, cctEffect = {currentEffect}
+                                where ID = {ID};""")
+                
+                # add extra columnns for those and check if they are even in an adventure
+            cursor.execute(f"""update stats
+                           set tut_boolean = True
+                           where ID = {ID};""") # add query that allows it to update to the table based on the ID!!
             return
 
         return result

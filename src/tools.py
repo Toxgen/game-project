@@ -1,7 +1,7 @@
 def drops(mob: str) -> list:
     """
-    very complicated drops
-    (the mob level, self.luck, self.mob)
+    drops(mob)
+    mob: mob that is being faced
     """
 
     import random as r
@@ -25,6 +25,17 @@ def drops(mob: str) -> list:
                 if len(returning) >= 3:
                     _x = r.randint(0, 150)
 
+                if _x <= 3:
+                    _x = r.randint(1, 3)
+                    if _x == 1:
+                        returning.append("goblin_chestplate")
+
+                    elif _x == 2:
+                        returning.append("leather_leggings")
+
+                    else:
+                        returning.append("goblin_helmet")
+
                 if _x <= 5:  
                     returning.append("goblin_staff")
                     continue
@@ -45,11 +56,12 @@ def drops(mob: str) -> list:
 
         case _:
             raise Exception("1st: Oh NAHHHHHHHHHHHHHHHHH")
-        
+
 def counting_drop(list: list, mob: str):
     """
-    count em
-    (the drops, self.mob)
+    counting_drop(list, mob)
+    list: cct inventory
+    mob: the mob that is being faced
     """
 
     match mob:
@@ -63,10 +75,17 @@ def counting_drop(list: list, mob: str):
 
             g_staff = list.count("goblin_staff")
 
-            return [g_hide, g_leg, g_sword, g_staff]
+            g_chest = list.count("goblin_chestplate")
+
+            g_legging = list.count("goblin_legging")
+
+            g_helmet = list.count("goblin_helmet")
+
+            return [g_hide, g_leg, g_sword, g_staff, g_chest, g_legging, g_helmet]
     
         case _:
-            raise Exception("Error: This shouldn't happen, p.s. check mob arg")      
+            raise Exception("Error: This shouldn't happen, p.s. check mob arg")
+              
 def printingDrops(preinv: list, mob: str):
     """
     print em drops
