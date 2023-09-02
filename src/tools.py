@@ -81,7 +81,7 @@ def counting_drop(list: list, mob: str):
 
             g_helmet = list.count("goblin_helmet")
 
-            return [g_hide, g_leg, g_sword, g_staff, g_chest, g_legging, g_helmet]
+            return [g_hide, g_leg, g_sword, g_staff, g_chest, g_legging, g_helmet] # dont forget to index this into the game.py thing
     
         case _:
             raise Exception("Error: This shouldn't happen, p.s. check mob arg")
