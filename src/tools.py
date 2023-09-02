@@ -99,7 +99,7 @@ def printingDrops(preinv: list, mob: str):
 
         case "goblin":
 
-            for _q in range(len(preinv)):
+            for _q, x in enumerate(preinv):
 
                 match _q:
 

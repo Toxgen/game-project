@@ -33,6 +33,7 @@ class main:
                       tut=False):
         if tut:
             while True: # check if "i" actually does something
+                i = 0
                 i += 1
                 x = sql.execute_query(connection=connection, 
                                       query=f"""select exists(select * from stats where id = {i});""")
@@ -223,7 +224,7 @@ class main:
     def insertingMobDrops(self, preinv: list, mob: str) -> None: # how would you transform this into the tools.py bc this takes a space
         # possibly search up a function that gets what it returns and then adds it on this main class
         if mob == "goblin": # match case
-            for i in range(len(preinv)):
+            for i, x in enumerate(preinv):
 
                 match i:
 
@@ -429,7 +430,7 @@ class starting_phase(main):
 
         return [self.hp, preinv]
 
-if __name__ == "__main__"
+if __name__ == "__main__":
 
     try:
 
