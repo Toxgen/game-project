@@ -7,14 +7,23 @@ import sql_data as sql
 
 """
 Add something that allows the player to load or del save files
+Add mana for wands and etc
 """
-class main:
+potionD = {
+    "small_health_potion": [5, 5, "A small health potion, heals 5hp"], 
+    "medium_health_potion": [20, 10, "A medium health potion, heals 10hp"],
+    "large_health_potion": [30, 20, "A large health potion, heals for 30hp"]
+}
 
-    weapDict = {"fist": 2}
-    gold = 0
+all_weapons = {
+    # goblins
+    "goblin_sword": [3, 10, 5, "A wooden, green sword carved by goblins"] # [dmg+, buy, sell, description]
+}
+class main:
 
     @staticmethod
     def sqlQuery(connection,
+                      add=False,
                       grab=False,
                       tut=False):
         if tut:
@@ -24,20 +33,26 @@ class main:
                 if not x:
                     query=f"""insert into stats (id, name, gold, cc_weap, tut_booean, hp)
                     values ({i+1}, "", 0, "", null, 100)"""
-                    
-            sql.execute_query(connection=connection, query=query)
+                    return sql.execute_query(connection=connection, query=query)
 
         if grab:
             query="""select * from stats;"""
 
+        if add:
+            query=""""""
+
         return sql.execute_query(connection=connection, query=query, fetch=True)
         
 
-    def __init__(self, hp, name):
+    def __init__(self, hp, name, ccWeap, gold):
+        __check = sql.execute_query(connection=connection, query="select tut_check from stats;", noText=True)
+        if not __check:
+
         self.hp = hp
-        self.defe = 0
+        #self.defe = 0 lets make some armor first then implement this
+        self.gold = gold
         self.input = ''
-        self.ccWeap = ''
+        self.ccWeap = ccWeap
         self.xp_sys = [0, 4, 0]
         self.name = name
         self.inv = {}
@@ -423,7 +438,7 @@ if __name__ == "__main__":
 
              print(tutorial, "=========", sep='\n')
              _main_return = tutorial.start()
-             main = main(_main_return[0], _main_return[1])
+             main = main(_main_return[0], )
              main.sqlQuery(connection, )
 
     except KeyboardInterrupt:

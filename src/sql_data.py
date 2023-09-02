@@ -33,7 +33,10 @@ def create_db_connection(host_name, user_name, user_password, db_name):
     return connection
 
 
-def execute_query(connection, query, fetch=False) -> (tuple | None):
+def execute_query(connection, query, fetch=False, noText=False, autoSend=False) -> (tuple | None):
+    """
+    Be careful with noText, it won't show if you made a error !!
+    """
     cursor = connection.cursor()
     try:
         cursor.execute(query)
@@ -41,7 +44,12 @@ def execute_query(connection, query, fetch=False) -> (tuple | None):
         if fetch:
             result = cursor.fetchone()
 
-        print("Query successful")
+        if noText:
+            print("Query successful")
+
+        if autoSend:
+            cursor.execute() # add query that allows it to update to the table based on the ID!!
+            return
 
         return result
     

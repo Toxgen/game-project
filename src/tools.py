@@ -1,6 +1,3 @@
-class gameInfo:
-    pass # might want to use something else besides a class cause it seems like way too overengineered
-
 def drops(mob: str) -> list:
     """
     very complicated drops
