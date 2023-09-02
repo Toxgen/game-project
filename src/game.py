@@ -22,7 +22,7 @@ all_weapons = {
 
 all_armors = {
     # goblin
-    "goblin_chestplate": [1, ]
+    "goblin_chestplate": [1, 30, 10, "A leather, ripped wooden chestplate, covered with green goo everywhere"]
 }
 class main:
 
@@ -32,9 +32,10 @@ class main:
                       grab=False,
                       tut=False):
         if tut:
-            for i in range: 
+            while True: # check if "i" actually does something
+                i += 1
                 x = sql.execute_query(connection=connection, 
-                                      query=f"""select exists(select * from stats where id = {i+1});""")
+                                      query=f"""select exists(select * from stats where id = {i});""")
                 if not x:
                     query=f"""insert into stats (id, name, gold, cc_weap, tut_booean, hp)
                     values ({i+1}, "", 0, "", null, 100)"""
