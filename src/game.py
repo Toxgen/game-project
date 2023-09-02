@@ -47,7 +47,7 @@ class main:
     def __init__(self, hp, name, ccWeap, gold):
         __check = sql.execute_query(connection=connection, query="select tut_check from stats;", noText=True)
         if not __check:
-
+            pass # work on this tmw
         self.hp = hp
         #self.defe = 0 lets make some armor first then implement this
         self.gold = gold
