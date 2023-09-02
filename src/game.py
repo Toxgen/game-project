@@ -429,8 +429,7 @@ class starting_phase(main):
 
         return [self.hp, preinv]
 
-if __name__ == "__main__":
-    t = t.time()
+if __name__ == "__main__"
 
     try:
 
