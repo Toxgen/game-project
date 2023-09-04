@@ -1,9 +1,9 @@
 import random as r
 import time as t
 
-import tools as tool
+import modules.tools as tool
 
-import sql_data as sql
+import modules.sql_data as sql
 
 """
 Add something that allows the player to load or del save files
@@ -22,7 +22,7 @@ all_weapons = {
 
 all_armors = {
     # goblin
-    "goblin_chestplate": [1, 30, 10, "A leather, ripped wooden chestplate, covered with green goo everywhere"]
+    "goblin_chestplate": [1, ]
 }
 class main:
 
@@ -32,11 +32,9 @@ class main:
                       grab=False,
                       tut=False):
         if tut:
-            while True: # check if "i" actually does something
-                i = 0
-                i += 1
+            for i in range: 
                 x = sql.execute_query(connection=connection, 
-                                      query=f"""select exists(select * from stats where id = {i});""")
+                                      query=f"""select exists(select * from stats where id = {i+1});""")
                 if not x:
                     query=f"""insert into stats (id, name, gold, cc_weap, tut_booean, hp)
                     values ({i+1}, "", 0, "", null, 100)"""
@@ -224,7 +222,7 @@ class main:
     def insertingMobDrops(self, preinv: list, mob: str) -> None: # how would you transform this into the tools.py bc this takes a space
         # possibly search up a function that gets what it returns and then adds it on this main class
         if mob == "goblin": # match case
-            for i, x in enumerate(preinv):
+            for i in range(len(preinv)):
 
                 match i:
 
@@ -431,6 +429,7 @@ class starting_phase(main):
         return [self.hp, preinv]
 
 if __name__ == "__main__":
+    t = t.time()
 
     try:
 
