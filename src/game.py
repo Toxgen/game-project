@@ -340,7 +340,6 @@ class main:
         self.insertingMobDrops(preinv)
         tool.printingDrops(preinv, mob)
 
-
 class starting_phase(main):
     def __init__(self):
         self.hp = 100
@@ -435,7 +434,8 @@ if __name__ == "__main__":
 
         connection = sql.create_server_connection("localhost", "root", sql.pw)
         connection = sql.create_db_connection("localhost", "root", sql.pw, "rpg_stats")
-        player_stats = main.sqlQuery(connection, grab=True)
+        player_stats = main.sqlQuery(connection, grab=True) # print out something the database and its users and use it
+        main.sqlQuery(connection=connection, )
 
         if not player_stats[4]:
 
