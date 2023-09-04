@@ -225,7 +225,7 @@ class main:
 
         mob = mob_list[0]
         mobHp = mob_list[1]
-        mobAttk = [x for x in mob_list if 2 in x if 3 in x] 
+        mobAttk = [x for x in mob_list if 2 in x if 3 in x] # no need for list comprehension here !
         mobDefe = mob_list[4]
             
         print(
