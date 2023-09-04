@@ -71,6 +71,7 @@ def counting_drop(list: list, mob: str):
         case "goblin":
             # make a list of the drops
             # maybe make the mob drops global so every single function can use it
+            # or even make a mob a global variable
             g_hide = list.count("goblin_hide")
 
             g_leg = list.count("goblin_leg")
