@@ -218,59 +218,6 @@ class main:
                     if xy+1 == len(self.weapDict):
                         print("____________________________")
                         break
-
-    def insertingMobDrops(self, preinv: list, mob: str) -> None: # how would you transform this into the tools.py bc this takes a space
-        # possibly search up a function that gets what it returns and then adds it on this main class
-        if mob == "goblin": # match case
-            for i in range(len(preinv)):
-
-                match i:
-
-                    case 0:
-                        try:
-
-                            if "goblin_hide" not in self.inv:
-                                self.inv.update({"goblin_hide": 0})
-
-                            self.inv["goblin_hide"] += preinv[i]
-
-                        except Exception:
-                            raise Exception("0st case")
-
-                    case 1:
-                        try:
-
-                            if "goblin_leg" not in self.inv:
-                                self.inv.update({"goblin_leg": 0})
-
-                            self.inv["goblin_leg"] += preinv[i]
-
-                        except Exception:
-                            raise Exception("1st case")
-                    case 2:
-                        try:
-
-                            if "goblin_sword" not in self.inv:
-                                self.inv.update({"goblin_sword": 0})
-
-                            self.inv["goblin_sword"] += preinv[i]
-
-                        except Exception:
-                            raise Exception("2nd case")
-
-                    case 3:
-                        try:
-
-                            if "goblin_staff" not in self.inv:
-                                self.inv.update({"goblin_staff": 0})
-
-                            self.inv["goblin_staff"] += preinv[i]
-
-                        except Exception:
-                            raise Exception("3rd case")
-
-                    case _:
-                        raise Exception("oh no")
                     
     def main_attack(self) -> None:
         crit = None
@@ -337,7 +284,7 @@ class main:
 
         preinv = tool.counting_drop(tool.drops(mob), mob)
 
-        self.insertingMobDrops(preinv)
+        self.inv = tool.insertingMobDrops(preinv, self.inv, mob)
         tool.printingDrops(preinv, mob)
 
 class starting_phase(main):

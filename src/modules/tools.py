@@ -4,6 +4,8 @@ def drops(mob: str) -> list:
     mob: mob that is being faced
     """
 
+    # make this better cause its possible to 
+
     import random as r
     from random import randint
 
@@ -31,7 +33,7 @@ def drops(mob: str) -> list:
                         returning.append("goblin_chestplate")
 
                     elif _x == 2:
-                        returning.append("leather_leggings")
+                        returning.append("leather_legging")
 
                     else:
                         returning.append("goblin_helmet")
@@ -67,6 +69,8 @@ def counting_drop(list: list, mob: str):
     match mob:
 
         case "goblin":
+            # make a list of the drops
+            # maybe make the mob drops global so every single function can use it
             g_hide = list.count("goblin_hide")
 
             g_leg = list.count("goblin_leg")
@@ -95,60 +99,20 @@ def printingDrops(preinv: list, mob: str):
     import time as t
     from time import sleep
 
-    match mob:
+    for _q, x in enumerate(preinv):
 
-        case "goblin":
+        if not _q:
+                print("+=======================+")
 
-            for _q, x in enumerate(preinv):
+        if preinv[_q] > 1:
+            print(f"Earned {preinv[_q]} {x}s")
+        else:
+            print(f"Earned {preinv[_q]} {x}")
 
-                match _q:
+        t.sleep(0.33)
 
-                        case 0:
-                            if preinv[_q] > 1:
-                                print("+=======================+",
-                                    f"Earned {preinv[_q]} goblin_hides", sep='\n')
-                            else:
-                                print("+=======================+",
-                                    f"Earned {preinv[_q]} goblin_hide", sep='\n')
+    print("+=======================+")
 
-                            t.sleep(0.33)
-                            continue
-
-                        case 1:
-                            if preinv[_q]:
-                                if preinv[_q] > 1:
-                                    print(f"Earned {preinv[_q]} goblin_legs")
-                                else:
-                                    print(f"Earned {preinv[_q]} goblin_leg")
-
-                                t.sleep(0.33)
-                            continue
-
-                        case 2:
-                            if preinv[_q]:
-                                if preinv[_q] > 1:
-                                    print(f"Earned {preinv[_q]} goblin_swords")
-                                else:
-                                    print(f"Earned {preinv[_q]} goblin_sword")
-
-                                t.sleep(0.33)
-                            continue
-
-                        case 3:
-                            if preinv[_q]:
-                                if preinv[_q] > 1:
-                                    print(f"Earned {preinv[_q]} goblin_staffs",
-                                        "+=======================+", sep='\n')
-                                else:
-                                    print(f"Earned {preinv[_q]} goblin_staff",
-                                        "+=======================+", sep='\n')
-                            else:
-                                print("+=======================+")
-
-                                t.sleep(0.33)
-            
-        case _:
-            raise Exception("Error: This shouldn't happen, p.s. check mob arg")        
 def printingInv(inv: dict) -> None:
     """
     print inventory
@@ -210,6 +174,7 @@ def returnMob(hp: int, location: str) -> list:
         _attk_mul = 1
 
     def __wood_mobs(md: list, mob: str, hp: int, defe: int, attk: int) -> list: 
+        # there should be a easier way to do this way less boilerplate code
         match mob:
             case "goblin":
                 for i in range(5):
@@ -244,6 +209,29 @@ def returnMob(hp: int, location: str) -> list:
                 return __wood_mobs(md, md[2][0], _hp_multi, _def_multi, _attk_mul)
         case _:
             raise Exception("ERROR 1: MissType")
+        
+def insertingMobDrops(preinv: list, inv: list, mob: str) -> list:
+    __mob_drops = [
+        # goblin
+        ["_hide", "_leg", "_sword", "_staff", "_chestplate", "_legging", "_helmet"]
+
+    ]
+
+    __possible_mobs = [
+        ["goblin", "slime", "wolf"]
+    ]
+
+    __index  = __possible_mobs.index(mob)
+
+    for i, thing in enumerate(__mob_drops[__index]):
+
+        if f"{mob}{thing}" not in inv: 
+            inv.update({f"{mob}{thing}": 0})
+
+        inv[f"{mob}{thing}"] += preinv[i]
+    
+    return inv
+
 
 if __name__ == '__main__':
     pass
