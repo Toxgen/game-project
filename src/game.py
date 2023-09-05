@@ -204,20 +204,6 @@ class main:
             if dice < 6:
                 return [round((attk ** counter) - (self.defe - 1))]
             dice += 1
-
-    def selectWeapon(self) -> None:
-        possibleWeapList = ["fist", "goblin_sword"] # maybe just throw this into a database or something to that 
-        # extent with other varibles similar to this, for organization
-        sel_wep = list(self.weapDict.keys())
-        for xy in self.weapDict:
-            for y in possibleWeapList:
-                if sel_wep[xy] == possibleWeapList[y]:
-                    if xy == 0:
-                        print("____________________________", '\n')
-                    print(f"{sel_wep[xy]}")
-                    if xy+1 == len(self.weapDict):
-                        print("____________________________")
-                        break
                     
     def main_attack(self) -> None:
         crit = None
