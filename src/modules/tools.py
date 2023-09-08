@@ -224,7 +224,7 @@ def returnMob(hp: int, location: str) -> list:
         
 def insertingMobDrops(preinv: list[str], inv: list, mob: str) -> list:
 
-    for thing in __mob_drops[mob]: # maybe just make the mobdrops[mob][drop_index] a variable
+    for thing in __mob_drops[mob]: 
         drop_index = __mob_drops[mob].index(thing)
         _mob_drop = __mob_drops[mob][drop_index]
 
