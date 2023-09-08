@@ -52,7 +52,7 @@ class main:
     def __init__(self, hp, name, ccWeap, gold):
         __check = sql.execute_query(connection=connection, query="select tut_check from stats;", noText=True)
         if not __check:
-            pass # work on this tmw
+            pass # work on this tmw^4
         self.hp = hp
         self.gold = gold
         self.input = ''
@@ -361,14 +361,13 @@ class starting_phase(main):
         return [self.hp, preinv]
 
 if __name__ == "__main__":
-    t = t.time()
 
     try:
 
         connection = sql.create_server_connection("localhost", "root", sql.pw)
         connection = sql.create_db_connection("localhost", "root", sql.pw, "rpg_stats")
         player_stats = main.sqlQuery(connection, grab=True) # print out something the database and its users and use it
-        main.sqlQuery(connection=connection, )
+        main.sqlQuery(connection=connection)
 
         if not player_stats[4]:
 

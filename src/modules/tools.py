@@ -8,11 +8,12 @@ __mob_data = [
     # plains [1][0 - ?]
 ]
 
-__mob_drops = [
-    # goblin
-    ["_hide", "_leg", "_sword", "_staff", "_chestplate", "_legging", "_helmet"]
 
-]
+__mob_drops = {
+    "goblin": ["goblin_hide", "goblin_sword", "goblin_staff", 
+               "goblin_chestplate", "goblin_legging", "goblin_helmet"],
+# maybe add orc
+}
 
 __possible_mobs = [
     "goblin", "slime", "wolf"
@@ -89,9 +90,6 @@ def counting_drop(check: list[str], mob: str):
     match mob:
 
         case "goblin":
-            # make a list of the drops
-            # maybe make the mob drops global so every single function can use it
-            # or even make a mob a global variable
             g_hide = check.count("goblin_hide")
 
             g_leg = check.count("goblin_leg")
@@ -226,23 +224,35 @@ def returnMob(hp: int, location: str) -> list:
         
 def insertingMobDrops(preinv: list[str], inv: list, mob: str) -> list:
 
-    __index  = __possible_mobs.index(mob) 
+    for thing in __mob_drops[mob]: # maybe just make the mobdrops[mob][drop_index] a variable
+        drop_index = __mob_drops[mob].index(thing)
+        _mob_drop = __mob_drops[mob][drop_index]
 
-    for i, thing in enumerate(__mob_drops[__index]):
+        print(f"drop index: {drop_index}", '\n')
+        print(f"mob drops: {_mob_drop}", '\n')
 
-        if f"{mob}{thing}" not in inv and f"{mob}{thing}" in preinv: 
-            inv.append(["goblin_hide", 1])
+        if not _mob_drop in inv and _mob_drop in preinv:
+            check = [item for item in preinv if item == _mob_drop]
+            inv.append([_mob_drop, len(check)])
+            print("succed", inv, '\n')
             continue
 
-        __index = inv.index([f"{mob}{thing}", int])
+        if _mob_drop in inv:
+            indices = [index for index, sublist in enumerate(inv) if _mob_drop in sublist]
+            print(indices)
+            inv[indices[0]][1] += 1
+
+        if not _mob_drop in inv:
+            continue
+
+        print(f"inv {inv}", '\n')
+        
+
 
     return inv
 
 
 if __name__ == '__main__':
-    ex = [["a", 1], ["b", 2]]
-    index = ex.index(["a", ])
-    print(index)
-    # inv = []
-    # inv = insertingMobDrops(["goblin_hide", "goblin_sword", "goblin_chestplate", "goblin_hide"], inv=inv, mob="goblin")
-    # print(inv)
+    inv = []
+    inv = insertingMobDrops(["goblin_hide", "goblin_sword", "goblin_chestplate", "goblin_hide", "goblin_hide", "goblin_staff"], inv=inv, mob="goblin")
+    print(inv)

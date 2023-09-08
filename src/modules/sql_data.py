@@ -36,11 +36,14 @@ def create_db_connection(host_name, user_name, user_password, db_name):
 def execute_query(connection, query, 
                   ID=1, fetch=False, 
                   noText=False, autoSend=False, 
-                  adv=False, hp: int = 0, enemyhp: int = 0,
+                  adv=False, 
+                  
+                  hp: int = 0, enemyhp: int = 0,
                   currentEffect: bool = None, mobName: str = "") -> (tuple | None):
     """
     Be careful with noText, it won't show if you made a error !!
     """
+    
     cursor = connection.cursor()
     try:
         cursor.execute(query)
