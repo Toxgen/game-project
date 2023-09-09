@@ -357,9 +357,9 @@ class starting_phase(main):
         print("+=====================+",
               "You gained 4 xp!",
               "+=====================+", sep="\n")
-        tool.printingDrops(preinv, self.mob)
+        inv = tool.printingDrops(preinv, self.mob)
 
-        return [self.hp, preinv]
+        return [self.hp, inv]
 
 if __name__ == "__main__":
 
