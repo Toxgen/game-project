@@ -90,6 +90,7 @@ class main:
                     break
                 elif self.input == "no":
                     self.input = True
+                    break
                 else:
                     print("Please Type in { yes } or { no }", '\n')
 
