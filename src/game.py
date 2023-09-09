@@ -351,13 +351,13 @@ class starting_phase(main):
 
         print("You have defeated the Goblin!")
 
-        preinv = tool.counting_drop(tool.drops(self.mob), self.mob)
+        preinv = tool.drops(self.mob)
 
-        tool.insertingMobDrops(preinv, "goblin")
+        inv = tool.insertingMobDrops(preinv, "goblin")
         print("+=====================+",
               "You gained 4 xp!",
               "+=====================+", sep="\n")
-        inv = tool.printingDrops(preinv, self.mob)
+        tool.printingDrops(preinv, self.mob)
 
         return [self.hp, inv]
 
