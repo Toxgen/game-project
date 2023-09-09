@@ -79,35 +79,6 @@ def drops(mob: str) -> list:
 
         case _:
             raise Exception("1st: Oh NAHHHHHHHHHHHHHHHHH")
-
-def counting_drop(check: list[str], mob: str):
-    """
-    counting_drop(list, mob)
-    list: cct inventory
-    mob: the mob that is being faced
-    """
-
-    match mob:
-
-        case "goblin":
-            g_hide = check.count("goblin_hide")
-
-            g_leg = check.count("goblin_leg")
-            
-            g_sword = check.count("goblin_sword")
-
-            g_staff = check.count("goblin_staff")
-
-            g_chest = check.count("goblin_chestplate")
-
-            g_legging = check.count("goblin_legging")
-
-            g_helmet = check.count("goblin_helmet")
-
-            return [g_hide, g_leg, g_sword, g_staff, g_chest, g_legging, g_helmet] # dont forget to index this into the game.py thing
-    
-        case _:
-            raise Exception("Error: This shouldn't happen, p.s. check mob arg")
               
 def printingDrops(preinv: list[str]):
     """
