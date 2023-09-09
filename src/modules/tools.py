@@ -141,37 +141,30 @@ def printingInv(inv: dict) -> None:
     import time as t
     from time import sleep
 
-    __quit = False
+    print("+========[page 0]=========+")
+    print(f"len: {len(inv)}")
+    for count, i in enumerate(inv): 
 
-    print("+======|inv|======+")
-    for _i, (key, value) in enumerate(inv.items()): 
-        print(f'+ {value} x {key}')
+        t.sleep(0.075)
 
-        t.sleep(0.05)
-
-        if _i % 8 == 0 and _i > 1:
-            print("+=================+")
-
-            while True: # probably gotta fix this because if they have a lot of items, then this would just bug out
-                # probably do something like i % 8 = 0: blah blah blah
-                check = input("Continue? ").lower()
-                if check in ["yes", "ye", "y", "continue", "cont"]:
-                    print("+=================+")
-                    break
-                elif check in ["no", "n"]:
-                    __quit = True
-                    break
-                else:
-                    continue
-
-            if __quit:
+        if count % 8 != 0 or count == 0:
+            print(f"+ {i[1]} x {i[0]}")
+        
+        else:
+            if len(inv) == count + 1:
                 break
+            print("+=========================+")
 
-            while _i % 8 != 0:
-                print(f"+ {value[_i]} x {key[_i]}")
-                
-    print("+=================+")
-
+        if count % 8 == 0 and count > 1:
+            _check = int(count / 8)
+            if len(inv) == count + 1:
+                break
+            print("\n")
+            print(f"+========[page {_check}]=========+")
+            
+    if count % 8 != 0 or len(inv) == count + 1:
+        print("+==========[end]==========+")
+        
 def returnMob(hp: int, location: str) -> list:
     import random as r
     from random import randint
@@ -222,19 +215,15 @@ def returnMob(hp: int, location: str) -> list:
         case _:
             raise Exception("ERROR 1: MissType")
         
-def insertingMobDrops(preinv: list[str], inv: list, mob: str) -> list:
+def insertingMobDrops(preinv: list[str], mob: str, inv: list = []) -> list:
 
     for thing in __mob_drops[mob]: 
         drop_index = __mob_drops[mob].index(thing)
         _mob_drop = __mob_drops[mob][drop_index]
 
-        print(f"drop index: {drop_index}", '\n')
-        print(f"mob drops: {_mob_drop}", '\n')
-
         if not _mob_drop in inv and _mob_drop in preinv:
             check = [item for item in preinv if item == _mob_drop]
             inv.append([_mob_drop, len(check)])
-            print("succed", inv, '\n')
             continue
 
         if _mob_drop in inv:
@@ -245,14 +234,12 @@ def insertingMobDrops(preinv: list[str], inv: list, mob: str) -> list:
         if not _mob_drop in inv:
             continue
 
-        print(f"inv {inv}", '\n')
-        
-
-
+        else:
+            quit("""Error has occured:
+                 hint: I don't have a hint, this seriously shouldn't happen""")
+            
     return inv
 
 
 if __name__ == '__main__':
-    inv = []
-    inv = insertingMobDrops(["goblin_hide", "goblin_sword", "goblin_chestplate", "goblin_hide", "goblin_hide", "goblin_staff"], inv=inv, mob="goblin")
-    print(inv)
+    pass

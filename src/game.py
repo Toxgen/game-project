@@ -54,6 +54,7 @@ class main:
         if not __check:
             pass # work on this tmw^4
         self.hp = hp
+        self.defe = 0
         self.gold = gold
         self.input = ''
         self.ccWeap = ccWeap
@@ -352,7 +353,7 @@ class starting_phase(main):
 
         preinv = tool.counting_drop(tool.drops(self.mob), self.mob)
 
-        super().insertingMobDrops(preinv, "goblin")
+        tool.insertingMobDrops(preinv, "goblin")
         print("+=====================+",
               "You gained 4 xp!",
               "+=====================+", sep="\n")
