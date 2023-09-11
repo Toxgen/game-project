@@ -1,9 +1,9 @@
 import random as r
 import time as t
+import pickle
 
 import modules.tools as tool
 
-import modules.sql_data as sql
 
 """
 Add something that allows the player to load or del save files
@@ -27,32 +27,15 @@ all_armors = {
 class main:
 
     @staticmethod
-    def sqlQuery(connection,
-                      add=False,
-                      grab=False,
-                      tut=False):
-        if tut:
-            for i in range: 
-                x = sql.execute_query(connection=connection, 
-                                      query=f"""select exists(select * from stats where id = {i+1});""")
-                if not x:
-                    query=f"""insert into stats (id, name, gold, cc_weap, tut_booean, hp)
-                    values ({i+1}, "", 0, "", null, 100)"""
-                    return sql.execute_query(connection=connection, query=query)
+    def save_obj(obj):
+        try:
+            with open("data.txt", "w") as f:
+                pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-        if grab:
-            query="""select * from stats;"""
-
-        if add:
-            query=""""""
-
-        return sql.execute_query(connection=connection, query=query, fetch=True)
-        
+        except Exception as ex:
+            print("Error during pickling (Possible unsupported):", ex)
 
     def __init__(self, hp, name, ccWeap, gold):
-        __check = sql.execute_query(connection=connection, query="select tut_check from stats;", noText=True)
-        if not __check:
-            pass # work on this tmw^4
         self.hp = hp
         self.defe = 0
         self.gold = gold
@@ -362,25 +345,23 @@ class starting_phase(main):
         return [self.hp, preinv]
 
 if __name__ == "__main__":
+    # while True:
 
-    try:
+    #     try:
+            
 
-        connection = sql.create_server_connection("localhost", "root", sql.pw)
-        connection = sql.create_db_connection("localhost", "root", sql.pw, "rpg_stats")
-        player_stats = main.sqlQuery(connection, grab=True) # print out something the database and its users and use it
-        main.sqlQuery(connection=connection)
+    #         if not data[4]:
 
-        if not player_stats[4]:
+    #             tutorial = starting_phase()
 
-             tutorial = starting_phase()
+    #             print(tutorial, "=========", sep='\n')
+    #             _main_return = tutorial.start()
+    #             main = main(_main_return[0], )
 
-             print(tutorial, "=========", sep='\n')
-             _main_return = tutorial.start()
-             main = main(_main_return[0], )
-             main.sqlQuery(connection, autoSend=True) # add something here that updates the data into sql
+    #     except KeyboardInterrupt:
+    #         quit(KeyboardInterrupt)
+    
 
-    except KeyboardInterrupt:
-        connection.close()
-        quit(KeyboardInterrupt)
 
-    connection.close()
+    #! LEARN HOW TO PICKLE :( !#
+    pass
