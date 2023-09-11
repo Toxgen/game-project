@@ -73,6 +73,7 @@ class main:
                     break
                 elif self.input == "no":
                     self.input = True
+                    break
                 else:
                     print("Please Type in { yes } or { no }", '\n')
 
@@ -334,15 +335,15 @@ class starting_phase(main):
 
         print("You have defeated the Goblin!")
 
-        preinv = tool.counting_drop(tool.drops(self.mob), self.mob)
+        preinv = tool.drops(self.mob)
 
-        tool.insertingMobDrops(preinv, "goblin")
+        inv = tool.insertingMobDrops(preinv, "goblin")
         print("+=====================+",
               "You gained 4 xp!",
               "+=====================+", sep="\n")
         tool.printingDrops(preinv, self.mob)
 
-        return [self.hp, preinv]
+        return [self.hp, inv]
 
 if __name__ == "__main__":
     # while True:
