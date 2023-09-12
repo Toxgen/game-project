@@ -46,7 +46,7 @@ class main:
         self.inv = {}
         self.location = "woods"
 
-    def xp(self) -> None:
+    def xp(self) -> None: # maybe just change the xp into a list and enumerate it
         cc_level = self.xp_sys[0]
 
         self.xp_sys[0] = 0
@@ -158,7 +158,7 @@ class main:
         counter = 1.0
         
         if dice2 >= 11:
-            return [round(self.weapDict.get(input) ** 1.75 - defe) + 2, 1, dice]
+            return [round(self.weapDict.get(input) ** 1.75 - defe) + 2, 1, dice] # find what weapon they are currently using
         
         while dice2 >= 6:
             counter += 0.1
