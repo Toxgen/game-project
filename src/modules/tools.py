@@ -154,7 +154,7 @@ def returnMob(hp: int, location: str) -> list:
         # there should be a easier way to do this way less boilerplate code
         match mob:
             case "goblin":
-                    return [__mob_data[0][0], 
+                    return [__mob_data[0][0], # use list comprehension for the indexs 
                             __mob_data[0][1] + hp + hp * 0.5, 
                             __mob_data[0][2] + attk + attk * 0.5,
                             __mob_data[0][3] + attk + attk * 0.5,
