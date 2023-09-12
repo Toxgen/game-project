@@ -315,13 +315,14 @@ class starting_phase(main):
                           f"% Rolled: {__attk[2]}",
                           f"- Lost: {__defe[0]}hp", sep='\n')
 
-                if crit:
+                if crit: # idk why this doesn't crit
                     print(f"CRIT! Dealt: {__attk[0]}hp",
                             f"Your Hp: {self.hp}/{maxHp}",
                             f"Enemy Hp: {__mobHp}/{maxMobHp}", 
                             "+===========================+", 
                             sep='\n')
                     t.sleep(0.133)
+                    
                 else:
                     print(f"+ Dealt: {__attk[0]}hp",
                             f"Your Hp: {self.hp}/{maxHp}",
