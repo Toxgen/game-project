@@ -4,7 +4,7 @@ import pickle
 
 import modules.tools as tool
 
-
+# https://www.phind.com/search?cache=ftxjz0uhme19rzhxgxrs6uen
 """
 Add something that allows the player to load or del save files
 Add mana for wands and etc
@@ -29,11 +29,16 @@ class main:
     @staticmethod
     def save_obj(obj):
         try:
-            with open("data.txt", "w") as f:
-                pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
+            with open("data.pickle", "w") as file:
+                pickle.dump(obj, file)
 
         except Exception as ex:
             print("Error during pickling (Possible unsupported):", ex)
+
+    @staticmethod
+    def get_obj():
+        try:
+            with open("data.pickle")
 
     def __init__(self, hp, name, ccWeap, gold):
         self.hp = hp
