@@ -150,11 +150,11 @@ def returnMob(hp: int, location: str) -> list:
         _def_multi = 1
         _attk_mul = 1
 
-    def __wood_mobs(__mob_data: list, mob: str, hp: int, defe: int, attk: int) -> list: 
+    def __wood_mobs(__mob_data: list, mob: str, hp: int, defe: int, attk: int) -> list: # no need need for srgs bc already nested i think, test it out
         # there should be a easier way to do this way less boilerplate code
         match mob:
             case "goblin":
-                    return [__mob_data[0][0], 
+                    return [__mob_data[0][0], # use list comprehension for the indexs 
                             __mob_data[0][1] + hp + hp * 0.5, 
                             __mob_data[0][2] + attk + attk * 0.5,
                             __mob_data[0][3] + attk + attk * 0.5,

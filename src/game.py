@@ -46,7 +46,7 @@ class main:
         self.inv = {}
         self.location = "woods"
 
-    def xp(self) -> None:
+    def xp(self) -> None: # maybe just change the xp into a list and enumerate it
         cc_level = self.xp_sys[0]
 
         self.xp_sys[0] = 0
@@ -158,7 +158,7 @@ class main:
         counter = 1.0
         
         if dice2 >= 11:
-            return [round(self.weapDict.get(input) ** 1.75 - defe) + 2, 1, dice]
+            return [round(self.weapDict.get(input) ** 1.75 - defe) + 2, 1, dice] # find what weapon they are currently using
         
         while dice2 >= 6:
             counter += 0.1
@@ -315,13 +315,14 @@ class starting_phase(main):
                           f"% Rolled: {__attk[2]}",
                           f"- Lost: {__defe[0]}hp", sep='\n')
 
-                if crit:
+                if crit: # idk why this doesn't crit
                     print(f"CRIT! Dealt: {__attk[0]}hp",
                             f"Your Hp: {self.hp}/{maxHp}",
                             f"Enemy Hp: {__mobHp}/{maxMobHp}", 
                             "+===========================+", 
                             sep='\n')
                     t.sleep(0.133)
+                    
                 else:
                     print(f"+ Dealt: {__attk[0]}hp",
                             f"Your Hp: {self.hp}/{maxHp}",
