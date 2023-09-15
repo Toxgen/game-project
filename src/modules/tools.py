@@ -92,7 +92,7 @@ def printingDrops(preinv: list[str]):
     for _q, x in enumerate(preinv):
 
         if not _q:
-                print("+=======================+")
+            print("+=======================+")
 
         if preinv[_q] > 1:
             print(f"Earned {preinv[_q]} {x}s")
