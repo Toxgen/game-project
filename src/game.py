@@ -27,18 +27,44 @@ all_armors = {
 class main:
 
     @staticmethod
-    def save_obj(obj):
+    def save_obj(*obj, remove=False):
+        """
+        WARNING!!!
+        DO NOT MESS AROUND WITH REMOVE
+        """
+
         try:
-            with open("data.pickle", "w") as file:
-                pickle.dump(obj, file)
+
+            with open("data.pickle", "wb") as file:
+                if remove:
+                    pickle.dump("", file)
+
+                else:
+                    pickle.dump(obj, file)
 
         except Exception as ex:
-            print("Error during pickling (Possible unsupported):", ex)
+            print("Error during pickling (Possible unsupported) (Saving obj):", ex)
+            print(f"Printing obj for debugging, object: {obj}")
 
     @staticmethod
     def get_obj():
         try:
-            with open("data.pickle")
+            with open("data.pickle", "rb") as file:
+                data = pickle.load(file)
+                return data
+        
+        except Exception as ex:
+            print("Error during pickling (Possible unsupported) (Getting obj):", ex)
+
+    @staticmethod
+    def insertData() -> tuple: # this is going to take forever
+        try:
+            pass
+
+
+        except KeyboardInterrupt as ky:
+            print("Uh Oh, idk what happens here now")
+            
 
     def __init__(self, hp, name, ccWeap, gold):
         self.hp = hp
@@ -148,6 +174,10 @@ class main:
                 case "inv":
 
                     tool.printingInv(self.inv)
+
+                case "save":
+                    data = [self.inv, ]
+                    main.save_obj()
 
                 case "adv":
                     print("WIP")
@@ -352,23 +382,24 @@ class starting_phase(main):
         return [self.hp, inv]
 
 if __name__ == "__main__":
-    # while True:
+    
+    try:
+        data = main.get_obj()
+        
 
-    #     try:
+        while True:
             
 
-    #         if not data[4]:
+            if not data[4]:
 
-    #             tutorial = starting_phase()
+                tutorial = starting_phase()
 
-    #             print(tutorial, "=========", sep='\n')
-    #             _main_return = tutorial.start()
-    #             main = main(_main_return[0], )
+                print(tutorial, "=========", sep='\n')
+                _main_return = tutorial.start()
+                main = main(_main_return[0], )
 
-    #     except KeyboardInterrupt:
-    #         quit(KeyboardInterrupt)
+    except KeyboardInterrupt:
+        quit(KeyboardInterrupt)
     
 
-
-    #! LEARN HOW TO PICKLE :( !#
     pass
