@@ -1,10 +1,11 @@
 import random as r
 import time as t
 import pickle
+import signal
+import logging
 
 import modules.tools as tool
 
-# https://www.phind.com/search?cache=ftxjz0uhme19rzhxgxrs6uen
 """
 Add something that allows the player to load or del save files
 Add mana for wands and etc
@@ -16,6 +17,8 @@ potionD = {
 }
 
 all_weapons = {
+    # default
+    "fist": [2, None, None, "Your fist"],
     # goblin
     "goblin_sword": [3, 10, 5, "A wooden, green sword carved by goblins"] # [dmg+, buy, sell, description]
 }
@@ -24,6 +27,22 @@ all_armors = {
     # goblin
     "goblin_chestplate": [1, ]
 }
+
+class DelayedKeyboardInterrupt:
+
+    def __enter__(self):
+        self.signal_received = False
+        self.old_handler = signal.signal(signal.SIGINT, self.handler) # it finds the signal and then holds it when it ends
+                
+    def handler(self, sig, frame):
+        self.signal_received = (sig, frame)
+        print("TEST")
+    
+    def __exit__(self, type, value, traceback):
+        signal.signal(signal.SIGINT, self.old_handler)
+        if self.signal_received: # if this doesn't get a tuple, then it would be false and then it would show up
+            self.old_handler(*self.signal_received)
+
 class main:
 
     @staticmethod
@@ -176,8 +195,8 @@ class main:
                     tool.printingInv(self.inv)
 
                 case "save":
-                    data = [self.inv, ]
-                    main.save_obj()
+                    data = [self.inv]
+                    main.save_obj(data)
 
                 case "adv":
                     print("WIP")
@@ -187,24 +206,24 @@ class main:
                     print("Please type in a allowed command", '\n')
                     continue
 
-    def attk_RNGESUS(self, input: str, defe: int) -> int:
+    def attk_RNGESUS(self, current_weapon: str, defe: int) -> int:
         dice = r.randint(1, 12)
         dice2 = dice
         counter = 1.0
         
         if dice2 >= 11:
-            return [round(self.weapDict.get(input) ** 1.75 - defe) + 2, 1, dice] # find what weapon they are currently using
+            return [round(all_weapons.get(current_weapon)[0] ** 1.75 - defe) + 2, 1, dice] # find what weapon they are currently using
         
         while dice2 >= 6:
             counter += 0.1
             if dice2 == 6:
-                return [round(self.weapDict.get(input) ** counter - defe) + 1, 0, dice]
+                return [round(all_weapons.get(current_weapon)[0] ** counter - defe) + 1, 0, dice]
             dice2 -= 1
 
         while dice2 <= 6:
             counter -= 0.1
             if dice2 == 6: # maybe add something if only it was lower than >2 or >3
-                return [round(self.weapDict.get(input) ** counter - defe) - 1, 0, dice]
+                return [round(all_weapons.get(current_weapon)[0] ** counter - defe) - 1, 0, dice]
             dice2 += 1
 
     def defe_RNGESUS(self, attk: int, dice: int) -> int:
@@ -229,10 +248,8 @@ class main:
         crit = None
         mob_list = tool.returnMob(self.hp, "woods") # Woods for now, but implement a system later
 
-        mob = mob_list[0]
-        mobHp = mob_list[1]
-        mobAttk = [x for x in mob_list if 2 in x if 3 in x] # no need for list comprehension here !
-        mobDefe = mob_list[4]
+        mob, mobHp = mob_list[0], mob_list[1]
+        mobAttk, mobDefe = [mob_list[2], mob_list[3]], mob_list[4]
             
         print(
             f"Encountered '{mob}'! || Hp: {mobHp}, Attk: {mobAttk[0]} - {mobAttk[1]}, Def: {mobDefe}")
@@ -248,11 +265,8 @@ class main:
                 attk = self.attk_RNGESUS(self.ccWeap, mobDefe)
                 mobDefe = self.defe_RNGESUS(r.randint(mobAttk[0], mobAttk[1]), attk[2])
 
-                if len(attk) == 2:
-                    mobHp -= attk[0]
-                    crit = attk[1]
-                else:
-                    mobHp -= attk[0]
+                mobHp -= attk[0]
+                crit = attk[1]
 
                 self.hp -= mobDefe[0]
 
@@ -285,10 +299,10 @@ class main:
                 print("Please type in attack", '\n')
                 continue
 
-        print("You have defeated the Goblin!") # akso gotta change this cause u dont always be defeating goblins
+        print(f"You have defeated the {mob}!")
 
 
-        preinv = tool.counting_drop(tool.drops(mob), mob)
+        preinv = tool.drops(mob)
 
         self.inv = tool.insertingMobDrops(preinv, self.inv, mob)
         tool.printingDrops(preinv, mob)
@@ -300,14 +314,10 @@ class starting_phase(main):
         self.mob = "goblin"
         self.inv = {}
         self.location = "woods"
-
-
-    def __repr__(self):
-        return "Tutorial!"
-
-
-    def start(self) -> list:
-        crit = 0
+    
+    def __enter__(self) -> list:
+        print("tutorial!!", "=========", sep='\n')
+        crit = None
 
         __mobHp = 20
         mobAttk = "2 - 3"
@@ -321,22 +331,16 @@ class starting_phase(main):
         maxMobHp = __mobHp
 
         while True:
-            """
-            when it crits, it doesn't show CRIT!!!
-            """
+
             self.input = input('> ').lower()
             if self.input in ["attack", "atk", "attk", "q"]:
 
                 __attk = super().attk_RNGESUS("fist", __mobDefe)
-                __defe = super().defe_RNGESUS(r.randint(2, 3), __attk[2])
+                __defe = super().defe_RNGESUS(r.randint(3, 7), __attk[2])
 
-
-                if len(__attk) == 2:
-                    __mobHp -= __attk[0]
-                    crit = __attk[1]
-                else:
-                    __mobHp -= __attk[0]
-                    
+                __mobHp -= __attk[0]
+                crit = __attk[1]
+                
                 self.hp -= __defe[0]
 
                 if self.hp <= 0:
@@ -350,7 +354,7 @@ class starting_phase(main):
                           f"% Rolled: {__attk[2]}",
                           f"- Lost: {__defe[0]}hp", sep='\n')
 
-                if crit: # idk why this doesn't crit
+                if crit:
                     print(f"CRIT! Dealt: {__attk[0]}hp",
                             f"Your Hp: {self.hp}/{maxHp}",
                             f"Enemy Hp: {__mobHp}/{maxMobHp}", 
@@ -377,29 +381,24 @@ class starting_phase(main):
         print("+=====================+",
               "You gained 4 xp!",
               "+=====================+", sep="\n")
-        tool.printingDrops(preinv, self.mob)
+        tool.printingDrops(preinv, "goblin")
 
-        return [self.hp, inv]
+        return [self.hp, self.inv]
+              
+    def __exit__(self, *exc):
+        print(f'__exit__ called with: {exc!r}')
 
 if __name__ == "__main__":
+    with DelayedKeyboardInterrupt():
+        for i in range(20):
+            i += 1
+            print(i)
+            t.sleep(0.2)
     
-    try:
-        data = main.get_obj()
-        
+            # data = main.get_obj()
 
-        while True:
-            
+            # if data or not data:
 
-            if not data[4]:
+            #     with starting_phase() as tut:
 
-                tutorial = starting_phase()
-
-                print(tutorial, "=========", sep='\n')
-                _main_return = tutorial.start()
-                main = main(_main_return[0], )
-
-    except KeyboardInterrupt:
-        quit(KeyboardInterrupt)
-    
-
-    pass
+            #         main.save_obj(tut, [0])

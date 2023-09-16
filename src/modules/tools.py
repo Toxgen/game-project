@@ -80,7 +80,7 @@ def drops(mob: str) -> list:
         case _:
             raise Exception("1st: Oh NAHHHHHHHHHHHHHHHHH")
               
-def printingDrops(preinv: list[str]):
+def printingDrops(preinv: list[str], mob):
     """
     print em drops
     (the counted drop list, self.mob)
@@ -89,15 +89,21 @@ def printingDrops(preinv: list[str]):
     import time as t
     from time import sleep
 
-    for _q, x in enumerate(preinv):
+    for q, x in enumerate(__mob_drops[mob]):
 
-        if not _q:
+        if not q:
                 print("+=======================+")
 
-        if preinv[_q] > 1:
-            print(f"Earned {preinv[_q]} {x}s")
+        _amount = [m for m in preinv if m == x]
+
+        if len(_amount) > 1:
+            print(f"Earned {len(_amount)} {x}s")
+
+        elif len(_amount) == 0:
+            continue
+        
         else:
-            print(f"Earned {preinv[_q]} {x}")
+            print(f"Earned {len(_amount)} {x}")
 
         t.sleep(0.33)
 
