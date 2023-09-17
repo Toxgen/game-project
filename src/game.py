@@ -157,7 +157,7 @@ class main:
 
         while True:
             self.name = input('> ').strip()
-            if len(self.name) <= 0:
+            if len(self.name) <= 0: # use or 
                 print("Retry", '\n')
                 continue
             elif len(self.name) >= 13:
@@ -168,7 +168,7 @@ class main:
                 for i in self.name:
                     if self.name[i] in special_chara:
                         print("No Special Characters", '\n')
-                        c = True
+                        c = True # just put continue, no need for the variable
                 if c:
                     c = False
                     continue
