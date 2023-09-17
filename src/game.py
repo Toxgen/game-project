@@ -2,7 +2,6 @@ import random as r
 import time as t
 import pickle
 import signal
-import logging
 
 import modules.tools as tool
 
@@ -10,33 +9,38 @@ import modules.tools as tool
 Add something that allows the player to load or del save files
 Add mana for wands and etc
 """
+
 potionD = {
-    "small_health_potion": [5, 5, "A small health potion, heals 5hp"], 
+    "small_health_potion": [5, 5, "A small health potion, heals 5hp"], # hp+, buy, description
     "medium_health_potion": [20, 10, "A medium health potion, heals 10hp"],
     "large_health_potion": [30, 20, "A large health potion, heals for 30hp"]
 }
 
 all_weapons = {
     # default
-    "fist": [2, None, None, "Your fist"],
+    "fist": [2, None, None, "Your fist"], # [dmg+, buy, sell, description]
     # goblin
-    "goblin_sword": [3, 10, 5, "A wooden, green sword carved by goblins"] # [dmg+, buy, sell, description]
+    "goblin_sword": [3, 10, 5, "A wooden, green sword carved by goblins"]
 }
 
 all_armors = {
+    # defualt
+    "pants": [0, None, None, "A pair of pants"], # defense, sell, buy, description
     # goblin
-    "goblin_chestplate": [1, ]
+    "goblin_chestplate": [1, None, None, "Green chestplate"]
 }
 
 class DelayedKeyboardInterrupt:
 
+    # To stop keyboard interruptions during saving files
+
     def __enter__(self):
+        print("SAVING: DO NOT INTERRUPT!!")
         self.signal_received = False
         self.old_handler = signal.signal(signal.SIGINT, self.handler)
                 
     def handler(self, sig, frame):
         self.signal_received = (sig, frame)
-        print("TEST")
     
     def __exit__(self, type, value, traceback):
         signal.signal(signal.SIGINT, self.old_handler)
@@ -85,31 +89,49 @@ class main:
             print("Uh Oh, idk what happens here now")
             
 
-    def __init__(self, hp, name, ccWeap, gold):
+    def __init__(self, hp, name, ccWeap, gold: int = 0, xp_sys: list[int] = [1, 4], inv: list = [], location: str = "woods"):
         self.hp = hp
         self.defe = 0
         self.gold = gold
         self.input = ''
         self.ccWeap = ccWeap
-        self.xp_sys = [0, 4, 0]
+        self.xp_sys = xp_sys # [level, xp]
         self.name = name
-        self.inv = {}
-        self.location = "woods"
+        self.inv = inv
+        self.location = location
 
-    def xp(self) -> None: # maybe just change the xp into a list and enumerate it
-        cc_level = self.xp_sys[0]
-
-        self.xp_sys[0] = 0
-        print(round(1.5 * (cc_level ** 1.15)))
-
-        if round(1.5 * (cc_level ** 1.15)) <= self.xp_sys[1]:
-            self.xp_sys[0] += 1
+    def xp(self) -> list: 
+        possible_XPlevels = [0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 
+                             15, 16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28, 
+                             30, 31, 33, 34, 36, 38, 40, 42, 44, 46, 48, 51, 53, 56, 
+                             24, 24, 25, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30, 
+                             30, 31, 31, 32, 32, 33, 34, 34, 35, 35, 36, 37, 37, 38, 
+                             39, 39, 40, 41, 41, 42, 43, 44, 44, 45, 46, 47, 48, 48, 
+                             49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62]
         
-        while self.xp_sys[2] > round(1.5 * (self.xp_sys[0] ** 1.15) + 10):
-            self.xp_sys[0] += 1
-                    
-        if cc_level > self.xp_sys[0]:
-            print(f"Congrats! You gained {self.xp_sys[0] - cc_level}")
+        exp = self.xp_sys[1]
+        level = self.xp_sys[0]
+
+        for x in possible_XPlevels[level:]:
+            if exp >= x:
+                level += 1
+                exp -= x
+            
+            else:
+                break
+
+        if level > self.xp_sys[0]:
+            if level - 1 > self.xp_sys[0]:
+                print(f"Congrats! You gained {level - self.xp_sys[0]} levels")
+            else:
+                print(f"Congrats! You gained {level - self.xp_sys[0]} level")
+
+        self.xp_sys[0] = level
+
+        return [self.xp_sys[0], self.xp_sys[1]]
+        # maybe add something that shows the how much exp/xp is need next for the next leve
+        # should be pretty easy to implement
+
             
     def naming(self) -> (str | None):
         special_chara = "~!@#$%^&*()_+`{|}[]\:;<,>.?/*-'="
@@ -389,20 +411,15 @@ class starting_phase(main):
         print(f'__exit__ called with: {exc!r}')
 
 if __name__ == "__main__":
-    with DelayedKeyboardInterrupt():
-        for i in range(20):
-            i += 1
-            print(i)
-            t.sleep(0.2)
-
-    for i in range(20):
-        print(i)
-        t.sleep(0.11115)
     
-            # data = main.get_obj()
+    # data = main.get_obj()
 
-            # if data or not data:
+    # if data or not data:
 
-            #     with starting_phase() as tut:
+    #     with starting_phase() as tut:
 
-            #         main.save_obj(tut, [0])
+    #         with DelayedKeyboardInterrupt:
+    #             main.save_obj(tut, [0])s
+
+    main = main(0, "", "", xp_sys=[1, 300])
+    print(main.xp())
