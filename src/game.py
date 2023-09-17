@@ -32,7 +32,7 @@ class DelayedKeyboardInterrupt:
 
     def __enter__(self):
         self.signal_received = False
-        self.old_handler = signal.signal(signal.SIGINT, self.handler) # it finds the signal and then holds it when it ends
+        self.old_handler = signal.signal(signal.SIGINT, self.handler)
                 
     def handler(self, sig, frame):
         self.signal_received = (sig, frame)
@@ -40,7 +40,7 @@ class DelayedKeyboardInterrupt:
     
     def __exit__(self, type, value, traceback):
         signal.signal(signal.SIGINT, self.old_handler)
-        if self.signal_received: # if this doesn't get a tuple, then it would be false and then it would show up
+        if self.signal_received:
             self.old_handler(*self.signal_received)
 
 class main:
@@ -394,6 +394,10 @@ if __name__ == "__main__":
             i += 1
             print(i)
             t.sleep(0.2)
+
+    for i in range(20):
+        print(i)
+        t.sleep(0.11115)
     
             # data = main.get_obj()
 
