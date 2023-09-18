@@ -87,7 +87,7 @@ class main:
 
 
         except KeyboardInterrupt as ky:
-            print("Uh Oh, idk what happens here now")
+            print("Uh Oh, idk what happens here now") # just retry the insetr like return none
             
 
     def __init__(self, hp, name, ccWeap, gold: int = 0, xp_sys: list[int] = [1, 4], inv: list = [], location: str = "woods"):
