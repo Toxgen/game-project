@@ -46,6 +46,7 @@ class DelayedKeyboardInterrupt:
         signal.signal(signal.SIGINT, self.old_handler)
         if self.signal_received:
             self.old_handler(*self.signal_received)
+            
 
 class main:
 
@@ -353,12 +354,15 @@ class starting_phase(main):
         maxMobHp = __mobHp
 
         while True:
+            try:
+                self.input = input('> ').lower()
+            except EOFError:
+                self.input = "attack"
 
-            self.input = input('> ').lower()
             if self.input in ["attack", "atk", "attk", "q"]:
 
                 __attk = super().attk_RNGESUS("fist", __mobDefe)
-                __defe = super().defe_RNGESUS(r.randint(3, 7), __attk[2])
+                __defe = super().defe_RNGESUS(r.randint(2, 5), __attk[2])
 
                 __mobHp -= __attk[0]
                 crit = __attk[1]
@@ -408,18 +412,14 @@ class starting_phase(main):
         return [self.hp, self.inv]
               
     def __exit__(self, *exc):
-        print(f'__exit__ called with: {exc!r}')
+        return None
 
 if __name__ == "__main__":
     
-    # data = main.get_obj()
+    data = main.get_obj()
 
-    # if data or not data:
+    if not data[1][0]:
+        with DelayedKeyboardInterrupt():
 
-    #     with starting_phase() as tut:
-
-    #         with DelayedKeyboardInterrupt:
-    #             main.save_obj(tut, [0])s
-
-    main = main(0, "", "", xp_sys=[1, 300])
-    print(main.xp())
+            with starting_phase() as tut:
+                main.save_obj(tut, ["tutorial", True])
