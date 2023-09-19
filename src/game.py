@@ -214,7 +214,6 @@ class main:
                     break
 
                 case "inv":
-
                     tool.printingInv(self.inv)
 
                 case "save":
@@ -227,9 +226,8 @@ class main:
 
                 case _:
                     print("Please type in a allowed command", '\n')
-                    continue
 
-    def attk_RNGESUS(self, current_weapon: str, defe: int) -> int:
+    def attk_RNGESUS(self, current_weapon: str, defe: int) -> list:
         dice = r.randint(1, 12)
         dice2 = dice
         counter = 1.0
@@ -249,7 +247,7 @@ class main:
                 return [round(all_weapons.get(current_weapon)[0] ** counter - defe) - 1, 0, dice]
             dice2 += 1
 
-    def defe_RNGESUS(self, attk: int, dice: int) -> int:
+    def defe_RNGESUS(self, attk: int, dice: int) -> list:
         counter = 1.0
         
         if dice >= 11:
