@@ -46,8 +46,7 @@ class DelayedKeyboardInterrupt:
         signal.signal(signal.SIGINT, self.old_handler)
         if self.signal_received:
             self.old_handler(*self.signal_received)
-            
-
+        
 class main:
 
     @staticmethod
