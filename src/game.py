@@ -78,12 +78,7 @@ class main:
         
         except Exception as ex:
             print("Error during pickling (Possible unsupported) (Getting obj):", ex)
-
-    @staticmethod
-    def insertData() -> tuple: # this is going to take forever
-        pass # just retry the insetr like return none
             
-
     def __init__(self, hp, name, ccWeap, gold: int = 0, xp_sys: list[int] = [1, 4], inv: list = [], location: str = "woods"):
         self.hp = hp
         self.defe = 0
