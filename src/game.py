@@ -410,8 +410,8 @@ if __name__ == "__main__":
     
     data = main.get_obj()
 
-    if not data[1][0]:
+    if not data[0][0]:
         with DelayedKeyboardInterrupt():
 
             with starting_phase() as tut:
-                main.save_obj(tut, ["tutorial", True])
+                main.save_obj(tut, (True))
