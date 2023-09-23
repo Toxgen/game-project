@@ -125,52 +125,43 @@ class main:
         self.xp_sys[0] = level
 
         return [self.xp_sys[0], self.xp_sys[1]]
-        # maybe add something that shows the how much exp/xp is need next for the next leve
-        # should be pretty easy to implement
-
             
     def naming(self) -> (str | None):
         special_chara = "~!@#$%^&*()_+`{|}[]\:;<,>.?/*-'="
-        c = None
 
         if self.name:
             print("Rename?", "Type in { yes } or { no }", sep='\n')
             while True:
-                self.input = input('> ').lower().strip()
-                if self.input == "yes":
+                self.input = input('> ')
+                if self.input.lower() == "yes":
                     break
-                elif self.input == "no":
+                elif self.input.lower() == "no":
                     self.input = True
                     break
                 else:
                     print("Please Type in { yes } or { no }", '\n')
 
-        if self.input:
-            return None
+            if self.input:
+                return None
 
         t.sleep(0.5)
         print("Name?", "p.s. 1 - 12 characters long & no special characters", sep='\n')
 
         while True:
             self.name = input('> ').strip()
-            if len(self.name) <= 0: # use or 
+            if 0 >= len(self.name) >= 13:
                 print("Retry", '\n')
                 continue
-            elif len(self.name) >= 13:
-                print("Retry", '\n')
-                continue
+                
             else:
                 self.name.split()
                 for i in self.name:
                     if self.name[i] in special_chara:
                         print("No Special Characters", '\n')
-                        c = True # just put continue, no need for the variable
-                if c:
-                    c = False
-                    continue
-                else:
-                    t.sleep(0.22)
-                    print("Are You Sure? { yes } or { no }")
+                        continue
+                        
+                t.sleep(0.22)
+                print("Are You Sure? { yes } or { no }")
 
             while True:
                 self.input = input('> ').lower()
@@ -216,7 +207,7 @@ class main:
 
                 case "save":
                     os.system("cls")
-                    data = [self.inv]
+                    data = [self.inv] # do something about this
                     main.save_obj(data)
 
                 case "adv":
@@ -270,7 +261,7 @@ class main:
         mob_list = tool.returnMob(self.hp, "woods") # Woods for now, but implement a system later
 
         mob, mobHp = mob_list[0], mob_list[1]
-        mobAttk, mobDefe = [mob_list[2], mob_list[3]], mob_list[4]
+        mobAttk, mobDefe = [[mob_list[2], mob_list[3]], mob_list[4]
             
         print(f"Encountered '{mob}'! || Hp: {mobHp}, Attk: {mobAttk[0]} - {mobAttk[1]}, Def: {mobDefe}")
         print("Type attack to attack your opponent!")
