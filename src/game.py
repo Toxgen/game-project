@@ -111,12 +111,16 @@ class main:
             
             else:
                 break
+                
+        self.xp_sys[1] = exp
 
         if level > self.xp_sys[0]:
             if level - 1 > self.xp_sys[0]:
                 print(f"Congrats! You gained {level - self.xp_sys[0]} levels")
+                print(f"Next level at {self.xp_sys[1]}/{possible_XP[level]}")
             else:
                 print(f"Congrats! You gained {level - self.xp_sys[0]} level")
+                print(f"Next level at {self.xp_sys[1]}/{possible_XP[level]}")
 
         self.xp_sys[0] = level
 
