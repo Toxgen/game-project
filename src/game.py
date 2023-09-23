@@ -2,6 +2,7 @@ import random as r
 import time as t
 import pickle
 import signal
+from os import system
 
 import modules.tools as tool
 
@@ -80,7 +81,7 @@ class main:
         except Exception as ex:
             print("Error during pickling (Possible unsupported) (Getting obj):", ex)
             
-    def __init__(self, hp, name, ccWeap, gold: int = 0, xp_sys: list[int] = [1, 4], inv: list = [], location: str = "woods"):
+    def __init__(self, hp, name=None, ccWeap="fist", gold: int = 0, xp_sys: list[int] = [1, 4], inv: list = [], location: str = "woods"):
         self.hp = hp
         self.defe = 0
         self.gold = gold
@@ -189,6 +190,7 @@ class main:
             match self.input:
 
                 case "help":
+                    os.system("cls")
                     print("""The Following Commands Are:
 
                             'Stats': To show your stats
@@ -200,18 +202,22 @@ class main:
                     continue
 
                 case "stats":
+                    os.system("cls")
                     print("WIP")
                     break
 
                 case "inv":
+                    os.system("cls")
                     tool.printingInv(self.inv)
 
                 case "save":
+                    os.system("cls")
                     data = [self.inv]
                     main.save_obj(data)
 
                 case "adv":
-                    print("WIP")
+                    os.system("cls")
+                    self.main_attack(self)
                     break
 
                 case _:
@@ -262,16 +268,16 @@ class main:
         mob, mobHp = mob_list[0], mob_list[1]
         mobAttk, mobDefe = [mob_list[2], mob_list[3]], mob_list[4]
             
-        print(
-            f"Encountered '{mob}'! || Hp: {mobHp}, Attk: {mobAttk[0]} - {mobAttk[1]}, Def: {mobDefe}")
+        print(f"Encountered '{mob}'! || Hp: {mobHp}, Attk: {mobAttk[0]} - {mobAttk[1]}, Def: {mobDefe}")
         print("Type attack to attack your opponent!")
-
-        maxHp = self.hp
+        
+        maxHp = 100
         maxMobHp = mobHp
 
         while True:
             self.input = input('> ').lower()
             if self.input in ["attack", "atk", "attk", "q"]:
+                os.system("cls")
 
                 attk = self.attk_RNGESUS(self.ccWeap, mobDefe)
                 mobDefe = self.defe_RNGESUS(r.randint(mobAttk[0], mobAttk[1]), attk[2])
@@ -348,6 +354,7 @@ class starting_phase(main):
                 self.input = "attack"
 
             if self.input in ["attack", "atk", "attk", "q"]:
+                os.system("cls")
 
                 __attk = super().attk_RNGESUS("fist", __mobDefe)
                 __defe = super().defe_RNGESUS(r.randint(2, 5), __attk[2])
@@ -410,4 +417,10 @@ if __name__ == "__main__":
         with DelayedKeyboardInterrupt():
 
             with starting_phase() as tut:
-                main.save_obj(tut, (True))
+                main.save_obj((True), (tut[0]), (tut[1])
+                
+                main = main(hp=tut[0])
+                
+    while True:# make the self.input = input() into something else
+        main.help_ccmd()
+        
