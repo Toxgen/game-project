@@ -66,8 +66,9 @@ class main:
                     pickle.dump(obj, file)
 
         except Exception as ex:
-            print("Error during pickling (Possible unsupported) (Saving obj):", ex)
             print(f"Printing obj for debugging, object: {obj}")
+            print("Error during pickling (Possible unsupported) (Saving obj):", ex)
+            
 
     @staticmethod
     def get_obj():
