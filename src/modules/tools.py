@@ -2,7 +2,7 @@ global __mob_data, __mob_drops, __possible_mobs
 
 __mob_data = [ 
     # woods [0][0 - 2]
-    ["goblin", 8, 2, 3, 1, None],
+    ["goblin", 8, 2, 3, 1, None], # name, health, r-attk1, r-attk2, defense, s-effect
     ["slime", 12, 3, 4, 3, None],
     ["wolf", 7, 5, 7, 2, None]
     # plains [1][0 - ?]
@@ -152,43 +152,27 @@ def returnMob(hp: int, location: str) -> list:
         _attk_mul = round(hp/30 * 0.25)
     
     else:
-        _hp_multi = 1
-        _def_multi = 1
-        _attk_mul = 1
+        _hp_multi, _def_multi, _attk_multi = 1
 
-    def __wood_mobs(__mob_data: list, mob: str, hp: int, defe: int, attk: int) -> list: # no need need for srgs bc already nested i think, test it out
-        # there should be a easier way to do this way less boilerplate code
-        match mob:
-            case "goblin":
-                    return [__mob_data[0][0], # use list comprehension for the indexs 
-                            __mob_data[0][1] + hp + hp * 0.5, 
-                            __mob_data[0][2] + attk + attk * 0.5,
-                            __mob_data[0][3] + attk + attk * 0.5,
-                            __mob_data[0][4] + defe + defe * 0.5]
-        
-            case "slime":
-                    return [__mob_data[1][0], 
-                            __mob_data[1][1] + hp + hp * 0.5, 
-                            __mob_data[1][2] + attk + attk * 0.5,
-                            __mob_data[1][3] + attk + attk * 0.5,
-                            __mob_data[1][4] + defe + defe * 0.5]
-            case "wolf":
-                pass # work on this later
-
-            case _:
-                raise Exception("wood mobs error")  
+    def __wood_mobs(chance: int) -> list:
+        if chance > 4:
+            _index = 2
+        if chance > 8:
+            _index = 1
+        if chance > 12:
+            _index = 0
+            
+        return [__mob_data[_index][0],  
+                __mob_data[_index][1] + hp + hp * 0.5, 
+                __mob_data[_index][2] + attk + attk * 0.5,
+                __mob_data[_index][3] + attk + attk * 0.5,
+                __mob_data[_index][4] + defe + defe * 0.5]
     
     match location:
         case "woods":
             x = r.randint(0, 20)
-            if x > 12:
-                return __wood_mobs(__mob_data, __mob_data[0][0], _hp_multi, _def_multi, _attk_mul)
+            return __wood_mobs(chance=x)
             
-            if x > 8:
-                return __wood_mobs(__mob_data, __mob_data[1][0], _hp_multi, _def_multi, _attk_mul)
-            
-            if x > 4:
-                return __wood_mobs(__mob_data, __mob_data[2][0], _hp_multi, _def_multi, _attk_mul)
         case _:
             raise Exception("ERROR 1: MissType")
         
@@ -205,7 +189,6 @@ def insertingMobDrops(preinv: list[str], mob: str, inv: list = []) -> list:
 
         if _mob_drop in inv:
             indices = [index for index, sublist in enumerate(inv) if _mob_drop in sublist]
-            print(indices)
             inv[indices[0]][1] += 1
 
         if not _mob_drop in inv:
