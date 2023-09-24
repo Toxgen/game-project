@@ -128,7 +128,7 @@ def returnMob(hp: int, location: str) -> list:
     if hp > 50:
         _hp_multi = round(hp/20 * 0.5) 
         _def_multi = round(hp/20 * 0.5)
-        _attk_mul = round(hp/30 * 0.25)
+        _attk_multi = round(hp/30 * 0.25)
     
     else:
         _hp_multi, _def_multi, _attk_multi = 1
@@ -142,10 +142,10 @@ def returnMob(hp: int, location: str) -> list:
             _index = 0
             
         return [__mob_data[_index][0],  
-                __mob_data[_index][1] + hp + hp * 0.5, 
-                __mob_data[_index][2] + attk + attk * 0.5,
-                __mob_data[_index][3] + attk + attk * 0.5,
-                __mob_data[_index][4] + defe + defe * 0.5]
+                __mob_data[_index][1] * (1 + _hp_multi),
+                __mob_data[_index][2] * (1 + _attk_multi),
+                __mob_data[_index][3] * (1 + _attk_multi),
+                __mob_data[_index][4] * (1 + def_multi)]
     
     match location:
         case "woods":
