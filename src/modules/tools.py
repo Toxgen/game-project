@@ -1,5 +1,3 @@
-global __mob_data, __mob_drops, __possible_mobs
-
 __mob_data = [ 
     # woods [0][0 - 2]
     ("goblin", 8, 2, 3, 1, None), # name, health, r-attk1, r-attk2, defense, s-effect
@@ -20,8 +18,10 @@ __possible_mobs = [
 ]
 
 __drop_data = {
-    "goblin": ([25, "goblin_hide"], [12, "goblin_leg"], [8, "goblin_sword"], 
-                [5, "goblin_staff"], [)
+    "goblin": ({"goblin_hide": 25}, {"goblin_leg": 12}, 
+        {"goblin_sword": 8}, {"goblin_staff": 5}, 
+        {"goblin_chestplate": 3}, {"goblin_legging": 2}, 
+        {"goblin_helemt": 1})
 }
 
 def drops(mob: str) -> list:
@@ -29,35 +29,30 @@ def drops(mob: str) -> list:
     drops(mob)
     mob: mob that is being faced
     """
-    # loop through the chance values
-    # then put like a item value next to it
-    # its also gotta check what mob it is
-    #25, 12, 8, 5, [3, 2, 1]
+
     import random as r
     from random import randint
 
-    luck = r.randint(1, 6)
+    luck = r.randint(0, 5)
 
-    match mob:
+    returning = []
 
-        case "goblin":
+    for counter, (key, value) in enumerate(__drop_data[mob]):
 
-            returning = []
+        if not counter:
+            returning.append("goblin_hide")
+        
+        if counter >= luck:
+            break
 
-            for _i in range(luck):
-
-                if not _i: # guaranteed 1
-                    returning.append("goblin_hide")
-
-                _x = r.randint(0, 100)
-
-                if len(returning) >= 3:
-                    _x = r.randint(0, 150)
-
-            return returning
-
-        case _:
-            raise Exception("1st: Oh NAHHHHHHHHHHHHHHHHH")
+        if len(returning) >= 3:
+            x = r.randint(0, 150)
+            
+        else:
+            x = r.randint(0, 100)
+            
+        if x <= value:
+            returning.append(key)
               
 def printingDrops(preinv: list[str], mob):
     """
