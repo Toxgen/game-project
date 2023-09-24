@@ -40,7 +40,7 @@ def drops(mob: str) -> list:
     for counter, (key, value) in enumerate(__drop_data[mob]):
 
         if not counter:
-            returning.append("goblin_hide")
+            returning.append(key)
         
         if counter >= luck:
             break
