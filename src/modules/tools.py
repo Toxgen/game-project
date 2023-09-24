@@ -93,7 +93,7 @@ def printingDrops(preinv: list[str], mob):
     for q, x in enumerate(__mob_drops[mob]):
 
         if not q:
-                print("+=======================+")
+            print("+=======================+")
 
         _amount = [m for m in preinv if m == x]
 
