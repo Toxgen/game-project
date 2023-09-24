@@ -2,6 +2,7 @@ import random as r
 import time as t
 import pickle
 import signal
+import os
 from os import system
 
 import modules.tools as tool
@@ -85,7 +86,7 @@ class main:
         self.hp = hp
         self.defe = 0
         self.gold = gold
-        self.input = ''
+        self.player_input = ''
         self.ccWeap = ccWeap
         self.xp_sys = xp_sys # [level, xp]
         self.name = name
@@ -117,10 +118,10 @@ class main:
         if level > self.xp_sys[0]:
             if level - 1 > self.xp_sys[0]:
                 print(f"Congrats! You gained {level - self.xp_sys[0]} levels")
-                print(f"Next level at {self.xp_sys[1]}/{possible_XP[level]}")
+                print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}")
             else:
                 print(f"Congrats! You gained {level - self.xp_sys[0]} level")
-                print(f"Next level at {self.xp_sys[1]}/{possible_XP[level]}")
+                print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}")
 
         self.xp_sys[0] = level
 
@@ -132,16 +133,16 @@ class main:
         if self.name:
             print("Rename?", "Type in { yes } or { no }", sep='\n')
             while True:
-                self.input = input('> ')
-                if self.input.lower() == "yes":
+                self.player_input = input('> ')
+                if self.player_input.lower() == "yes":
                     break
-                elif self.input.lower() == "no":
-                    self.input = True
+                elif self.player_input.lower() == "no":
+                    self.player_input = True
                     break
                 else:
                     print("Please Type in { yes } or { no }", '\n')
 
-            if self.input:
+            if self.player_input:
                 return None
 
         t.sleep(0.5)
@@ -164,11 +165,11 @@ class main:
                 print("Are You Sure? { yes } or { no }")
 
             while True:
-                self.input = input('> ').lower()
-                if self.input.strip() == "yes":
+                self.player_input = input('> ').lower()
+                if self.player_input.strip() == "yes":
                     t.sleep(0.3333)
                     return str(self.name)
-                elif self.input == "no":
+                elif self.player_input == "no":
                     self.name = ''
                     print("Name?", sep='\n')
                     break
@@ -180,9 +181,9 @@ class main:
         print("Type In { help } For Commands", "\n")
         t.sleep(0.5)
         while True:
-            self.input = input('> ').lower()
+            self.player_input = input('> ').lower()
 
-            match self.input:
+            match self.player_input:
 
                 case "help":
                     os.system("cls")
@@ -261,7 +262,7 @@ class main:
         mob_list = tool.returnMob(self.hp, "woods") # Woods for now, but implement a system later
 
         mob, mobHp = mob_list[0], mob_list[1]
-        mobAttk, mobDefe = [[mob_list[2], mob_list[3]], mob_list[4]
+        mobAttk, mobDefe = [[mob_list[2], mob_list[3]], mob_list[4]]
             
         print(f"Encountered '{mob}'! || Hp: {mobHp}, Attk: {mobAttk[0]} - {mobAttk[1]}, Def: {mobDefe}")
         print("Type attack to attack your opponent!")
@@ -270,8 +271,8 @@ class main:
         maxMobHp = mobHp
 
         while True:
-            self.input = input('> ').lower()
-            if self.input in ["attack", "atk", "attk", "q"]:
+            self.player_input = input('> ').lower()
+            if self.player_input in ["attack", "atk", "attk", "q"]:
                 os.system("cls")
 
                 attk = self.attk_RNGESUS(self.ccWeap, mobDefe)
@@ -344,11 +345,11 @@ class starting_phase(main):
 
         while True:
             try:
-                self.input = input('> ').lower()
+                self.player_input = input('> ').lower()
             except EOFError:
-                self.input = "attack"
+                self.player_input = "attack"
 
-            if self.input in ["attack", "atk", "attk", "q"]:
+            if self.player_input in ["attack", "atk", "attk", "q"]:
                 os.system("cls")
 
                 __attk = super().attk_RNGESUS("fist", __mobDefe)
@@ -412,10 +413,10 @@ if __name__ == "__main__":
         with DelayedKeyboardInterrupt():
 
             with starting_phase() as tut:
-                main.save_obj((True), (tut[0]), (tut[1])
+                main.save_obj((True), (tut[0]), (tut[1]))
                 
-                main = main(hp=tut[0])
+                mainc = main(hp=tut[0])
+    mainc = main(hp=0)
                 
-    while True:# make the self.input = input() into something else
-        main.help_ccmd()
-        
+    while True:
+        mainc.help_ccmd()

@@ -93,7 +93,7 @@ def printingInv(inv: dict) -> None:
     from time import sleep
 
     print("+========[page 0]=========+")
-    print(f"len: {len(inv)}")
+    count = None
     for count, i in enumerate(inv): 
 
         t.sleep(0.075)
@@ -140,7 +140,7 @@ def returnMob(hp: int, location: str) -> list:
                 __mob_data[_index][1] * (1 + _hp_multi),
                 __mob_data[_index][2] * (1 + _attk_multi),
                 __mob_data[_index][3] * (1 + _attk_multi),
-                __mob_data[_index][4] * (1 + def_multi)]
+                __mob_data[_index][4] * (1 + _def_multi)]
     
     match location:
         case "woods":
