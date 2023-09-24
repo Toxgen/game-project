@@ -2,22 +2,27 @@ global __mob_data, __mob_drops, __possible_mobs
 
 __mob_data = [ 
     # woods [0][0 - 2]
-    ["goblin", 8, 2, 3, 1, None], # name, health, r-attk1, r-attk2, defense, s-effect
-    ["slime", 12, 3, 4, 3, None],
-    ["wolf", 7, 5, 7, 2, None]
+    ("goblin", 8, 2, 3, 1, None), # name, health, r-attk1, r-attk2, defense, s-effect
+    ("slime", 12, 3, 4, 3, None),
+    ("wolf", 7, 5, 7, 2, None)
     # plains [1][0 - ?]
 ]
 
 
 __mob_drops = {
-    "goblin": ["goblin_hide", "goblin_sword", "goblin_staff", 
-               "goblin_chestplate", "goblin_legging", "goblin_helmet"],
+    "goblin": ("goblin_hide", "goblin_leg", "goblin_sword", "goblin_staff", 
+               "goblin_chestplate", "goblin_legging", "goblin_helmet"),
 # maybe add orc
 }
 
 __possible_mobs = [
     "goblin", "slime", "wolf"
 ]
+
+__drop_data = {
+    "goblin": ([25, "goblin_hide"], [12, "goblin_leg"], [8, "goblin_sword"], 
+                [5, "goblin_staff"], [)
+}
 
 def drops(mob: str) -> list:
     """
@@ -27,7 +32,7 @@ def drops(mob: str) -> list:
     # loop through the chance values
     # then put like a item value next to it
     # its also gotta check what mob it is
-
+    #25, 12, 8, 5, [3, 2, 1]
     import random as r
     from random import randint
 
@@ -48,33 +53,6 @@ def drops(mob: str) -> list:
 
                 if len(returning) >= 3:
                     _x = r.randint(0, 150)
-
-                if _x <= 3:
-                    _x = r.randint(1, 3)
-                    if _x == 1:
-                        returning.append("goblin_chestplate")
-
-                    elif _x == 2:
-                        returning.append("leather_legging")
-
-                    else:
-                        returning.append("goblin_helmet")
-
-                if _x <= 5:  
-                    returning.append("goblin_staff")
-                    continue
-
-                if _x <= 8:  
-                    returning.append("goblin_sword")
-                    continue
-
-                if _x <= 12:  
-                    returning.append("goblin_leg")
-                    continue
-
-                if _x <= 25: 
-                    returning.append("goblin_hide")
-                    continue
 
             return returning
 
