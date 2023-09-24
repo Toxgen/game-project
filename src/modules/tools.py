@@ -24,8 +24,9 @@ def drops(mob: str) -> list:
     drops(mob)
     mob: mob that is being faced
     """
-
-    # make this better cause its possible to 
+    # loop through the chance values
+    # then put like a item value next to it
+    # its also gotta check what mob it is
 
     import random as r
     from random import randint
