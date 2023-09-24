@@ -33,7 +33,7 @@ def drops(mob: str) -> list:
     import random as r
     from random import randint
 
-    luck = r.randint(0, 5)
+    luck = r.randint(0, 6)
 
     returning = []
 
