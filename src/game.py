@@ -408,6 +408,8 @@ class starting_phase(main):
 def main(): 
     # change the main game class name to something else
     # cause this will conflict with the class
+    # additionally get rid of those private variable underscores
+    # cause there's no point
     data = main.get_obj()
 
     if not data[0][0]:
