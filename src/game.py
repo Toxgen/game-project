@@ -404,9 +404,10 @@ class starting_phase(main):
               
     def __exit__(self, *exc):
         return None
-
-if __name__ == "__main__":
-    
+        
+def main(): 
+    # change the main game class name to something else
+    # cause this will conflict with the class
     data = main.get_obj()
 
     if not data[0][0]:
@@ -420,3 +421,7 @@ if __name__ == "__main__":
                 
     while True:
         mainc.help_ccmd()
+    
+if __name__ == "__main__":
+    main()
+    
