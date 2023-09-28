@@ -6,7 +6,6 @@ __mob_data = [
     # plains [1][0 - ?]
 ]
 
-
 __mob_drops = {
     "goblin": ("goblin_hide", "goblin_leg", "goblin_sword", "goblin_staff", 
                "goblin_chestplate", "goblin_legging", "goblin_helmet"),
@@ -23,6 +22,10 @@ __drop_data = {
         {"goblin_chestplate": 3}, {"goblin_legging": 2}, 
         {"goblin_helemt": 1})
 }
+
+__possible_locations = (
+        "woods", "ruins"
+) # ruins is just a placeholder i think
 
 def drops(mob: str) -> list:
     """
@@ -116,9 +119,12 @@ def printingInv(inv: dict) -> None:
     if count % 8 != 0 or len(inv) == count + 1:
         print("+==========[end]==========+")
         
-def returnMob(hp: int, location: str) -> list:
+def returnMob(hp: int, location: str) -> (list | None):
     import random as r
     from random import randint
+    
+    if location not in __possible_locations:
+        return None
 
     if hp > 50:
         _hp_multi = round(hp/20 * 0.5) 
