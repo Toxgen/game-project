@@ -104,6 +104,7 @@ class main:
         
         exp = self.xp_sys[1]
         level = self.xp_sys[0]
+        pre_hp = (self.xp_sys[0] * 5) + 100
 
         for x in possible_XPlevels[level:]:
             if exp >= x:
@@ -114,13 +115,19 @@ class main:
                 break
                 
         self.xp_sys[1] = exp
+        
 
         if level > self.xp_sys[0]:
+            curMaxHp = (level * 5) + 100
             if level - 1 > self.xp_sys[0]:
                 print(f"Congrats! You gained {level - self.xp_sys[0]} levels")
+                print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
+                self.hp = curMaxHp
                 print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}")
             else:
                 print(f"Congrats! You gained {level - self.xp_sys[0]} level")
+                print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
+                self.hp = curMaxHp
                 print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}")
 
         self.xp_sys[0] = level
