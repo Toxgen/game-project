@@ -157,7 +157,7 @@ class main:
 
         while True:
             self.name = input('> ').strip()
-            if 0 >= len(self.name) >= 13:
+            if 2 >= len(self.name) >= 13:
                 print("Retry", '\n')
                 continue
                 
@@ -266,15 +266,18 @@ class main:
                     
     def main_attack(self) -> None:
         crit = None
-        mob_list = tool.returnMob(self.hp, "woods") # Woods for now, but implement a system later
-
+        mob_list = tool.returnMob(self.hp, self.location) # Woods for now, but implement a system later
+        if not mob_list:
+            print("It is not possible to attack here")
+            return None
+            
         mob, mobHp = mob_list[0], mob_list[1]
         mobAttk, mobDefe = [[mob_list[2], mob_list[3]], mob_list[4]]
             
         print(f"Encountered '{mob}'! || Hp: {mobHp}, Attk: {mobAttk[0]} - {mobAttk[1]}, Def: {mobDefe}")
         print("Type attack to attack your opponent!")
         
-        maxHp = 100
+        maxHp = (self.xp_sys[0] * 5) + 100
         maxMobHp = mobHp
 
         while True:
