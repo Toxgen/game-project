@@ -13,23 +13,23 @@ Add mana for wands and etc
 """
 
 potionD = {
-    "small_health_potion": [5, 5, "A small health potion, heals 5hp"], # hp+, buy, description
-    "medium_health_potion": [20, 10, "A medium health potion, heals 10hp"],
-    "large_health_potion": [30, 20, "A large health potion, heals for 30hp"]
+    "small_health_potion": (5, 5, "A small health potion, heals 5hp"), # hp+, buy, description
+    "medium_health_potion": (20, 10, "A medium health potion, heals 10hp"),
+    "large_health_potion": (30, 20, "A large health potion, heals for 30hp")
 }
 
 all_weapons = {
     # default
-    "fist": [2, None, None, "Your fist"], # [dmg+, buy, sell, description]
+    "fist": (2, None, None, "Your fist"), # [dmg+, buy, sell, description]
     # goblin
-    "goblin_sword": [3, 10, 5, "A wooden, green sword carved by goblins"]
+    "goblin_sword": (3, 10, 5, "A wooden, green sword carved by goblins")
 }
 
 all_armors = {
     # defualt
-    "pants": [0, None, None, "A pair of pants"], # defense, sell, buy, description
+    "pants": (0, None, None, "A pair of pants"), # defense, sell, buy, description
     # goblin
-    "goblin_chestplate": [1, None, None, "Green chestplate"]
+    "goblin_chestplate": (1, None, None, "Green chestplate")
 }
 
 class DelayedKeyboardInterrupt:
