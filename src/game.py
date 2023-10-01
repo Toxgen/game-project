@@ -272,7 +272,7 @@ class main:
             return None
             
         mob, mobHp = mob_list[0], mob_list[1]
-        mobAttk, mobDefe = [[mob_list[2], mob_list[3]], mob_list[4]]
+        mobAttk, mobDefe = [mob_list[2], mob_list[3]], mob_list[4]
             
         print(f"Encountered '{mob}'! || Hp: {mobHp}, Attk: {mobAttk[0]} - {mobAttk[1]}, Def: {mobDefe}")
         print("Type attack to attack your opponent!")
