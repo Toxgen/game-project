@@ -47,12 +47,8 @@ def drops(mob: str) -> list:
         
         if counter >= luck:
             break
-
-        if len(returning) >= 3:
-            x = r.randint(0, 150)
-            
-        else:
-            x = r.randint(0, 100)
+          
+        x = r.randint(0, 150) if len(returning) >= 3 else r.randint(0, 100)
             
         if x <= value:
             returning.append(key)
@@ -162,7 +158,7 @@ def insertingMobDrops(preinv: list[str], mob: str, inv: list = []) -> list:
         drop_index = __mob_drops[mob].index(thing)
         _mob_drop = __mob_drops[mob][drop_index]
 
-        if not _mob_drop in inv and _mob_drop in preinv:
+        if _mob_drop not in inv and _mob_drop in preinv:
             check = [item for item in preinv if item == _mob_drop]
             inv.append([_mob_drop, len(check)])
             continue
@@ -171,7 +167,7 @@ def insertingMobDrops(preinv: list[str], mob: str, inv: list = []) -> list:
             indices = [index for index, sublist in enumerate(inv) if _mob_drop in sublist]
             inv[indices[0]][1] += 1
 
-        if not _mob_drop in inv:
+        if _mob_drop not in inv:
             continue
 
         else:
