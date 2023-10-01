@@ -1,9 +1,8 @@
-import random as r
-import time as t
-import pickle
-import signal
 import os
-from os import system
+import pickle
+import random as r
+import signal
+import time as t
 
 import modules.tools as tool
 
@@ -135,7 +134,7 @@ class main:
         return [self.xp_sys[0], self.xp_sys[1]]
             
     def naming(self) -> (str | None):
-        special_chara = "~!@#$%^&*()_+`{|}[]\:;<,>.?/*-'="
+        special_chara = "~!@#$%^&*()_+`{|}[]\\:;<,>.?/*-'="
 
         if self.name:
             print("Rename?", "Type in { yes } or { no }", sep='\n')
@@ -404,7 +403,7 @@ class starting_phase(main):
 
         preinv = tool.drops(self.mob)
 
-        inv = tool.insertingMobDrops(preinv, "goblin")
+        tool.insertingMobDrops(preinv, "goblin")
         print("+=====================+",
               "You gained 4 xp!",
               "+=====================+", sep="\n")
@@ -415,25 +414,23 @@ class starting_phase(main):
     def __exit__(self, *exc):
         return None
         
-def main(): 
+def mains(): 
     # change the main game class name to something else
     # cause this will conflict with the class
     # additionally get rid of those private variable underscores
     # cause there's no point
+    # commit the pickle file
     data = main.get_obj()
-
-    if not data[0][0]:
-        with DelayedKeyboardInterrupt():
-
-            with starting_phase() as tut:
-                main.save_obj((True), (tut[0]), (tut[1]))
-                
-                mainc = main(hp=tut[0])
+    # do a try and except clause cause NoneType cant be sliced
+    if not data[0][0] or data is None:
+        with DelayedKeyboardInterrupt(), starting_phase() as tut:
+            main.save_obj((True), (tut[0]), (tut[1]))
+            
+            mainc = main(hp=tut[0])
     mainc = main(hp=0)
                 
     while True:
         mainc.help_ccmd()
     
 if __name__ == "__main__":
-    main()
-    
+    mains()
