@@ -17,10 +17,10 @@ __possible_mobs = [
 ]
 
 __drop_data = {
-    "goblin": ({"goblin_hide": 25}, {"goblin_leg": 12}, 
-        {"goblin_sword": 8}, {"goblin_staff": 5}, 
-        {"goblin_chestplate": 3}, {"goblin_legging": 2}, 
-        {"goblin_helemt": 1})
+    "goblin": (("goblin_hide", 25), ("goblin_leg", 12), 
+        ("goblin_sword", 8), ("goblin_staff", 5), 
+        ("goblin_chestplate", 3), ("goblin_legging", 2), 
+        ("goblin_helmet", 1))
 }
 
 __possible_locations = (
@@ -49,7 +49,7 @@ def drops(mob: str) -> list:
             break
           
         x = r.randint(0, 150) if len(returning) >= 3 else r.randint(0, 100)
-            
+
         if x <= value:
             returning.append(key)
               

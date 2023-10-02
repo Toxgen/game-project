@@ -9,6 +9,7 @@ import modules.tools as tool
 """
 Add something that allows the player to load or del save files
 Add mana for wands and etc
+Add like a dictionary for if they have finished like the tutorial or something
 """
 
 potionD = {
@@ -36,7 +37,6 @@ class DelayedKeyboardInterrupt:
     # To stop keyboard interruptions during saving files
 
     def __enter__(self):
-        print("SAVING: DO NOT INTERRUPT!!")
         self.signal_received = False
         self.old_handler = signal.signal(signal.SIGINT, self.handler)
                 
@@ -48,7 +48,7 @@ class DelayedKeyboardInterrupt:
         if self.signal_received:
             self.old_handler(*self.signal_received)
         
-class main:
+class game:
 
     @staticmethod
     def save_obj(*obj, remove=False):
@@ -56,6 +56,7 @@ class main:
         WARNING!!!
         DO NOT MESS AROUND WITH REMOVE
         """
+        
 
         try:
 
@@ -215,11 +216,11 @@ class main:
                 case "save":
                     os.system("cls")
                     data = [self.inv] # do something about this
-                    main.save_obj(data)
+                    game.save_obj(data)
 
                 case "adv":
                     os.system("cls")
-                    self.main_attack(self)
+                    self.game_attack(self)
                     break
 
                 case _:
@@ -329,7 +330,7 @@ class main:
         self.inv = tool.insertingMobDrops(preinv, self.inv, mob)
         tool.printingDrops(preinv, mob)
 
-class starting_phase(main):
+class starting_phase(game):
     def __init__(self):
         self.hp = 100
         self.defe = 0
@@ -341,16 +342,16 @@ class starting_phase(main):
         print("tutorial!!", "=========", sep='\n')
         crit = None
 
-        __mobHp = 20
+        mobHp = 20
         mobAttk = "2 - 3"
-        __mobDefe = 0
+        mobDefe = 0
 
         print(
-            f"Encountered 'Goblin'! || Hp: {__mobHp}, Attk: {mobAttk}, Def: {__mobDefe}, Level: 1")
+            f"Encountered 'Goblin'! || Hp: {mobHp}, Attk: {mobAttk}, Def: {mobDefe}, Level: 1")
         print("Type attack to attack your opponent!")
 
         maxHp = self.hp
-        maxMobHp = __mobHp
+        maxMobHp = mobHp
 
         while True:
             try:
@@ -361,37 +362,37 @@ class starting_phase(main):
             if self.player_input in ["attack", "atk", "attk", "q"]:
                 os.system("cls")
 
-                __attk = super().attk_RNGESUS("fist", __mobDefe)
-                __defe = super().defe_RNGESUS(r.randint(2, 5), __attk[2])
+                attk = super().attk_RNGESUS("fist", mobDefe)
+                defe = super().defe_RNGESUS(r.randint(2, 5), attk[2])
 
-                __mobHp -= __attk[0]
-                crit = __attk[1]
+                mobHp -= attk[0]
+                crit = attk[1]
                 
-                self.hp -= __defe[0]
+                self.hp -= defe[0]
 
                 if self.hp <= 0:
                     quit("ERROR 1: Died unexpected")
 
-                if __mobHp <= 0:
+                if mobHp <= 0:
                     break
 
                 else:
                     print("+===========================+",
-                          f"% Rolled: {__attk[2]}",
-                          f"- Lost: {__defe[0]}hp", sep='\n')
+                          f"% Rolled: {attk[2]}",
+                          f"- Lost: {defe[0]}hp", sep='\n')
 
                 if crit:
-                    print(f"CRIT! Dealt: {__attk[0]}hp",
+                    print(f"CRIT! Dealt: {attk[0]}hp",
                             f"Your Hp: {self.hp}/{maxHp}",
-                            f"Enemy Hp: {__mobHp}/{maxMobHp}", 
+                            f"Enemy Hp: {mobHp}/{maxMobHp}", 
                             "+===========================+", 
                             sep='\n')
                     t.sleep(0.133)
                     
                 else:
-                    print(f"+ Dealt: {__attk[0]}hp",
+                    print(f"+ Dealt: {attk[0]}hp",
                             f"Your Hp: {self.hp}/{maxHp}",
-                            f"Enemy Hp: {__mobHp}/{maxMobHp}", 
+                            f"Enemy Hp: {mobHp}/{maxMobHp}", 
                             "+===========================+", 
                             sep='\n')
                     t.sleep(0.133)
@@ -414,23 +415,34 @@ class starting_phase(main):
     def __exit__(self, *exc):
         return None
         
-def mains(): 
-    # change the main game class name to something else
-    # cause this will conflict with the class
-    # additionally get rid of those private variable underscores
-    # cause there's no point
-    # commit the pickle file
-    data = main.get_obj()
-    # do a try and except clause cause NoneType cant be sliced
-    if not data[0][0] or data is None:
-        with DelayedKeyboardInterrupt(), starting_phase() as tut:
-            main.save_obj((True), (tut[0]), (tut[1]))
-            
-            mainc = main(hp=tut[0])
-    mainc = main(hp=0)
+def mainfunc(): 
+    data = game.get_obj()
+    print(type(data))
+    print(data)
+    try:
+        if not data["is_done_tutorial"] == True:
+            print("1")
+            with DelayedKeyboardInterrupt():
+                with starting_phase() as tut:
+                    game.save_obj((True), (tut[0]), (tut[1]), {"is_done_tutorial": True})
+                    
+                main = game(hp=tut[0])
+
+    except TypeError:
+        if data == "":
+            print("2")
+            with DelayedKeyboardInterrupt():
+                with starting_phase() as tut:
+                    game.save_obj((True), (tut[0]), (tut[1]), {"is_done_tutorial": True})
                 
+                main = game(hp=tut[0])
+    
+    else:
+        print("3")
+        main = game(hp=0)
+
     while True:
-        mainc.help_ccmd()
+        main.help_ccmd()
     
 if __name__ == "__main__":
-    mains()
+    mainfunc()
