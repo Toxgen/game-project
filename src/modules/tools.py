@@ -52,6 +52,8 @@ def drops(mob: str) -> list:
 
         if x <= value:
             returning.append(key)
+          
+    return returning
               
 def printingDrops(preinv: list[str], mob):
     """
@@ -128,7 +130,7 @@ def returnMob(hp: int, location: str) -> (list | None):
         _attk_multi = round(hp/30 * 0.25)
     
     else:
-        _hp_multi, _def_multi, _attk_multi = 1
+        _hp_multi, _def_multi, _attk_multi = 1, 1, 1
 
     def __wood_mobs(chance: int) -> list:
         if chance > 4:

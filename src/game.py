@@ -3,6 +3,7 @@ import pickle
 import random as r
 import signal
 import time as t
+from os import system
 
 import modules.tools as tool
 
@@ -51,21 +52,27 @@ class DelayedKeyboardInterrupt:
 class game:
 
     @staticmethod
-    def save_obj(*obj, remove=False):
+    def save_obj(*obj, remove=False, config=False):
         """
         WARNING!!!
         DO NOT MESS AROUND WITH REMOVE
         """
         
-
         try:
+          if not config:
+              with open("data.pickle", "wb") as file:
+                  if remove:
+                      pickle.dump("", file)
 
-            with open("data.pickle", "wb") as file:
-                if remove:
-                    pickle.dump("", file)
+                  else:
+                      pickle.dump(obj, file)
+          else:
+            with open("config.pickle", "wb") as file:
+              if remove:
+                pickle.dump("", file)
 
-                else:
-                    pickle.dump(obj, file)
+              else:
+                pickle.dump(obj, file)
 
         except Exception as ex:
             print(f"Printing obj for debugging, object: {obj}")
@@ -73,16 +80,23 @@ class game:
             
 
     @staticmethod
-    def get_obj():
+    def get_obj(config=False):
         try:
+          if not config:
             with open("data.pickle", "rb") as file:
+                data = pickle.load(file)
+                return data
+              
+          else:
+            with open("config.pickle", "rb") as file:
                 data = pickle.load(file)
                 return data
         
         except Exception as ex:
             print("Error during pickling (Possible unsupported) (Getting obj):", ex)
             
-    def __init__(self, hp, name=None, ccWeap="fist", gold: int = 0, xp_sys: list[int] = [1, 4], inv: list = [], location: str = "woods"):
+    def __init__(self, hp, name=None, ccWeap="fist", gold: int = 0, xp_sys: list[int] = [1, 4], 
+                 inv: list = [], location: str = "woods"):
         self.hp = hp
         self.defe = 0
         self.gold = gold
@@ -94,13 +108,13 @@ class game:
         self.location = location
 
     def xp(self) -> list: 
-        possible_XPlevels = [0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 
+        possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 
                              15, 16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28, 
                              30, 31, 33, 34, 36, 38, 40, 42, 44, 46, 48, 51, 53, 56, 
                              24, 24, 25, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30, 
                              30, 31, 31, 32, 32, 33, 34, 34, 35, 35, 36, 37, 37, 38, 
                              39, 39, 40, 41, 41, 42, 43, 44, 44, 45, 46, 47, 48, 48, 
-                             49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62]
+                             49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62)
         
         exp = self.xp_sys[1]
         level = self.xp_sys[0]
@@ -135,7 +149,7 @@ class game:
         return [self.xp_sys[0], self.xp_sys[1]]
             
     def naming(self) -> (str | None):
-        special_chara = "~!@#$%^&*()_+`{|}[]\\:;<,>.?/*-'="
+        special_chara = """~!@#$%^&*()_+`{|}[]\\:;<,>.?/*-'"="""
 
         if self.name:
             print("Rename?", "Type in { yes } or { no }", sep='\n')
@@ -196,10 +210,10 @@ class game:
                     os.system("cls")
                     print("""The Following Commands Are:
 
-                            'Stats': To show your stats
-                            'Inventory or inv': To show your inventory
-                            'Adventure or adv': To start an adventure 
-                            'Switch or swi': To switch current weapon
+                        'Stats': To show your stats
+                        'Inventory or inv': To show your inventory
+                        'Adventure or adv': To start an adventure 
+                        'Switch or swi': To switch current weapon
                             """)
                     t.sleep(1.0)
                     continue
@@ -220,7 +234,7 @@ class game:
 
                 case "adv":
                     os.system("cls")
-                    self.game_attack(self)
+                    self.main_attack()
                     break
 
                 case _:
@@ -242,7 +256,7 @@ class game:
 
         while dice2 <= 6:
             counter -= 0.1
-            if dice2 == 6: # maybe add something if only it was lower than >2 or >3
+            if dice2 == 6:
                 return [round(all_weapons.get(current_weapon)[0] ** counter - defe) - 1, 0, dice]
             dice2 += 1
 
@@ -338,7 +352,7 @@ class starting_phase(game):
         self.inv = {}
         self.location = "woods"
     
-    def __enter__(self) -> list:
+    def __enter__(self) -> tuple:
         print("tutorial!!", "=========", sep='\n')
         crit = None
 
@@ -410,39 +424,40 @@ class starting_phase(game):
               "+=====================+", sep="\n")
         tool.printingDrops(preinv, "goblin")
 
-        return [self.hp, self.inv]
+        return (self.hp, self.inv)
               
-    def __exit__(self, *exc):
+    def __exit__(self, *exc) -> None:
         return None
         
-def mainfunc(): 
+def start() -> tuple: 
     data = game.get_obj()
     print(type(data))
     print(data)
-    try:
-        if not data["is_done_tutorial"] == True:
-            print("1")
-            with DelayedKeyboardInterrupt():
-                with starting_phase() as tut:
-                    game.save_obj((True), (tut[0]), (tut[1]), {"is_done_tutorial": True})
-                    
-                main = game(hp=tut[0])
+    game.save_obj(remove=True)
+  
+    with DelayedKeyboardInterrupt():
+      try:
+          if not data["is_done_tutorial"]:
+              print("1")
+              with starting_phase() as tut:
+                  game.save_obj((tut[0]), (tut[1]), {"is_done_tutorial": True})
+                  game.save_obj({"is_done_tutorial": True}, config=True)
+                  main = game(hp=tut[0])
+                  data = game.get_obj()
+            
+          else:
+            return () # reutne somehring like true if this came from tutorial
+            # then writ wohter if state,ent comparing if they have done this
 
-    except TypeError:
-        if data == "":
-            print("2")
-            with DelayedKeyboardInterrupt():
-                with starting_phase() as tut:
-                    game.save_obj((True), (tut[0]), (tut[1]), {"is_done_tutorial": True})
-                
-                main = game(hp=tut[0])
-    
-    else:
-        print("3")
-        main = game(hp=0)
+      except TypeError:
+          if data == "":
+              print("2")
+              with starting_phase() as tut:
+                  game.save_obj((tut[0]), (tut[1]))
+                  game.save_obj({"is_done_tutorial": True}, config=True)
+                  main = game(hp=tut[0])
 
-    while True:
-        main.help_ccmd()
-    
+def main():
+    pass
 if __name__ == "__main__":
     mainfunc()
