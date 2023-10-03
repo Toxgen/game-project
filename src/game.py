@@ -460,4 +460,27 @@ def start() -> tuple:
 def main():
     pass
 if __name__ == "__main__":
-    mainfunc()
+    possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14,
+                             15, 16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28, 
+                             30, 31, 33, 34, 36, 38, 40, 42, 44, 46, 48, 51, 53, 56, 
+                             24, 24, 25, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30, 
+                             30, 31, 31, 32, 32, 33, 34, 34, 35, 35, 36, 37, 37, 38, 
+                             39, 39, 40, 41, 41, 42, 43, 44, 44, 45, 46, 47, 48, 48, 
+                             49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62)
+    new = []
+    already = []
+    for x in possible_XPlevels:
+        count = possible_XPlevels.count(x)
+        if x not in already:
+            already.append(x)
+            while count > 0:
+                new.append(x)
+                count -= 1
+            print(f"new: {new}")
+        else:
+            continue
+        print(f"used:{already}")
+        print("\n")
+        
+    print(f"possible_XPlevels = {new}")
+        
