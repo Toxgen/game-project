@@ -108,13 +108,13 @@ class game:
         self.location = location
 
     def xp(self) -> list: 
-        possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 
-                             15, 16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28, 
-                             30, 31, 33, 34, 36, 38, 40, 42, 44, 46, 48, 51, 53, 56, 
-                             24, 24, 25, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30, 
-                             30, 31, 31, 32, 32, 33, 34, 34, 35, 35, 36, 37, 37, 38, 
-                             39, 39, 40, 41, 41, 42, 43, 44, 44, 45, 46, 47, 48, 48, 
-                             49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62)
+        possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 15, 
+                             16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 24, 24, 25, 25, 25, 26, 
+                             26, 26, 27, 27, 27, 28, 28, 28, 29, 29, 30, 30, 30, 31, 31, 31, 
+                             32, 32, 33, 33, 34, 34, 34, 35, 35, 36, 36, 37, 37, 38, 38, 39, 
+                             39, 40, 40, 41, 41, 42, 42, 43, 44, 44, 44, 45, 46, 46, 47, 48, 
+                             48, 48, 49, 50, 51, 51, 52, 53, 53, 54, 55, 56, 56, 57, 58, 59,
+                             60, 61, 62)
         
         exp = self.xp_sys[1]
         level = self.xp_sys[0]
@@ -137,12 +137,12 @@ class game:
                 print(f"Congrats! You gained {level - self.xp_sys[0]} levels")
                 print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
                 self.hp = curMaxHp
-                print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}")
+                print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}xp")
             else:
                 print(f"Congrats! You gained {level - self.xp_sys[0]} level")
                 print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
                 self.hp = curMaxHp
-                print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}")
+                print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}xp")
 
         self.xp_sys[0] = level
 
@@ -240,24 +240,42 @@ class game:
                 case _:
                     print("Please type in a allowed command", '\n')
 
-    def attk_RNGESUS(self, current_weapon: str, defe: int) -> list:
+    def attk_RNGESUS(self, current_weapon: str, defe: int) -> (list | float):
         dice = r.randint(1, 12)
         dice2 = dice
         counter = 1.0
+        returning = None
+        print(f"defe: {defe}")
         
         if dice2 >= 11:
-            return [round(all_weapons.get(current_weapon)[0] ** 1.75 - defe) + 2, 1, dice] # find what weapon they are currently using
-        
+            returning = [round(all_weapons.get(current_weapon)[0] ** 1.75 - defe) + 2, 1, dice]
+            if returning[0] <= -1:
+                returning[0] = 0
+                return returning 
+            else:
+                return returning
+            
         while dice2 >= 6:
             counter += 0.1
             if dice2 == 6:
-                return [round(all_weapons.get(current_weapon)[0] ** counter - defe) + 1, 0, dice]
+                returning = [round(all_weapons.get(current_weapon)[0] ** counter - defe) + 1, 0, dice] 
+                if returning[0] <= -1:
+                    returning[0] = 0
+                    return returning 
+                else:
+                    return returning 
+    
             dice2 -= 1
 
         while dice2 <= 6:
             counter -= 0.1
             if dice2 == 6:
-                return [round(all_weapons.get(current_weapon)[0] ** counter - defe) - 1, 0, dice]
+                returning = [round(all_weapons.get(current_weapon)[0] ** counter - defe) - 1, 0, dice] 
+                if returning[0] <= -1:
+                    returning[0] = 0
+                    return returning 
+                else:
+                    return returning 
             dice2 += 1
 
     def defe_RNGESUS(self, attk: int, dice: int) -> list:
@@ -287,6 +305,7 @@ class game:
             
         mob, mobHp = mob_list[0], mob_list[1]
         mobAttk, mobDefe = [mob_list[2], mob_list[3]], mob_list[4]
+        mob = "goblin"
             
         print(f"Encountered '{mob}'! || Hp: {mobHp}, Attk: {mobAttk[0]} - {mobAttk[1]}, Def: {mobDefe}")
         print("Type attack to attack your opponent!")
@@ -297,15 +316,16 @@ class game:
         while True:
             self.player_input = input('> ').lower()
             if self.player_input in ["attack", "atk", "attk", "q"]:
-                os.system("cls")
+                # os.system("cls")
 
                 attk = self.attk_RNGESUS(self.ccWeap, mobDefe)
-                mobDefe = self.defe_RNGESUS(r.randint(mobAttk[0], mobAttk[1]), attk[2])
+                print(f"attk: {attk}")
+                mobAttkacking = self.defe_RNGESUS(r.randint(mobAttk[0], mobAttk[1]), attk[2])
 
                 mobHp -= attk[0]
                 crit = attk[1]
 
-                self.hp -= mobDefe[0]
+                self.hp -= mobAttkacking[0]
 
                 if self.hp <= 0:
                     quit("WIP")
@@ -316,7 +336,7 @@ class game:
                 else:
                     print("+===========================+",
                           f"% Rolled: {attk[2]}",
-                          f"- Lost: {mobDefe[0]}hp", sep='\n')
+                          f"- Lost: {mobAttkacking[0]}hp", sep='\n')
 
                 if crit:
                     print(f"CRIT! Dealt: {attk[0]}hp",
@@ -341,7 +361,7 @@ class game:
 
         preinv = tool.drops(mob)
 
-        self.inv = tool.insertingMobDrops(preinv, self.inv, mob)
+        self.inv = tool.insertingMobDrops(preinv, mob, self.inv)
         tool.printingDrops(preinv, mob)
 
 class starting_phase(game):
@@ -460,27 +480,6 @@ def start() -> tuple:
 def main():
     pass
 if __name__ == "__main__":
-    possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14,
-                             15, 16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28, 
-                             30, 31, 33, 34, 36, 38, 40, 42, 44, 46, 48, 51, 53, 56, 
-                             24, 24, 25, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30, 
-                             30, 31, 31, 32, 32, 33, 34, 34, 35, 35, 36, 37, 37, 38, 
-                             39, 39, 40, 41, 41, 42, 43, 44, 44, 45, 46, 47, 48, 48, 
-                             49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62)
-    new = []
-    already = []
-    for x in possible_XPlevels:
-        count = possible_XPlevels.count(x)
-        if x not in already:
-            already.append(x)
-            while count > 0:
-                new.append(x)
-                count -= 1
-            print(f"new: {new}")
-        else:
-            continue
-        print(f"used:{already}")
-        print("\n")
-        
-    print(f"possible_XPlevels = {new}")
-        
+    main = game(hp=100, xp_sys=[2, 1001])
+    main.xp()
+    main.main_attack()

@@ -9,6 +9,8 @@ __mob_data = [
 __mob_drops = {
     "goblin": ("goblin_hide", "goblin_leg", "goblin_sword", "goblin_staff", 
                "goblin_chestplate", "goblin_legging", "goblin_helmet"),
+    "slime": ("nothing u got scammed lol"),
+    "wolf": ("You also got scammed lol")
 # maybe add orc
 }
 
@@ -133,12 +135,15 @@ def returnMob(hp: int, location: str) -> (list | None):
         _hp_multi, _def_multi, _attk_multi = 1, 1, 1
 
     def __wood_mobs(chance: int) -> list:
-        if chance > 4:
-            _index = 2
-        if chance > 8:
-            _index = 1
-        if chance > 12:
+        if chance < 4:
             _index = 0
+        if chance < 8:
+            _index = 1
+        if chance < 12:
+            _index = 2
+        else:
+            _index = 0
+        print(f"chance: {chance}")
             
         return [__mob_data[_index][0],  
                 __mob_data[_index][1] * (1 + _hp_multi),
