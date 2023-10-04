@@ -483,3 +483,4 @@ if __name__ == "__main__":
     main = game(hp=100, xp_sys=[2, 1001])
     main.xp()
     main.main_attack()
+# change variable names cause this will not work and be more speicifc
