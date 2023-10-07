@@ -127,22 +127,18 @@ def returnMob(hp: int, location: str) -> (list | None):
         return None
 
     if hp > 50:
-        _hp_multi = round(hp/20 * 0.5) 
-        _def_multi = round(hp/20 * 0.5)
-        _attk_multi = round(hp/30 * 0.25)
+        _hp_multi = round(hp/50* 0.5) 
+        _def_multi = round(hp/50 * 0.5)
+        _attk_multi = round(hp/40 * 0.25)
     
     else:
         _hp_multi, _def_multi, _attk_multi = 1, 1, 1
 
     def __wood_mobs(chance: int) -> list:
-        if chance < 4:
-            _index = 0
-        if chance < 8:
-            _index = 1
-        if chance < 12:
-            _index = 2
-        else:
-            _index = 0
+        
+        _index = 0 if chance < 4 else 1    
+        _index = 2 if chance < 12 else 0
+        
         print(f"chance: {chance}")
             
         return [__mob_data[_index][0],  

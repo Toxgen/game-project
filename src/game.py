@@ -20,6 +20,7 @@ potionD = {
 }
 
 all_weapons = {
+    "test": (100, None, None, "..."),
     # default
     "fist": (2, None, None, "Your fist"), # [dmg+, buy, sell, description]
     # goblin
@@ -95,8 +96,8 @@ class game:
         except Exception as ex:
             print("Error during pickling (Possible unsupported) (Getting obj):", ex)
             
-    def __init__(self, hp, name=None, ccWeap="fist", gold: int = 0, xp_sys: list[int] = [1, 4], 
-                 inv: list = [], location: str = "woods"):
+    def __init__(self, hp, name=None, ccWeap="fist", gold: int = 0,
+                 xp_sys: list[int] = [1, 4], inv: list = [], location: str = "woods"):
         self.hp = hp
         self.defe = 0
         self.gold = gold
@@ -240,7 +241,7 @@ class game:
                 case _:
                     print("Please type in a allowed command", '\n')
 
-    def attk_RNGESUS(self, current_weapon: str, defe: int) -> (list | float):
+    def attk_RNGESUS(self, current_weapon: str, defe: int) -> list:
         dice = r.randint(1, 12)
         dice2 = dice
         counter = 1.0
@@ -449,38 +450,25 @@ class starting_phase(game):
     def __exit__(self, *exc) -> None:
         return None
         
-def start() -> tuple: 
+def start() -> bool:
     data = game.get_obj()
-    print(type(data))
-    print(data)
-    game.save_obj(remove=True)
-  
-    with DelayedKeyboardInterrupt():
-      try:
-          if not data["is_done_tutorial"]:
-              print("1")
-              with starting_phase() as tut:
-                  game.save_obj((tut[0]), (tut[1]), {"is_done_tutorial": True})
-                  game.save_obj({"is_done_tutorial": True}, config=True)
-                  main = game(hp=tut[0])
-                  data = game.get_obj()
-            
-          else:
-            return () # reutne somehring like true if this came from tutorial
-            # then writ wohter if state,ent comparing if they have done this
-
-      except TypeError:
-          if data == "":
-              print("2")
-              with starting_phase() as tut:
+    config = game.get_obj(config=True)
+    
+    return False if data == None else True if config["is_done_tutorial"] else False
+    
+def main():
+    tut_bool = start()
+    if not tut_bool:
+        with starting_phase() as tut:
                   game.save_obj((tut[0]), (tut[1]))
                   game.save_obj({"is_done_tutorial": True}, config=True)
                   main = game(hp=tut[0])
-
-def main():
-    pass
+    # else:
+        
 if __name__ == "__main__":
-    main = game(hp=100, xp_sys=[2, 1001])
-    main.xp()
+    main = game(hp=1000, xp_sys=[2, 1001], cc_weap="test")
     main.main_attack()
-# change variable names cause this will not work and be more speicifc
+# change variable names cause this will not work and be more specific
+# maybe make it like a dictionaey like {hp: (number)}
+# for inv it could also be the same {inv: self.inv}
+# pretty simple tbh
