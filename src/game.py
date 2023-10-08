@@ -53,51 +53,35 @@ class DelayedKeyboardInterrupt:
 class game:
 
     @staticmethod
-    def save_obj(*obj, remove=False, config=False):
-        """
-        WARNING!!!
-        DO NOT MESS AROUND WITH REMOVE
-        """
-        obj = list(obj)
-        print(f"save_obj: {obj}")
+    def save_obj(*obj) -> None:
         
-        try:
-            if not config or remove:
-                with open("data.pickle", "wb") as file:
-                    if remove:
-                        pickle.dump("", file)
-                    
-                    else:
-                        pickle.dump(obj, file)
-                    
-            if config:        
-                with open("config.pickle", "wb") as file:
-                    if remove:
-                        pickle.dump("", file)
-
-                    else:
-                        pickle.dump(obj, file)
-
-        except Exception as ex:
-            print(f"Printing obj for debugging, object: {obj}")
-            print("Error during pickling (Possible unsupported) (Saving obj):", ex)
-            
+        with open("save/data.pickle", "wb") as file:        
+            pickle.dump(obj, file)
+    
+    @staticmethod
+    def save_config(**obj) -> None:
+        
+        with open("save/config.pickle", "wb") as file:
+            pickle.dump(obj, file)
 
     @staticmethod
-    def get_obj(config=False):
-        try:
-          if not config:
-            with open("data.pickle", "rb") as file:
-                data = pickle.load(file)
-                return data
-              
-          else:
-            with open("config.pickle", "rb") as file:
-                data = pickle.load(file)
-                return data
+    def get_obj(remove=False, config=False):
         
-        except Exception as ex:
-            print("Error during pickling (Possible unsupported) (Getting obj):", ex)
+        if not remove:
+            if not config:
+                with open("save/data.pickle", "rb") as file:
+                    data = pickle.load(file)
+                    return data
+              
+            else:
+                with open("save/config.pickle", "rb") as file:
+                    data = pickle.load(file)
+                    return data
+        else:
+            with open("save/data.pickle", "wb") as file:
+                pickle.dump("", file)
+            with open("save/config.pickle", "wb") as file:
+                pickle.dump("", file)
             
     def __init__(self, hp, name=None, ccWeap="fist", gold: int = 0,
                  xp_sys: list[int] = [1, 4], inv: list = [], location: str = "woods"):
@@ -367,7 +351,7 @@ class game:
 
         self.inv = tool.insertingMobDrops(preinv, mob, self.inv)
         tool.printingDrops(preinv, mob)
-
+        
 class starting_phase(game):
     def __init__(self):
         self.hp = 100
@@ -454,13 +438,13 @@ class starting_phase(game):
         return None
         
 def start() -> bool:
-    #game.save_obj(remove=True, config=True)
+    game.get_obj(remove=True)
     data = game.get_obj()
     config = game.get_obj(config=True)
     print(f"data: {data}")
     print(f"config: {config}")
     
-    return False if data == "" else config["is_done_tutorial"]
+    return False if data == "" else True#config["is_done_tutorial"]
     
 def main():
     tut_bool = start()
@@ -468,7 +452,7 @@ def main():
     if not tut_bool:
         with starting_phase() as tut:
                   game.save_obj((tut[0]), (tut[1]))
-                  game.save_obj({"is_done_tutorial": True}, config=True)
+                  game.save_config(is_done_tutorial=True)
                   main = game(hp=tut[0])
     # else:
         
