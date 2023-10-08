@@ -58,22 +58,25 @@ class game:
         WARNING!!!
         DO NOT MESS AROUND WITH REMOVE
         """
+        obj = list(obj)
+        print(f"save_obj: {obj}")
         
         try:
-          if not config:
-              with open("data.pickle", "wb") as file:
-                  if remove:
-                      pickle.dump("", file)
+            if not config or remove:
+                with open("data.pickle", "wb") as file:
+                    if remove:
+                        pickle.dump("", file)
+                    
+                    else:
+                        pickle.dump(obj, file)
+                    
+            if config:        
+                with open("config.pickle", "wb") as file:
+                    if remove:
+                        pickle.dump("", file)
 
-                  else:
-                      pickle.dump(obj, file)
-          else:
-            with open("config.pickle", "wb") as file:
-              if remove:
-                pickle.dump("", file)
-
-              else:
-                pickle.dump(obj, file)
+                    else:
+                        pickle.dump(obj, file)
 
         except Exception as ex:
             print(f"Printing obj for debugging, object: {obj}")
@@ -451,13 +454,17 @@ class starting_phase(game):
         return None
         
 def start() -> bool:
+    #game.save_obj(remove=True, config=True)
     data = game.get_obj()
     config = game.get_obj(config=True)
+    print(f"data: {data}")
+    print(f"config: {config}")
     
-    return False if data == None else True if config["is_done_tutorial"] else False
+    return False if data == "" else config["is_done_tutorial"]
     
 def main():
     tut_bool = start()
+    print(f"what did we get: {tut_bool}")
     if not tut_bool:
         with starting_phase() as tut:
                   game.save_obj((tut[0]), (tut[1]))
@@ -466,9 +473,9 @@ def main():
     # else:
         
 if __name__ == "__main__":
-    main = game(hp=1000, xp_sys=[2, 1001], cc_weap="test")
-    main.main_attack()
+    main()
 # change variable names cause this will not work and be more specific
 # maybe make it like a dictionaey like {hp: (number)}
 # for inv it could also be the same {inv: self.inv}
 # pretty simple tbh
+# keyword args store it in a tuple
