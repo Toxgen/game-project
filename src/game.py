@@ -13,12 +13,6 @@ Add mana for wands and etc
 Add like a dictionary for if they have finished like the tutorial or something
 """
 
-potionD = {
-    "small_health_potion": (5, 5, "A small health potion, heals 5hp"), # hp+, buy, description
-    "medium_health_potion": (20, 10, "A medium health potion, heals 10hp"),
-    "large_health_potion": (30, 20, "A large health potion, heals for 30hp")
-}
-
 all_weapons = {
     "test": (100, None, None, "..."),
     # default
@@ -293,7 +287,6 @@ class game:
             
         mob, mobHp = mob_list[0], mob_list[1]
         mobAttk, mobDefe = [mob_list[2], mob_list[3]], mob_list[4]
-        mob = "goblin"
             
         print(f"Encountered '{mob}'! || Hp: {mobHp}, Attk: {mobAttk[0]} - {mobAttk[1]}, Def: {mobDefe}")
         print("Type attack to attack your opponent!")
@@ -463,3 +456,9 @@ if __name__ == "__main__":
 # for inv it could also be the same {inv: self.inv}
 # pretty simple tbh
 # keyword args store it in a tuple
+"""
+completly change how this works
+make this a class as a person
+then add other functions in other files in parent classes that does stuff
+dont forget that you can use class variables as like self.name -> game.name (game being class name)
+"""

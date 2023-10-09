@@ -27,9 +27,10 @@ __drop_data = {
 
 __possible_locations = (
         "woods", "ruins"
-) # ruins is just a placeholder i think
-#TODO: Implement all those variables into classes to make
-# it cleaner and make a main class so all of them, yes u get it
+) 
+class mob():
+    def __init__(self, name, drops, data):
+        self.name = 
 def drops(mob: str) -> list:
     """
     drops(mob)
