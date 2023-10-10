@@ -14,4 +14,4 @@ class Item():
 
 class Potion(Item):
     def use(self):
-        
+        pass

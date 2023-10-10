@@ -5,22 +5,13 @@ import signal
 import time as t
 from os import system
 
-import modules.tools as tool
+from . import tools as tool
 
 """
 Add something that allows the player to load or del save files
 Add mana for wands and etc
 Add like a dictionary for if they have finished like the tutorial or something
 """
-
-all_weapons = {
-    "test": (100, None, None, "..."),
-    # default
-    "fist": (2, None, None, "Your fist"), # [dmg+, buy, sell, description]
-    # goblin
-    "goblin_sword": (3, 10, 5, "A wooden, green sword carved by goblins")
-}
-
 all_armors = {
     # defualt
     "pants": (0, None, None, "A pair of pants"), # defense, sell, buy, description
@@ -44,7 +35,7 @@ class DelayedKeyboardInterrupt:
         if self.signal_received:
             self.old_handler(*self.signal_received)
         
-class game:
+class Game:
 
     @staticmethod
     def save_obj(*obj) -> None:
@@ -212,7 +203,7 @@ class game:
                 case "save":
                     os.system("cls")
                     data = [self.inv] # do something about this
-                    game.save_obj(data)
+                    Game.save_obj(data)
 
                 case "adv":
                     os.system("cls")
@@ -221,62 +212,6 @@ class game:
 
                 case _:
                     print("Please type in a allowed command", '\n')
-
-    def attk_RNGESUS(self, current_weapon: str, defe: int) -> list:
-        dice = r.randint(1, 12)
-        dice2 = dice
-        counter = 1.0
-        returning = None
-        print(f"defe: {defe}")
-        
-        if dice2 >= 11:
-            returning = [round(all_weapons.get(current_weapon)[0] ** 1.75 - defe) + 2, 1, dice]
-            if returning[0] <= -1:
-                returning[0] = 0
-                return returning 
-            else:
-                return returning
-            
-        while dice2 >= 6:
-            counter += 0.1
-            if dice2 == 6:
-                returning = [round(all_weapons.get(current_weapon)[0] ** counter - defe) + 1, 0, dice] 
-                if returning[0] <= -1:
-                    returning[0] = 0
-                    return returning 
-                else:
-                    return returning 
-    
-            dice2 -= 1
-
-        while dice2 <= 6:
-            counter -= 0.1
-            if dice2 == 6:
-                returning = [round(all_weapons.get(current_weapon)[0] ** counter - defe) - 1, 0, dice] 
-                if returning[0] <= -1:
-                    returning[0] = 0
-                    return returning 
-                else:
-                    return returning 
-            dice2 += 1
-
-    def defe_RNGESUS(self, attk: int, dice: int) -> list:
-        counter = 1.0
-        
-        if dice >= 11:
-            return [round((attk ** 0.6) - (self.defe + 2))]
-        
-        while dice >= 6:
-            counter -= 0.0325
-            if dice >= 6:
-                return [round((attk ** counter) - (1 + self.defe))]
-            dice -= 1
-
-        while dice < 6:
-            counter += 0.03
-            if dice < 6:
-                return [round((attk ** counter) - (self.defe - 1))]
-            dice += 1
                     
     def main_attack(self) -> None:
         crit = None
@@ -345,112 +280,9 @@ class game:
         self.inv = tool.insertingMobDrops(preinv, mob, self.inv)
         tool.printingDrops(preinv, mob)
         
-class starting_phase(game):
-    def __init__(self):
-        self.hp = 100
-        self.defe = 0
-        self.mob = "goblin"
-        self.inv = {}
-        self.location = "woods"
-    
-    def __enter__(self) -> tuple:
-        print("tutorial!!", "=========", sep='\n')
-        crit = None
-
-        mobHp = 20
-        mobAttk = "2 - 3"
-        mobDefe = 0
-
-        print(
-            f"Encountered 'Goblin'! || Hp: {mobHp}, Attk: {mobAttk}, Def: {mobDefe}, Level: 1")
-        print("Type attack to attack your opponent!")
-
-        maxHp = self.hp
-        maxMobHp = mobHp
-
-        while True:
-            try:
-                self.player_input = input('> ').lower()
-            except EOFError:
-                self.player_input = "attack"
-
-            if self.player_input in ["attack", "atk", "attk", "q"]:
-                os.system("cls")
-
-                attk = super().attk_RNGESUS("fist", mobDefe)
-                defe = super().defe_RNGESUS(r.randint(2, 5), attk[2])
-
-                mobHp -= attk[0]
-                crit = attk[1]
-                
-                self.hp -= defe[0]
-
-                if self.hp <= 0:
-                    quit("ERROR 1: Died unexpected")
-
-                if mobHp <= 0:
-                    break
-
-                else:
-                    print("+===========================+",
-                          f"% Rolled: {attk[2]}",
-                          f"- Lost: {defe[0]}hp", sep='\n')
-
-                if crit:
-                    print(f"CRIT! Dealt: {attk[0]}hp",
-                            f"Your Hp: {self.hp}/{maxHp}",
-                            f"Enemy Hp: {mobHp}/{maxMobHp}", 
-                            "+===========================+", 
-                            sep='\n')
-                    t.sleep(0.133)
-                    
-                else:
-                    print(f"+ Dealt: {attk[0]}hp",
-                            f"Your Hp: {self.hp}/{maxHp}",
-                            f"Enemy Hp: {mobHp}/{maxMobHp}", 
-                            "+===========================+", 
-                            sep='\n')
-                    t.sleep(0.133)
-            else:
-                print("Please type in attack", '\n')
-                continue
-
-        print("You have defeated the Goblin!")
-
-        preinv = tool.drops(self.mob)
-
-        tool.insertingMobDrops(preinv, "goblin")
-        print("+=====================+",
-              "You gained 4 xp!",
-              "+=====================+", sep="\n")
-        tool.printingDrops(preinv, "goblin")
-
-        return (self.hp, self.inv)
-              
-    def __exit__(self, *exc) -> None:
-        return None
-        
-def start() -> bool:
-    game.get_obj(remove=True)
-    data = game.get_obj()
-    config = game.get_obj(config=True)
-    print(f"data: {data}")
-    print(f"config: {config}")
-    
-    return False if data == "" else True#config["is_done_tutorial"]
-    
-def main():
-    tut_bool = start()
-    print(f"what did we get: {tut_bool}")
-    if not tut_bool:
-        with starting_phase() as tut:
-                  game.save_obj((tut[0]), (tut[1]))
-                  game.save_config(is_done_tutorial=True)
-                  main = game(hp=tut[0])
-    # else:
-        
 if __name__ == "__main__":
-    main()
+    main = Game(0)
+    print(main)
 # change variable names cause this will not work and be more specific
 # maybe make it like a dictionaey like {hp: (number)}
 # for inv it could also be the same {inv: self.inv}
@@ -460,5 +292,5 @@ if __name__ == "__main__":
 completly change how this works
 make this a class as a person
 then add other functions in other files in parent classes that does stuff
-dont forget that you can use class variables as like self.name -> game.name (game being class name)
+dont forget that you can use class variables as like self.name -> Game.name (Game being class name)
 """

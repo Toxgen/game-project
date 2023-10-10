@@ -28,9 +28,9 @@ __drop_data = {
 __possible_locations = (
         "woods", "ruins"
 ) 
-class mob():
-    def __init__(self, name, drops, data):
-        self.name = 
+# class mob():
+#     def __init__(self, name, drops, data):
+#         self.name = 
 def drops(mob: str) -> list:
     """
     drops(mob)
