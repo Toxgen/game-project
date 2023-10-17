@@ -1,6 +1,7 @@
 import random as r
-from all_data import Weapons
 
+# just do like Attacking. or whatever .current_weapon = blah blah
+# remove the class and throw the methods into the main function for the
 class Attacking():
     def __init__(self, current_weapon, defense):
         self.current_weapon = current_weapon
@@ -11,10 +12,10 @@ class Attacking():
         dice2 = dice
         counter = 1.0
         returning = None
-        print(f"defe: {self.defense}")
         
         if dice2 >= 11:
-            returning = [round(all_weapons.get(self.current_weapon)[0] ** 1.75 - self.defense) + 2, 1, dice]
+            returning = [round(self.current_weapon
+                               ** 1.75 - self.defense) + 2, 1, dice]
             if returning[0] <= -1:
                 returning[0] = 0
                 return returning 
@@ -24,7 +25,8 @@ class Attacking():
         while dice2 >= 6:
             counter += 0.1
             if dice2 == 6:
-                returning = [round(all_weapons.get(self.current_weapon)[0] ** counter - self.defense) + 1, 0, dice] 
+                returning = [round(self.current_weapon
+                             ** counter - self.defense) + 1, 0, dice] 
                 if returning[0] <= -1:
                     returning[0] = 0
                     return returning 
@@ -36,7 +38,8 @@ class Attacking():
         while dice2 <= 6:
             counter -= 0.1
             if dice2 == 6:
-                returning = [round(all_weapons.get(self.current_weapon)[0] ** counter - self.defense) - 1, 0, dice] 
+                returning = [round(self.current_weapon
+                                   ** counter - self.defense) - 1, 0, dice] 
                 if returning[0] <= -1:
                     returning[0] = 0
                     return returning 
@@ -53,7 +56,7 @@ class Attacking():
         while dice >= 6:
             counter -= 0.0325
             if dice >= 6:
-                return [round((attk ** counter) - (1 + self.defense))]
+                return [round((attk ** counter) - (self.defense + 1))]
             dice -= 1
 
         while dice < 6:

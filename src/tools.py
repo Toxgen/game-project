@@ -98,7 +98,7 @@ def printingInv(inv: dict) -> None:
     from time import sleep
 
     print("+========[page 0]=========+")
-    count = None
+    count = 0
     for count, i in enumerate(inv): 
 
         t.sleep(0.075)
@@ -169,7 +169,8 @@ def insertingMobDrops(preinv: list[str], mob: str, inv: list = []) -> list:
             continue
 
         if _mob_drop in inv:
-            indices = [index for index, sublist in enumerate(inv) if _mob_drop in sublist]
+            indices = [index for index, sublist in enumerate(inv)
+                       if _mob_drop in sublist]
             inv[indices[0]][1] += 1
 
         if _mob_drop not in inv:

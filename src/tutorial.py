@@ -2,8 +2,12 @@ import os
 import random
 import time
 
+from src.components.attacking import Attacking
+
+from src.components import attacking
+
 from . import tools as tool
-from components.attacking import Attacking
+
 
 def main_tutorial() -> (tuple | None):
 
@@ -11,7 +15,6 @@ def main_tutorial() -> (tuple | None):
     defense = 0
     mob = "goblin"
     inv = {}
-    location = "woods"
     crit = None
     mobHp = 20
     mobAttk = "2 - 3"
@@ -36,8 +39,8 @@ def main_tutorial() -> (tuple | None):
         if player_input in ["attack", "atk", "attk", "q"]:
             os.system("cls")
 
-            attk = Attacking.attk_RNGESUS("fist", mobdefense)
-            defense = Attacking.defense_RNGESUS(random.randint(2, 5), attk[2])
+            attk = attack.attk_RNGESUS("fist", mobdefense)
+            defense = attack.defense_RNGESUS(random.randint(2, 5), attk[2])
 
             mobHp -= attk[0]
             crit = attk[1]
@@ -74,7 +77,7 @@ def main_tutorial() -> (tuple | None):
             print("Please type in attack", '\n')
             continue
 
-    print("You have defeated the Goblin!")
+    print("You have defeated the %s!" % mob)
 
     preinv = tool.drops(mob)
 

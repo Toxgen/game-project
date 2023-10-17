@@ -1,5 +1,5 @@
+import json
 import os
-import pickle
 import random as r
 import signal
 import time as t
@@ -37,57 +37,78 @@ class DelayedKeyboardInterrupt:
         
 class Game:
 
-    @staticmethod
-    def save_obj(*obj) -> None:
+    def save_obj(self, config: bool = False, 
+                 remove: bool = False, *obj) -> None:
         
-        with open("save/data.pickle", "wb") as file:        
-            pickle.dump(obj, file)
-    
-    @staticmethod
-    def save_config(**obj) -> None:
-        
-        with open("save/config.pickle", "wb") as file:
-            pickle.dump(obj, file)
+        if config:
+            try:
+                __data = Game.get_obj(config=True)
+            except json.decoder.JSONDecodeError as j:
+                print("first time saving: inputting standard form. error -> %s" % j)
+                obj = {
+                    "tutorial_done": False,
+                    "is_attacking": False
+                }
+                
+            if remove:
+                obj = []
 
+            with open()
+
+        try:
+            __data = Game.get_obj()
+        except json.decoder.JSONDecodeError as j:
+            print("first time saving: inputting standard form. error -> %s" % j)
+            obj = {
+                hp: self.hp, defense: self.defense, gold: self.gold,
+                current_weapon: self.current_weapon, xp_stats: self.xp_sys,
+                inventory: self.inv
+                
+            }
+            
+            with open("save/data.json", "w") as file:        
+                json.dump(obj, file, indent=4)
+    
     @staticmethod
     def get_obj(remove=False, config=False):
         
         if not remove:
             if not config:
-                with open("save/data.pickle", "rb") as file:
-                    data = pickle.load(file)
+                with open("save/data.config", "rb") as file:
+                    data = json.load(file)
                     return data
               
             else:
-                with open("save/config.pickle", "rb") as file:
-                    data = pickle.load(file)
+                with open("save/config.config", "rb") as file:
+                    data = json.load(file)
                     return data
         else:
             with open("save/data.pickle", "wb") as file:
-                pickle.dump("", file)
+                json.dump("", file)
             with open("save/config.pickle", "wb") as file:
-                pickle.dump("", file)
+                json.dump("", file)
             
-    def __init__(self, hp, name=None, ccWeap="fist", gold: int = 0,
-                 xp_sys: list[int] = [1, 4], inv: list = [], location: str = "woods"):
+    def __init__(self, hp, ccWeap="fist", gold: int = 0,
+                 xp_sys: list[int] = [1, 4], inv: list = [], 
+                 location: str = "woods"):
         self.hp = hp
-        self.defe = 0
+        self.defense = 0
         self.gold = gold
         self.player_input = ''
         self.ccWeap = ccWeap
         self.xp_sys = xp_sys # [level, xp]
-        self.name = name
         self.inv = inv
         self.location = location
 
-    def xp(self) -> list: 
+    def xp(self) -> list[int]: 
         possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 15, 
                              16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 24, 24, 25, 25, 25, 26, 
                              26, 26, 27, 27, 27, 28, 28, 28, 29, 29, 30, 30, 30, 31, 31, 31, 
                              32, 32, 33, 33, 34, 34, 34, 35, 35, 36, 36, 37, 37, 38, 38, 39, 
                              39, 40, 40, 41, 41, 42, 42, 43, 44, 44, 44, 45, 46, 46, 47, 48, 
                              48, 48, 49, 50, 51, 51, 52, 53, 53, 54, 55, 56, 56, 57, 58, 59,
-                             60, 61, 62)
+                             60, 61, 62) # maybe do some math to figure this out rather than
+                            # a big list
         
         exp = self.xp_sys[1]
         level = self.xp_sys[0]
@@ -103,7 +124,6 @@ class Game:
                 
         self.xp_sys[1] = exp
         
-
         if level > self.xp_sys[0]:
             curMaxHp = (level * 5) + 100
             if level - 1 > self.xp_sys[0]:
@@ -121,56 +141,6 @@ class Game:
 
         return [self.xp_sys[0], self.xp_sys[1]]
             
-    def naming(self) -> (str | None):
-        special_chara = """~!@#$%^&*()_+`{|}[]\\:;<,>.?/*-'"="""
-
-        if self.name:
-            print("Rename?", "Type in { yes } or { no }", sep='\n')
-            while True:
-                self.player_input = input('> ')
-                if self.player_input.lower() == "yes":
-                    break
-                elif self.player_input.lower() == "no":
-                    self.player_input = True
-                    break
-                else:
-                    print("Please Type in { yes } or { no }", '\n')
-
-            if self.player_input:
-                return None
-
-        t.sleep(0.5)
-        print("Name?", "p.s. 1 - 12 characters long & no special characters", sep='\n')
-
-        while True:
-            self.name = input('> ').strip()
-            if 2 >= len(self.name) >= 13:
-                print("Retry", '\n')
-                continue
-                
-            else:
-                self.name.split()
-                for i in self.name:
-                    if self.name[i] in special_chara:
-                        print("No Special Characters", '\n')
-                        continue
-                        
-                t.sleep(0.22)
-                print("Are You Sure? { yes } or { no }")
-
-            while True:
-                self.player_input = input('> ').lower()
-                if self.player_input.strip() == "yes":
-                    t.sleep(0.3333)
-                    return str(self.name)
-                elif self.player_input == "no":
-                    self.name = ''
-                    print("Name?", sep='\n')
-                    break
-                else:
-                    print("Type in either { yes } or { no }")
-                    continue
-
     def help_ccmd(self) -> None:
         print("Type In { help } For Commands", "\n")
         t.sleep(0.5)
