@@ -5,7 +5,11 @@ import signal
 import time as t
 from os import system
 
-from . import tools as tool
+try:
+    import tools as tool
+
+except ModuleNotFoundError:
+    from . import tools as tool
 
 """
 Add something that allows the player to load or del save files
@@ -53,16 +57,17 @@ class Game:
             if remove:
                 obj = []
 
-            with open()
+        with open("save/data.json", "w") as file:        
+                json.dump(obj, file, indent=4)
 
         try:
             __data = Game.get_obj()
         except json.decoder.JSONDecodeError as j:
             print("first time saving: inputting standard form. error -> %s" % j)
             obj = {
-                hp: self.hp, defense: self.defense, gold: self.gold,
-                current_weapon: self.current_weapon, xp_stats: self.xp_sys,
-                inventory: self.inv
+                "hp": self.hp, "defense": self.defense, "gold": self.gold,
+                "current_weapon": self.current_weapon, "xp_stats": self.xp_sys,
+                "inventory": self.inv
                 
             }
             
@@ -100,7 +105,7 @@ class Game:
         self.inv = inv
         self.location = location
 
-    def xp(self) -> list[int]: 
+    def xp(self) -> list[int, int]: 
         possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 15, 
                              16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 24, 24, 25, 25, 25, 26, 
                              26, 26, 27, 27, 27, 28, 28, 28, 29, 29, 30, 30, 30, 31, 31, 31, 
@@ -186,6 +191,7 @@ class Game:
     def main_attack(self) -> None:
         crit = None
         mob_list = tool.returnMob(self.hp, self.location) # Woods for now, but implement a system later
+
         if not mob_list:
             print("It is not possible to attack here")
             return None
