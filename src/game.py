@@ -40,6 +40,24 @@ class DelayedKeyboardInterrupt:
             self.old_handler(*self.signal_received)
         
 class Game:
+    @staticmethod
+    def get_obj(remove=False, config=False):
+        
+        if not remove:
+            if not config:
+                with open("save/data.json", "rb") as file:
+                    data = json.load(file)
+                    return data
+              
+            else:
+                with open("save/config.json", "rb") as file:
+                    data = json.load(file)
+                    return data
+        else:
+            with open("save/config.json", "wb") as file:
+                json.dump([], file)
+            with open("save/config.json", "wb") as file:
+                json.dump([], file)
 
     def save_obj(self, config: bool = False, 
                  remove: bool = False, *obj) -> None:
@@ -74,25 +92,8 @@ class Game:
             with open("save/data.json", "w") as file:        
                 json.dump(obj, file, indent=4)
     
-    @staticmethod
-    def get_obj(remove=False, config=False):
-        
-        if not remove:
-            if not config:
-                with open("save/data.config", "rb") as file:
-                    data = json.load(file)
-                    return data
-              
-            else:
-                with open("save/config.config", "rb") as file:
-                    data = json.load(file)
-                    return data
-        else:
-            with open("save/data.pickle", "wb") as file:
-                json.dump("", file)
-            with open("save/config.pickle", "wb") as file:
-                json.dump("", file)
-            
+    def return_next_level(self):
+        return
     def __init__(self, hp, ccWeap="fist", gold: int = 0,
                  xp_sys: list[int] = [1, 4], inv: list = [], 
                  location: str = "woods"):
