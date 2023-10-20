@@ -2,9 +2,8 @@ import os
 import random
 import time
 
-from src.components.attacking import Attacking
-
 from src.components import attacking
+from src.components.attacking import Attacking
 
 from . import tools as tool
 

@@ -1,5 +1,6 @@
 import random as r
 
+
 # just do like Attacking. or whatever .current_weapon = blah blah
 # remove the class and throw the methods into the main function for the
 class Attacking():

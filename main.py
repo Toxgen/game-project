@@ -1,8 +1,9 @@
 from src.game import Game
 from src.tutorial import main_tutorial
 
+
 def start() -> bool:
-    Game.get_obj(remove=True)
+    # Game.get_obj(remove=True)
     data = Game.get_obj()
     config = Game.get_obj(config=True)
     print(f"data: {data}")
