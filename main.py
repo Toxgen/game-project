@@ -3,22 +3,22 @@ from src.tutorial import main_tutorial
 
 
 def start() -> bool:
-    # Game.get_obj(remove=True)
-    data = Game.get_obj()
-    config = Game.get_obj(config=True)
-    print(f"data: {data}")
-    print(f"config: {config}")
     
-    return False if data == "" else True#config["is_done_tutorial"]
+    config = Game.get_obj(config=True)
+    
+    return config["tutorial_done?"]
     
 def main():
     tut_bool = start()
     print(f"what did we get: {tut_bool}")
     if not tut_bool:
-        tut = main_tutorial()
-        Game.save_obj((tut[0]), (tut[1]))
-        Game.save_config(is_done_tutorial=True)
-        main = Game(hp=tut[0])
+        _tutorial_return: tuple[int, str] = main_tutorial()
+        entity = Game(100)
+        entity.hp = _tutorial_return[0]
+        entity.inv = _tutorial_return[1]
+        entity.tutorial_done = True
+        entity.save()
+       # Game.save_obj() 
     # else:
         
 if __name__ == "__main__":

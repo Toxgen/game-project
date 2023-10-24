@@ -1,9 +1,12 @@
 from .components.items import Armor, Consumable, Item, Weapons
 
+# might need to put this into the pyinstaller hidden files thingy !!
+
 # weapons
 # name, description, buy, sell, damage increase
 Fist = Weapons("Fist", "Your Fist", 0, 0, 2)
 Goblin_Sword = Weapons("Goblin_sword", "A green, wooden sword", 10, 5, 4)
+weapon_list = [Fist, Goblin_Sword]
 
 # Items
 # name, description, buy, sell, effect

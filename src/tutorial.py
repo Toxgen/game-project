@@ -2,13 +2,13 @@ import os
 import random
 import time
 
-from src.components import attacking
 from src.components.attacking import Attacking
+from src.constants import weapon_list
 
 from . import tools as tool
 
 
-def main_tutorial() -> (tuple | None):
+def main_tutorial() -> tuple:
 
     hp = 100
     defense = 0
@@ -17,13 +17,14 @@ def main_tutorial() -> (tuple | None):
     crit = None
     mobHp = 20
     mobAttk = "2 - 3"
-    mobdefense = 0
-    attack = Attacking("fist", defense)
+    mobDefense = 0
+    attack = Attacking(weapon_list[0], defense)
 
     print("tutorial!!", "=========", sep='\n')
 
     print(
-        f"Encountered 'Goblin'! || Hp: {mobHp}, Attk: {mobAttk}, Def: {mobdefense}, Level: 1")
+        f"Encountered 'Goblin'! || Hp: {mobHp}, Attk: {mobAttk}, Def: {mobDefense}, Level: 1"
+    )
     print("Type attack to attack your opponent!")
 
     maxHp = hp
@@ -35,15 +36,15 @@ def main_tutorial() -> (tuple | None):
         except EOFError:
             player_input = "attack"
 
-        if player_input in ["attack", "atk", "attk", "q"]:
+        if player_input in ["attack", "attk", "q"]:
             os.system("cls")
 
-            attk = attack.attk_RNGESUS("fist", mobdefense)
+            attk = attack.attack_RNGESUS()
             defense = attack.defense_RNGESUS(random.randint(2, 5), attk[2])
 
             mobHp -= attk[0]
             crit = attk[1]
-            
+
             hp -= defense[0]
 
             if hp <= 0:
@@ -54,23 +55,24 @@ def main_tutorial() -> (tuple | None):
 
             else:
                 print("+===========================+",
-                        f"% Rolled: {attk[2]}",
-                        f"- Lost: {defense[0]}hp", sep='\n')
+                      f"% Rolled: {attk[2]}",
+                      f"- Lost: {defense[0]}hp",
+                      sep='\n')
 
             if crit:
                 print(f"CRIT! Dealt: {attk[0]}hp",
-                        f"Your Hp: {hp}/{maxHp}",
-                        f"Enemy Hp: {mobHp}/{maxMobHp}", 
-                        "+===========================+", 
-                        sep='\n')
+                      f"Your Hp: {hp}/{maxHp}",
+                      f"Enemy Hp: {mobHp}/{maxMobHp}",
+                      "+===========================+",
+                      sep='\n')
                 time.sleep(0.133)
-                
+
             else:
                 print(f"+ Dealt: {attk[0]}hp",
-                        f"Your Hp: {hp}/{maxHp}",
-                        f"Enemy Hp: {mobHp}/{maxMobHp}", 
-                        "+===========================+", 
-                        sep='\n')
+                      f"Your Hp: {hp}/{maxHp}",
+                      f"Enemy Hp: {mobHp}/{maxMobHp}",
+                      "+===========================+",
+                      sep='\n')
                 time.sleep(0.133)
         else:
             print("Please type in attack", '\n')
@@ -82,11 +84,13 @@ def main_tutorial() -> (tuple | None):
 
     tool.insertingMobDrops(preinv, "goblin")
     print("+=====================+",
-            "You gained 4 xp!",
-            "+=====================+", sep="\n")
+          "You gained 4 xp!",
+          "+=====================+",
+          sep="\n")
     tool.printingDrops(preinv, "goblin")
 
     return (hp, inv)
+
 
 if __name__ == "__main__":
     main_tutorial()

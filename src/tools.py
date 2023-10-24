@@ -31,7 +31,7 @@ __possible_locations = (
 # class mob():
 #     def __init__(self, name, drops, data):
 #         self.name = 
-def drops(mob: str) -> list:
+def drops(mob: str) -> list[str]:
     """
     drops(mob)
     mob: mob that is being faced
@@ -59,7 +59,7 @@ def drops(mob: str) -> list:
           
     return returning
               
-def printingDrops(preinv: list[str], mob):
+def printingDrops(preinv: list[str], mob) -> None:
     """
     print em drops
     (the counted drop list, self.mob)
@@ -87,6 +87,7 @@ def printingDrops(preinv: list[str], mob):
         t.sleep(0.33)
 
     print("+=======================+")
+    return None
 
 def printingInv(inv: dict) -> None:
     """
@@ -120,6 +121,7 @@ def printingInv(inv: dict) -> None:
             
     if count % 8 != 0 or len(inv) == count + 1:
         print("+==========[end]==========+")
+        return None
         
 def returnMob(hp: int, location: str) -> (list | None):
     import random as r
@@ -155,30 +157,29 @@ def returnMob(hp: int, location: str) -> (list | None):
             return __wood_mobs(chance=x)
             
         case _:
-            raise Exception("ERROR 1: MissType")
+            raise Exception("something went wrong")
         
-def insertingMobDrops(preinv: list[str], mob: str, inv: list = []) -> list:
+def insertingMobDrops(preinv: list[str], mob: str, inv: list = {}) -> list:
 
     for thing in __mob_drops[mob]: 
         drop_index = __mob_drops[mob].index(thing)
         _mob_drop = __mob_drops[mob][drop_index]
+        check = [item for item in preinv if item == _mob_drop]
 
         if _mob_drop not in inv and _mob_drop in preinv:
-            check = [item for item in preinv if item == _mob_drop]
-            inv.append([_mob_drop, len(check)])
+            inv[_mob_drop] = len(check)
             continue
 
         if _mob_drop in inv:
-            indices = [index for index, sublist in enumerate(inv)
-                       if _mob_drop in sublist]
-            inv[indices[0]][1] += 1
+            inv[_mob_drop] += len(check) 
+            continue
+                
 
         if _mob_drop not in inv:
             continue
 
         else:
-            quit("""Error has occured:
-                 hint: I don't have a hint, this seriously shouldn't happen""")
+            raise Exception("This really shouldn't happen")
             
     return inv
 

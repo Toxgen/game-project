@@ -26,6 +26,7 @@ all_armors = {
 class DelayedKeyboardInterrupt:
 
     # To stop keyboard interruptions during saving files
+    #this is not necessary
 
     def __enter__(self):
         self.signal_received = False
@@ -40,73 +41,112 @@ class DelayedKeyboardInterrupt:
             self.old_handler(*self.signal_received)
         
 class Game:
+    
     @staticmethod
-    def get_obj(remove=False, config=False):
-        
-        if not remove:
-            if not config:
-                with open("save/data.json", "rb") as file:
-                    data = json.load(file)
-                    return data
-              
-            else:
-                with open("save/config.json", "rb") as file:
-                    data = json.load(file)
-                    return data
-        else:
-            with open("save/config.json", "wb") as file:
-                json.dump([], file)
-            with open("save/config.json", "wb") as file:
-                json.dump([], file)
-
-    def save_obj(self, config: bool = False, 
-                 remove: bool = False, *obj) -> None:
+    def get_obj(config=False):
         
         if config:
             try:
-                __data = Game.get_obj(config=True)
+                with open("save/config.json") as file:
+                    data = json.load(file)
+
             except json.decoder.JSONDecodeError as j:
                 print("first time saving: inputting standard form. error -> %s" % j)
                 obj = {
-                    "tutorial_done": False,
-                    "is_attacking": False
+                    "tutorial_done?": False,
+                    "is_attacking?": False
                 }
+                    
+                with open("save/config.json", "w") as file:        
+                    json.dump(obj, file, indent=4)
+                        
+                return obj
+              
+        else:
+            try:
+                with open("save/data.json") as file:
+                    data = json.load(file)
+
+            except json.decoder.JSONDecodeError as j:
+                print("first time saving: inputting standard form. error -> %s" % j)
+                obj = {
+                    "hp": 0, "gold": 0,
+                    "current_weapon": "", "level": 0,
+                    "experience": 0,
+                    "inventory": [
+                        "", ""
+                    ]
+                }
+
+                with open("save/data.json", "w") as file:        
+                    json.dump(obj, file, indent=4)
+
+                return obj
                 
-            if remove:
-                obj = []
+        return data
 
-        with open("save/data.json", "w") as file:        
-                json.dump(obj, file, indent=4)
-
-        try:
-            __data = Game.get_obj()
-        except json.decoder.JSONDecodeError as j:
-            print("first time saving: inputting standard form. error -> %s" % j)
+    def save_obj(self,
+                 config: bool = False, 
+                 remove: bool = False) -> None:
+        
+        if remove and config:
             obj = {
-                "hp": self.hp, "defense": self.defense, "gold": self.gold,
-                "current_weapon": self.current_weapon, "xp_stats": self.xp_sys,
-                "inventory": self.inv
-                
+                "tutorial_done?": False,
+                "is_attacking?": False
             }
+        elif remove:
+            obj = {
+                "hp": 0, "gold": 0,
+                "current_weapon": "", "level": 0,
+                "experience": 0,
+                "inventory": [
+                    "", ""
+                ]
+            }
+            
+        else:
+            obj = {
+                "hp": self.hp, "gold": self.gold,
+                "current_weapon": self.current_weapon, "level": self.level,
+                "experience": self.experience,
+                "inventory": [
+                    "", ""
+                ]
+            }
+            
+            
+        if config:
+
+            with open("save/config.json", "w") as file:        
+                json.dump(obj, file, indent=4)
+                
+        else:          
             
             with open("save/data.json", "w") as file:        
                 json.dump(obj, file, indent=4)
     
     def return_next_level(self):
         return
-    def __init__(self, hp, ccWeap="fist", gold: int = 0,
-                 xp_sys: list[int] = [1, 4], inv: list = [], 
+    
+    def __init__(self, hp: int, 
+                 currentWeapon: str = "fist", 
+                 gold: int = 0,
+                 level: int = 0,
+                 experience: int = 4,
+                 inv: list = [], 
                  location: str = "woods"):
+
         self.hp = hp
         self.defense = 0
         self.gold = gold
         self.player_input = ''
-        self.ccWeap = ccWeap
-        self.xp_sys = xp_sys # [level, xp]
+        self.currentWeapon = currentWeapon
+        self.level = level
+        self.experience = experience
         self.inv = inv
         self.location = location
 
-    def xp(self) -> list[int, int]: 
+    def xp(self) -> None: 
         possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 15, 
                              16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 24, 24, 25, 25, 25, 26, 
                              26, 26, 27, 27, 27, 28, 28, 28, 29, 29, 30, 30, 30, 31, 31, 31, 
@@ -116,9 +156,9 @@ class Game:
                              60, 61, 62) # maybe do some math to figure this out rather than
                             # a big list
         
-        exp = self.xp_sys[1]
-        level = self.xp_sys[0]
-        pre_hp = (self.xp_sys[0] * 5) + 100
+        exp = self.experience
+        level = self.level
+        pre_hp = (self.level * 5) + 100
 
         for x in possible_XPlevels[level:]:
             if exp >= x:
@@ -128,24 +168,23 @@ class Game:
             else:
                 break
                 
-        self.xp_sys[1] = exp
+        self.experience = exp
         
-        if level > self.xp_sys[0]:
+        if level > self.level:
             curMaxHp = (level * 5) + 100
-            if level - 1 > self.xp_sys[0]:
-                print(f"Congrats! You gained {level - self.xp_sys[0]} levels")
+            if level - 1 > level:
+                print(f"Congrats! You gained {level - self.level} levels")
                 print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
                 self.hp = curMaxHp
-                print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}xp")
+                print(f"Next level at {self.experience}/{possible_XPlevels[level]}xp")
             else:
-                print(f"Congrats! You gained {level - self.xp_sys[0]} level")
+                print(f"Congrats! You gained {level - self.level} level")
                 print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
                 self.hp = curMaxHp
-                print(f"Next level at {self.xp_sys[1]}/{possible_XPlevels[level]}xp")
+                print(f"Next level at {self.experience}/{possible_XPlevels[level]}xp")
 
-        self.xp_sys[0] = level
-
-        return [self.xp_sys[0], self.xp_sys[1]]
+        self.level = level
+        return None
             
     def help_ccmd(self) -> None:
         print("Type In { help } For Commands", "\n")
@@ -176,11 +215,6 @@ class Game:
                     os.system("cls")
                     tool.printingInv(self.inv)
 
-                case "save":
-                    os.system("cls")
-                    data = [self.inv] # do something about this
-                    Game.save_obj(data)
-
                 case "adv":
                     os.system("cls")
                     self.main_attack()
@@ -188,6 +222,8 @@ class Game:
 
                 case _:
                     print("Please type in a allowed command", '\n')
+                    
+        return None
                     
     def main_attack(self) -> None:
         crit = None
