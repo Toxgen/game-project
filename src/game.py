@@ -124,17 +124,19 @@ class Game:
             
             with open("save/data.json", "w") as file:        
                 json.dump(obj, file, indent=4)
-    
+    """
     def return_next_level(self):
         return
+    """
     
     def __init__(self, hp: int, 
                  currentWeapon: str = "fist", 
                  gold: int = 0,
                  level: int = 0,
                  experience: int = 4,
-                 inv: list = [], 
-                 location: str = "woods"):
+                 inv: list = [], # plan to change this into a dictionary
+                 location: str = "woods",
+                 config: dict = {}):
 
         self.hp = hp
         self.defense = 0

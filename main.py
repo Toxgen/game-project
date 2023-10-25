@@ -16,9 +16,8 @@ def main():
         entity = Game(100)
         entity.hp = _tutorial_return[0]
         entity.inv = _tutorial_return[1]
-        entity.tutorial_done = True
-        entity.save()
-       # Game.save_obj() 
+        #entity.tutorial_done = True
+        entity.save_obj(config=True)
     # else:
         
 if __name__ == "__main__":
