@@ -98,14 +98,15 @@ def printingInv(inv: dict) -> None:
     import time as t
     from time import sleep
 
-    print("+========[page 0]=========+")
+    print("+========[page 0]=========+") # change this to incorporate a dictionary cause thi
+    #s doesn't woek
     count = 0
-    for count, i in enumerate(inv): 
+    for count, (key, value) in enumerate(inv.items()): 
 
         t.sleep(0.075)
 
         if count % 8 != 0 or count == 0:
-            print(f"+ {i[1]} x {i[0]}")
+            print(f"+ {key} x {value}", end='\n')
         
         else:
             if len(inv) == count + 1:
@@ -123,7 +124,7 @@ def printingInv(inv: dict) -> None:
         print("+==========[end]==========+")
         return None
         
-def returnMob(hp: int, location: str) -> (list | None):
+def returnMob(hp: int, location: str) -> list:
     import random as r
     from random import randint
     
@@ -142,9 +143,7 @@ def returnMob(hp: int, location: str) -> (list | None):
         
         _index = 0 if chance < 4 else 1    
         _index = 2 if chance < 12 else 0
-        
-        print(f"chance: {chance}")
-            
+         
         return [__mob_data[_index][0],  
                 __mob_data[_index][1] * (1 + _hp_multi),
                 __mob_data[_index][2] * (1 + _attk_multi),
@@ -159,7 +158,7 @@ def returnMob(hp: int, location: str) -> (list | None):
         case _:
             raise Exception("something went wrong")
         
-def insertingMobDrops(preinv: list[str], mob: str, inv: list = {}) -> list:
+def insertingMobDrops(preinv: list[str], mob: str, inv: list = {}) -> dict:
 
     for thing in __mob_drops[mob]: 
         drop_index = __mob_drops[mob].index(thing)
@@ -173,7 +172,6 @@ def insertingMobDrops(preinv: list[str], mob: str, inv: list = {}) -> list:
         if _mob_drop in inv:
             inv[_mob_drop] += len(check) 
             continue
-                
 
         if _mob_drop not in inv:
             continue
