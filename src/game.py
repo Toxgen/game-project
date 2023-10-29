@@ -23,23 +23,6 @@ all_armors = {
     "goblin_chestplate": (1, None, None, "Green chestplate")
 }
 
-class DelayedKeyboardInterrupt:
-
-    # To stop keyboard interruptions during saving files
-    #this is not necessary
-
-    def __enter__(self):
-        self.signal_received = False
-        self.old_handler = signal.signal(signal.SIGINT, self.handler)
-                
-    def handler(self, sig, frame):
-        self.signal_received = (sig, frame)
-    
-    def __exit__(self, type, value, traceback):
-        signal.signal(signal.SIGINT, self.old_handler)
-        if self.signal_received:
-            self.old_handler(*self.signal_received)
-        
 class Game:
     
     @staticmethod
@@ -86,44 +69,47 @@ class Game:
         return data
 
     def save_obj(self,
-                 config: bool = False, 
-                 remove: bool = False) -> None:
+                 config: bool = False,
+                 both: bool = False) -> None:
         
-        if remove and config:
+        if both and config:
+            raise Exception("code better")
+        
+        #------------------------------#
+        if both:
             obj = {
-                "tutorial_done?": False,
-                "is_attacking?": False
+                "hp": self.hp, "gold": self.gold,
+                "current_weapon": self.currentWeapon, "level": self.level,
+                "experience": self.experience,
+                "inventory": self.inv
             }
-        elif remove:
-            obj = {
-                "hp": 0, "gold": 0,
-                "current_weapon": "", "level": 0,
-                "experience": 0,
-                "inventory": [
-                    "", ""
-                ]
-            }
+
+            with open("save/data.json", "w") as file:        
+                json.dump(obj, file, indent=4)
+            
+            obj = self.config
+
+            with open("save/config.json", "w") as file:        
+                    json.dump(obj, file, indent=4)
+
+            return None
+        #------------------------------#   
+
+        if config:
+            obj = self.config
+            with open("save/config.json", "w") as file:        
+                json.dump(obj, file, indent=4)
             
         else:
             obj = {
                 "hp": self.hp, "gold": self.gold,
                 "current_weapon": self.currentWeapon, "level": self.level,
                 "experience": self.experience,
-                "inventory": [
-                    "", ""
-                ]
+                "inventory": self.inv
             }
-            
-            
-        if config:
-
-            with open("save/config.json", "w") as file:        
-                json.dump(obj, file, indent=4)
-                
-        else:          
-            
             with open("save/data.json", "w") as file:        
-                json.dump(obj, file, indent=4)
+                json.dump(obj, file, indent=4) 
+
     """
     def return_next_level(self):
         return
@@ -136,7 +122,10 @@ class Game:
                  experience: int = 4,
                  inv: list = [], # plan to change this into a dictionary
                  location: str = "woods",
-                 config: dict = {}):
+                 config: dict = {
+                    "tutorial_done?": False,
+                    "is_attacking?": False
+                }):
 
         self.hp = hp
         self.defense = 0

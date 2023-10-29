@@ -1,4 +1,4 @@
 {
-  "tutorial_done?": false,
-  "is_attacking?": false
+    "tutorial_done?": true,
+    "is_attacking?": false
 }
