@@ -98,8 +98,7 @@ def printingInv(inv: dict) -> None:
     import time as t
     from time import sleep
 
-    print("+========[page 0]=========+") # change this to incorporate a dictionary cause thi
-    #s doesn't woek
+    print("+========[page 0]=========+")
     count = 0
     for count, (key, value) in enumerate(inv.items()): 
 
@@ -158,7 +157,7 @@ def returnMob(hp: int, location: str) -> list:
         case _:
             raise Exception("something went wrong")
         
-def insertingMobDrops(preinv: list[str], mob: str, inv: list = {}) -> dict:
+def insertingMobDrops(preinv: list[str], mob: str, inv: dict = {}) -> dict:
 
     for thing in __mob_drops[mob]: 
         drop_index = __mob_drops[mob].index(thing)

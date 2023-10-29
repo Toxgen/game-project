@@ -107,7 +107,7 @@ class Game:
         else:
             obj = {
                 "hp": self.hp, "gold": self.gold,
-                "current_weapon": self.current_weapon, "level": self.level,
+                "current_weapon": self.currentWeapon, "level": self.level,
                 "experience": self.experience,
                 "inventory": [
                     "", ""
@@ -147,6 +147,7 @@ class Game:
         self.experience = experience
         self.inv = inv
         self.location = location
+        self.config = config
 
     def xp(self) -> None: 
         possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 15, 
@@ -197,7 +198,7 @@ class Game:
             match self.player_input:
 
                 case "help":
-                    os.system("cls")
+                    os.system("clear")
                     print("""The Following Commands Are:
 
                         'Stats': To show your stats
@@ -209,16 +210,16 @@ class Game:
                     continue
 
                 case "stats":
-                    os.system("cls")
+                    os.system("clear")
                     print("WIP")
                     break
 
                 case "inv":
-                    os.system("cls")
+                    os.system("clear")
                     tool.printingInv(self.inv)
 
                 case "adv":
-                    os.system("cls")
+                    os.system("clear")
                     self.main_attack()
                     break
 
@@ -247,7 +248,7 @@ class Game:
         while True:
             self.player_input = input('> ').lower()
             if self.player_input in ["attack", "atk", "attk", "q"]:
-                # os.system("cls")
+                os.system("cls")
 
                 attk = self.attk_RNGESUS(self.ccWeap, mobDefe)
                 print(f"attk: {attk}")
