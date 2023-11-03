@@ -214,4 +214,4 @@ def insertingMobDrops(preinv: list[str], mob: str, inv: dict = {}) -> dict:
 
 
 if __name__ == '__main__':
-    pass
+    print("very cool coding thing")
