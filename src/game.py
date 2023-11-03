@@ -237,7 +237,7 @@ class Game:
         while True:
             self.player_input = input('> ').lower()
             if self.player_input in ["attack", "atk", "attk", "q"]:
-                os.system("cls")
+                os.system("clear")
 
                 attk = self.attk_RNGESUS(self.ccWeap, mobDefe)
                 print(f"attk: {attk}")

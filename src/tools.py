@@ -1,10 +1,11 @@
-__mob_data = [ 
+
+__mob_data = (
     # woods [0][0 - 2]
     ("goblin", 8, 2, 3, 1, None), # name, health, r-attk1, r-attk2, defense, s-effect
     ("slime", 12, 3, 4, 3, None),
     ("wolf", 7, 5, 7, 2, None)
     # plains [1][0 - ?]
-]
+)
 
 __mob_drops = {
     "goblin": ("goblin_hide", "goblin_leg", "goblin_sword", "goblin_staff", 
@@ -14,9 +15,6 @@ __mob_drops = {
 # maybe add orc
 }
 
-__possible_mobs = [
-    "goblin", "slime", "wolf"
-]
 
 __drop_data = {
     "goblin": (("goblin_hide", 25), ("goblin_leg", 12), 
@@ -28,9 +26,43 @@ __drop_data = {
 __possible_locations = (
         "woods", "ruins"
 ) 
-# class mob():
-#     def __init__(self, name, drops, data):
-#         self.name = 
+class Mob():
+
+    armorDefBonus = (
+        "",
+    )
+
+    def __init__(self, 
+                 name: str, 
+                 drops: tuple, 
+                 stats: tuple) -> None:
+        
+        self.name = name
+        self.drops = drops
+        self.stats = stats
+        
+    def returnArmorBonus(self) -> tuple[int]:
+        pass
+
+    def foo(self, 
+            heatlh: int = 0) -> tuple[int]:
+        pass
+"""
+USE THESE CLASSES TO BLIT OBJECTS WHEN I LEARN PYGAME
+"""
+class Goblin(Mob):
+    def __init__(self, 
+                 name: str, 
+                 drops: tuple, 
+                 stats: tuple) -> None:
+        super().__init__(name, drops, stats)
+
+class Slime(Mob):
+    def __init__(self, 
+                name: str, 
+                drops: tuple, 
+                stats: tuple) -> None:
+        super().__init__(name, drops, stats)
 def drops(mob: str) -> list[str]:
     """
     drops(mob)
