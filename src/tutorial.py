@@ -1,11 +1,24 @@
 import os
 import random
 import time
+import pygame
+import sys
+try:
+    from src.components.attacking import Attacking
+    from src.constants import weapon_list
 
-from src.components.attacking import Attacking
-from src.constants import weapon_list
+except ModuleNotFoundError:
+    from .components import attacking
+    from . import constants
+    from constants import weapon_list # i absolutely do not understand relative improi joej cirothf
 
 from . import tools as tool
+
+pygame.init()
+screen = pygame.display.set_mode((600, 500))
+pygame.display.set_caption('Game?')
+
+clock = pygame.time.Clock()
 
 
 def main_tutorial() -> tuple:
@@ -31,6 +44,14 @@ def main_tutorial() -> tuple:
     maxMobHp = mobHp
 
     while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+                
+        pygame.display.update()
+        clock.tick(60)
+
         try:
             player_input = input('> ').lower()
         except EOFError:
@@ -91,6 +112,5 @@ def main_tutorial() -> tuple:
 
     return (hp, inv)
 
-
 if __name__ == "__main__":
-    main_tutorial()
+    main_tutorial() 

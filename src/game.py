@@ -1,5 +1,6 @@
 import json
 import os
+import pygame
 import random as r
 import signal
 import time as t
@@ -288,14 +289,3 @@ class Game:
 if __name__ == "__main__":
     main = Game(0)
     print(main)
-# change variable names cause this will not work and be more specific
-# maybe make it like a dictionaey like {hp: (number)}
-# for inv it could also be the same {inv: self.inv}
-# pretty simple tbh
-# keyword args store it in a tuple
-"""
-completly change how this works
-make this a class as a person
-then add other functions in other files in parent classes that does stuff
-dont forget that you can use class variables as like self.name -> Game.name (Game being class name)
-"""

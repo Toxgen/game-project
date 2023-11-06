@@ -1,5 +1,5 @@
-import random as r
-
+import random
+from random import randint
 
 class Attacking():
     def __init__(self, current_weapon, defense):
@@ -7,7 +7,7 @@ class Attacking():
         self.defense = defense
 
     def attack_RNGESUS(self) -> list[int]:
-        dice = r.randint(1, 12)
+        dice = random.randint(1, 12)
         dice2 = dice
         counter = 1.0
         returning = [0]
