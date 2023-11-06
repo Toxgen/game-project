@@ -1,3 +1,8 @@
+import pygame
+import random
+from random import randint
+import time
+from time import sleep
 
 __mob_data = (
     # woods [0][0 - 2]
@@ -38,11 +43,11 @@ class Mob():
                  stats: tuple) -> None:
         
         self.name = name
-        self.drops = drops
-        self.stats = stats
+        self.drops = drops # dros (self explantory)
+        self.stats = stats # name, health, r-attk1, r-attk2, defense, s-effect
         
     def returnArmorBonus(self) -> tuple[int]:
-        pass
+       return 
 
     def foo(self, 
             heatlh: int = 0) -> tuple[int]:
@@ -63,18 +68,16 @@ class Slime(Mob):
                 drops: tuple, 
                 stats: tuple) -> None:
         super().__init__(name, drops, stats)
-def drops(mob: str) -> list[str]:
+
+def drops(mob: str) -> tuple[str]:
     """
     drops(mob)
     mob: mob that is being faced
     """
 
-    import random as r
-    from random import randint
+    luck = random.randint(0, 6)
 
-    luck = r.randint(0, 6)
-
-    returning = []
+    returning = ()
 
     for counter, (key, value) in enumerate(__drop_data[mob]):
 
@@ -84,7 +87,7 @@ def drops(mob: str) -> list[str]:
         if counter >= luck:
             break
           
-        x = r.randint(0, 150) if len(returning) >= 3 else r.randint(0, 100)
+        x = random.randint(0, 150) if len(returning) >= 3 else random.randint(0, 100)
 
         if x <= value:
             returning.append(key)
@@ -96,9 +99,6 @@ def printingDrops(preinv: list[str], mob) -> None:
     print em drops
     (the counted drop list, self.mob)
     """
-
-    import time as t
-    from time import sleep
 
     for q, x in enumerate(__mob_drops[mob]):
 
@@ -116,7 +116,7 @@ def printingDrops(preinv: list[str], mob) -> None:
         else:
             print(f"Earned {len(_amount)} {x}")
 
-        t.sleep(0.33)
+        time.sleep(0.33)
 
     print("+=======================+")
     return None
@@ -127,14 +127,11 @@ def printingInv(inv: dict) -> None:
     (the inventory)
     """
 
-    import time as t
-    from time import sleep
-
     print("+========[page 0]=========+")
     count = 0
     for count, (key, value) in enumerate(inv.items()): 
 
-        t.sleep(0.075)
+        time.sleep(0.075)
 
         if count % 8 != 0 or count == 0:
             print(f"+ {key} x {value}", end='\n')
@@ -148,16 +145,13 @@ def printingInv(inv: dict) -> None:
             _check = int(count / 8)
             if len(inv) == count + 1:
                 break
-            print("\n")
-            print(f"+========[page {_check}]=========+")
+            print("\n", f"+========[page {_check}]=========+")
             
     if count % 8 != 0 or len(inv) == count + 1:
         print("+==========[end]==========+")
         return None
         
 def returnMob(hp: int, location: str) -> list:
-    import random as r
-    from random import randint
     
     if location not in __possible_locations:
         return None
@@ -183,7 +177,7 @@ def returnMob(hp: int, location: str) -> list:
     
     match location:
         case "woods":
-            x = r.randint(0, 20)
+            x = random.randint(0, 20)
             return __wood_mobs(chance=x)
             
         case _:
@@ -214,4 +208,4 @@ def insertingMobDrops(preinv: list[str], mob: str, inv: dict = {}) -> dict:
 
 
 if __name__ == '__main__':
-    print("very cool coding thing")
+    pass
