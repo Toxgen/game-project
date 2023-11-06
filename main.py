@@ -20,6 +20,9 @@ def main():
         entity.inv = _tutorial_return[1]
         entity.config["tutorial_done?"] = True
         entity.save_obj(both=True)
+
+    else:
+        _stuff = Game.get_obj()
         
 if __name__ == "__main__":
     main()
