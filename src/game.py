@@ -123,10 +123,7 @@ class Game:
                  experience: int = 4,
                  inv: list = [], # plan to change this into a dictionary
                  location: str = "woods",
-                 config: dict = {
-                    "tutorial_done?": False,
-                    "is_attacking?": False
-                }):
+                 config: dict = Game.get_obj(config)): # can u do this?
 
         self.hp = hp
         self.defense = 0
@@ -137,7 +134,7 @@ class Game:
         self.experience = experience
         self.inv = inv
         self.location = location
-        self.config = config
+        self.config = config# or do smth like if config == false or whatever
 
     def xp(self) -> None: 
         possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 15, 
