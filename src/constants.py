@@ -1,4 +1,4 @@
-from .components.items import Armor, Consumable, Item, Weapons
+from components.items import Armor, Consumable, Item, Weapons
 
 # might need to put this into the pyinstaller hidden files thingy !!
 

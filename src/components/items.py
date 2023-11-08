@@ -15,13 +15,14 @@ class Item():
         self.buyCost = buyCost
         self.sellCost = sellCost
 
-    def sell(self, location) -> (False | None):
+    def sell(self, location) -> (True | False):
         if location not in Item._possible_locations:
             return False
 
-    def buy(self, location) -> (False | None):
+    def buy(self, location) -> (True | False):
        if location not in Item._possible_locations:
            return False
+       
            
 class Armor(Item):
     def __init__(self, name, description, buy, sell):
@@ -38,8 +39,9 @@ class Armor(Item):
         # a method to find the bonus of all the armors
 
 class Consumable(Item):
-    def __init__(self, name, description, buy, sell):
+    def __init__(self, name, description, buy, sell, effect):
         super().__init__(name, description, buy, sell)
+        self.effect = effect # increased hp or mana
         
 class Weapons(Item):
     def __init__(self, name, description, buy, sell, damage):

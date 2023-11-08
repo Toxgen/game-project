@@ -3,16 +3,11 @@ import random
 import time
 import pygame
 import sys
-try:
-    from src.components.attacking import Attacking
-    from src.constants import weapon_list
+from components.attacking import Attacking
+from constants import weapon_list
+import tools as tool # make them into src.-> whatever after testing
 
-except ModuleNotFoundError:
-    from .components import attacking
-    from . import constants
-    from constants import weapon_list # i absolutely do not understand relative improi joej cirothf
-
-from . import tools as tool
+    
 
 pygame.init()
 screen = pygame.display.set_mode((600, 500))
