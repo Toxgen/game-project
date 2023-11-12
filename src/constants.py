@@ -1,6 +1,8 @@
 from components.items import Armor, Consumable, Item, Weapons
 
-# might need to put this into the pyinstaller hidden files thingy !!
+# pygame constants
+X_pos = 600
+Y_pos = 500
 
 # weapons
 # name, description, buy, sell, damage increase
