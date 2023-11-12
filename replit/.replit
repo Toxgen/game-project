@@ -1,4 +1,4 @@
-entrypoint = "main.py"
+entrypoint = "src/tools.py"
 modules = ["python-3.10:v18-20230807-322e88b"]
 
 hidden = [".pythonlibs"]
@@ -7,5 +7,5 @@ hidden = [".pythonlibs"]
 channel = "stable-23_05"
 
 [deployment]
-run = ["python3", "main.py"]
+run = ["python3", "src/tools.py"]
 deploymentTarget = "cloudrun"
