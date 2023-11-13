@@ -69,7 +69,7 @@ class Slime(Mob):
                 stats: tuple) -> None:
         super().__init__(name, drops, stats)
 
-def drops(mob: str) -> tuple[str]:
+def drops(mob: str) -> list[str]:
     """
     drops(mob)
     mob: mob that is being faced
@@ -77,7 +77,7 @@ def drops(mob: str) -> tuple[str]:
 
     luck = random.randint(0, 6)
 
-    returning = ()
+    returning = []
 
     for counter, (key, value) in enumerate(__drop_data[mob]):
 
