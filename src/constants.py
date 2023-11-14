@@ -1,8 +1,8 @@
 from components.items import Armor, Consumable, Item, Weapons
-
+from typing import Final
 # pygame constants
-X_pos = 600
-Y_pos = 500
+X_pos: Final = 600
+Y_pos: Final = 500
 
 # weapons
 # name, description, buy, sell, damage increase

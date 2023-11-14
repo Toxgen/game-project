@@ -83,7 +83,6 @@ def main_tutorial() -> tuple:
                     "You gained 4 xp!",
                     "+=====================+",
                     sep="\n")
-
                 tool.printingDrops(preinv, "goblin")
                 time.sleep(3)
                 return (hp, inv)
