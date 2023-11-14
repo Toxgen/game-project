@@ -2,12 +2,12 @@ import os
 import random
 import time
 from sys import exit
-import pygame
-from components.attacking import Attacking
-from constants import weapon_list, X_pos, Y_pos
-import tools as tool # make them into src.-> whatever after testing
 
-    
+import pygame
+import tools as tool  # make them into src.-> whatever after testing
+from components.attacking import Attacking
+from constants import X_pos, Y_pos, weapon_list
+
 pygame.init()
 screen = pygame.display.set_mode((X_pos, Y_pos))
 font = pygame.font.Font(None, 45)
@@ -83,7 +83,6 @@ def main_tutorial() -> tuple:
                     "You gained 4 xp!",
                     "+=====================+",
                     sep="\n")
-                
                 tool.printingDrops(preinv, "goblin")
                 time.sleep(3)
                 return (hp, inv)
