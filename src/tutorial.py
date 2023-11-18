@@ -55,8 +55,6 @@ def main_tutorial() -> tuple:
     entityAttack = False
     attack = Attacking(weapon_list[0], defense)
 
-    screen.blit
-
     print("tutorial!!", "=========", sep='\n')
 
     print(
