@@ -1,4 +1,3 @@
-import os
 import random
 import time
 from sys import exit

@@ -1,4 +1,4 @@
-entrypoint = "src/tools.py"
+entrypoint = "src/tutorial.py"
 modules = ["python-3.10:v18-20230807-322e88b"]
 
 hidden = [".pythonlibs"]
@@ -7,5 +7,8 @@ hidden = [".pythonlibs"]
 channel = "stable-23_05"
 
 [deployment]
-run = ["python3", "src/tools.py"]
+run = ["python3", "src/tutorial.py"]
 deploymentTarget = "cloudrun"
+
+[unitTest]
+language = "python3"
