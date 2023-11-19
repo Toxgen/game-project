@@ -2,9 +2,9 @@ import json
 import os
 import pygame
 import random as r
-import signal
 import time as t
 from os import system
+from sys import exit
 
 try:
     import tools as tool
@@ -24,7 +24,7 @@ all_armors = {
     "goblin_chestplate": (1, None, None, "Green chestplate")
 }
 
-class Game:
+class Game(pygame.sprite.Sprite):
     
     @staticmethod
     def get_obj(config=False):
@@ -122,8 +122,8 @@ class Game:
                  level: int = 0,
                  experience: int = 4,
                  inv: list = [], # plan to change this into a dictionary
-                 location: str = "woods",
-                 config: dict = Game.get_obj(config)): # can u do this?
+                 location: str = "woods",):
+                 #config: dict = Game.get_obj(config)): # can u do this?
 
         self.hp = hp
         self.defense = 0
@@ -134,7 +134,7 @@ class Game:
         self.experience = experience
         self.inv = inv
         self.location = location
-        self.config = config# or do smth like if config == false or whatever
+        #self.config = config# or do smth like if config == false or whatever
 
     def xp(self) -> None: 
         possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 15, 
@@ -175,7 +175,7 @@ class Game:
 
         self.level = level
         return None
-            
+    
     def help_ccmd(self) -> None:
         print("Type In { help } For Commands", "\n")
         t.sleep(0.5)

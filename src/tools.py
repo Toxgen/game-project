@@ -94,7 +94,7 @@ def drops(mob: str) -> list[str]:
           
     return returning
               
-def printingDrops(preinv: list[str], mob) -> None:
+def printingDrops(preinv: list[str], mob) -> None: # change this into blitting
     """
     print em drops
     (the counted drop list, self.mob)
@@ -121,7 +121,7 @@ def printingDrops(preinv: list[str], mob) -> None:
     print("+=======================+")
     return None
 
-def printingInv(inv: dict) -> None:
+def printingInv(inv: dict) -> None: # change this into blitting
     """
     print inventory
     (the inventory)
