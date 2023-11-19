@@ -66,6 +66,8 @@ def main_tutorial() -> tuple:
     
     # startup   
     resetBottomRect()
+    # mobile compability
+    pygame.draw.rect(screen, "pink", pygame.Rect((X_pos - 75, 0), (75, 75)))
 
     while True:
         for event in pygame.event.get():
@@ -79,6 +81,12 @@ def main_tutorial() -> tuple:
 
             if event.type == pygame.KEYUP:
                 print('')
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                print(mouse_pos)
+                if 520 <= mouse_pos[0] <= 601 and 0 <= mouse_pos[1] <= 75:
+                    entityAttack = True
 
         if entityAttack:
             attk = attack.attack_RNGESUS()
