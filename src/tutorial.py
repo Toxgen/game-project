@@ -17,23 +17,28 @@ clock = pygame.time.Clock()
 bottomRect = pygame.Surface((X_pos, 100))
 bottomRect.fill("blue")
 
+
 def OB1iter(text) -> None:
-    screen.blit(text, (15, 415)) # input values rather than text to contro where text 
+    screen.blit(
+        text, (15, 415))  # input values rather than text to contro where text
     # is place use a dictionary and use a key to find where everything is
 
-def OB2iter(text: tuple):
-   screen.blit(text, (15, 450))
 
-def overrideBlit(text, changeXY: bool = True) -> None: # maybe make a class that can just do this
+def OB2iter(text: tuple):
+    screen.blit(text, (15, 450))
+
+
+def overrideBlit(text, changeXY: bool = True) -> None:
 
     if changeXY:
         screen.blit(text, (20, 420))
-    
+
     else:
         screen.blit(text, (25, 435))
 
     print("what")
     pygame.display.update()
+
 
 def resetBottomRect() -> None:
     screen.blit(bottomRect, (0, Y_pos - 100))
@@ -62,8 +67,8 @@ def main_tutorial() -> tuple:
 
     maxHp = hp
     maxMobHp = mobHp
-    
-    # startup   
+
+    # startup
     resetBottomRect()
     # mobile compability
     pygame.draw.rect(screen, "pink", pygame.Rect((X_pos - 75, 0), (75, 75)))
@@ -75,7 +80,7 @@ def main_tutorial() -> tuple:
                 exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE: 
+                if event.key == pygame.K_SPACE:
                     entityAttack = True
 
             if event.type == pygame.KEYUP:
@@ -96,10 +101,14 @@ def main_tutorial() -> tuple:
 
             hp -= defense[0]
 
+            print(f'attk: {attk}')
+            print(f'defense: {defense}')
+
             if mobHp <= 0:
                 resetBottomRect()
 
-                text = font.render('You have defeated the %s!' % mob, False, "Green")
+                text = font.render('You have defeated the %s!' % mob, False,
+                                   "Green")
                 overrideBlit(text)
 
                 preinv = tool.drops(mob)
@@ -120,9 +129,10 @@ def main_tutorial() -> tuple:
                 #     f"% Rolled: {attk[2]}",
                 #     f"- Lost: {defense[0]}hp",
                 #     sep='\n')
-                
-                firstIter = font.render(f"% Rolled: {attk[2]} Lost: {defense[0]}hp", False, "yellow")
-                
+
+                firstIter = font.render(
+                    f"% Rolled: {attk[2]} Lost: {defense[0]}hp", False,
+                    "yellow")
 
             if crit:
                 # print(f"CRIT! Dealt: {attk[0]}hp",
@@ -130,8 +140,11 @@ def main_tutorial() -> tuple:
                 #         f"Enemy Hp: {mobHp}/{maxMobHp}",
                 #         "+===========================+",
                 #         sep='\n')
-                
-                secondIter = font.render(f"CRIT! Dealt: {attk[0]}hp Your Hp: {hp}/{maxHp} Enemy Hp: {mobHp}/{maxMobHp}", False, "yellow")
+
+                secondIter = font.render(
+                    f"CRIT! Dealt: {attk[0]}hp Your Hp: {hp}/{maxHp} Enemy Hp: {mobHp}/{maxMobHp}",
+                    False, "yellow")
+                entityAttack = False
 
             else:
                 # print(f"+ Dealt: {attk[0]}hp",
@@ -139,17 +152,20 @@ def main_tutorial() -> tuple:
                 #         f"Enemy Hp: {mobHp}/{maxMobHp}",
                 #         "+===========================+",
                 #         sep='\n')
-                
-                secondIter = font.render(f"Dealt: {attk[0]}hp Your Hp: {hp}/{maxHp} Enemy Hp: {mobHp}/{maxMobHp}", False, "pink")
+
+                secondIter = font.render(
+                    f"Dealt: {attk[0]}hp Your Hp: {hp}/{maxHp} Enemy Hp: {mobHp}/{maxMobHp}",
+                    False, "pink")
                 entityAttack = False
 
             resetBottomRect()
-            
+
             OB1iter(firstIter)
             OB2iter(secondIter)
-            
+
         pygame.display.update()
         clock.tick(60)
 
+
 if __name__ == "__main__":
-    main_tutorial() 
+    main_tutorial()
