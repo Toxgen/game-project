@@ -1,11 +1,13 @@
+#!/usr/bin/env python3
+
 import random
 import time
 from sys import exit
 
 import pygame
-import tools as tool  # make them into src.-> whatever after testing
-from components.attacking import Attacking
-from constants import X_pos, Y_pos, weapon_list
+import src.tools as tool  
+from src.components.attacking import Attacking
+from src.constants import X_pos, Y_pos, weapon_list
 
 pygame.init()
 screen = pygame.display.set_mode((X_pos, Y_pos))
@@ -17,17 +19,6 @@ clock = pygame.time.Clock()
 bottomRect = pygame.Surface((X_pos, 100))
 bottomRect.fill("blue")
 
-
-def OB1iter(text) -> None:
-    screen.blit(
-        text, (15, 415))  # input values rather than text to contro where text
-    # is place use a dictionary and use a key to find where everything is
-
-
-def OB2iter(text: tuple):
-    screen.blit(text, (15, 450))
-
-
 def overrideBlit(text, changeXY: bool = True) -> None:
 
     if changeXY:
@@ -35,8 +26,7 @@ def overrideBlit(text, changeXY: bool = True) -> None:
 
     else:
         screen.blit(text, (25, 435))
-
-    print("what")
+        
     pygame.display.update()
 
 
@@ -120,7 +110,10 @@ def main_tutorial() -> tuple:
                 text = font.render("You gained 4 xp!", False, "yellow")
                 overrideBlit(text)
 
-                tool.printingDrops(preinv, "goblin")
+                time.sleep(2)
+
+                text = font.render(f"You got {preinv}", False, "yellow")
+
                 time.sleep(3)
                 return (hp, inv)
 
@@ -160,8 +153,8 @@ def main_tutorial() -> tuple:
 
             resetBottomRect()
 
-            OB1iter(firstIter)
-            OB2iter(secondIter)
+            screen.blit(firstIter, (15, 415)) # blits the text for stuff
+            screen.blit(secondIter, (15, 450))
 
         pygame.display.update()
         clock.tick(60)

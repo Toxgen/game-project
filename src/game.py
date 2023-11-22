@@ -1,9 +1,7 @@
 import json
-import os
 import pygame
 import random as r
 import time as t
-from os import system
 from sys import exit
 
 try:
@@ -17,14 +15,12 @@ Add something that allows the player to load or del save files
 Add mana for wands and etc
 Add like a dictionary for if they have finished like the tutorial or something
 """
-all_armors = {
-    # defualt
-    "pants": (0, None, None, "A pair of pants"), # defense, sell, buy, description
-    # goblin
-    "goblin_chestplate": (1, None, None, "Green chestplate")
-}
 
 class Game(pygame.sprite.Sprite):
+
+    @staticmethod
+    def finishedAdv(mob, exp, preinv):
+        pass
     
     @staticmethod
     def get_obj(config=False):
@@ -111,22 +107,21 @@ class Game(pygame.sprite.Sprite):
             with open("save/data.json", "w") as file:        
                 json.dump(obj, file, indent=4) 
 
-    """
-    def return_next_level(self):
-        return
-    """
+    @staticmethod
+    def return_next_level(level: int) -> int:
+        return round(((1.31 * level) + 5))
     
     def __init__(self, 
                  hp: int,
-                 config: dict,
                  currentWeapon: str = "fist", 
                  gold: int = 0,
                  level: int = 0,
                  experience: int = 4,
-                 inv: list = [], # plan to change this into a dictionary
-                 location: str = "woods"): 
+                 inv: dict = {},
+                 location: str = "woods",
+                 config: dict = {}): 
         
-        super.__init__()
+        super().__init__()
         self.hp = hp
         self.defense = 0
         self.gold = gold
@@ -139,23 +134,16 @@ class Game(pygame.sprite.Sprite):
         self.config = Game.get_obj(config=True)
 
     def xp(self) -> None: 
-        possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 15, 
-                             16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 24, 24, 25, 25, 25, 26, 
-                             26, 26, 27, 27, 27, 28, 28, 28, 29, 29, 30, 30, 30, 31, 31, 31, 
-                             32, 32, 33, 33, 34, 34, 34, 35, 35, 36, 36, 37, 37, 38, 38, 39, 
-                             39, 40, 40, 41, 41, 42, 42, 43, 44, 44, 44, 45, 46, 46, 47, 48, 
-                             48, 48, 49, 50, 51, 51, 52, 53, 53, 54, 55, 56, 56, 57, 58, 59,
-                             60, 61, 62) # maybe do some math to figure this out rather than
-                            # a big list
         
         exp = self.experience
         level = self.level
         pre_hp = (self.level * 5) + 100
 
-        for x in possible_XPlevels[level:]:
-            if exp >= x:
+        while True:
+            amt_exp = Game.return_next_level(level)
+            if exp >= amt_exp:
                 level += 1
-                exp -= x
+                exp -= amt_exp
             
             else:
                 break
@@ -168,12 +156,12 @@ class Game(pygame.sprite.Sprite):
                 print(f"Congrats! You gained {level - self.level} levels")
                 print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
                 self.hp = curMaxHp
-                print(f"Next level at {self.experience}/{possible_XPlevels[level]}xp")
+                print(f"Next level at {self.experience}/{Game.return_next_level(level)}xp")
             else:
                 print(f"Congrats! You gained {level - self.level} level")
                 print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
                 self.hp = curMaxHp
-                print(f"Next level at {self.experience}/{possible_XPlevels[level]}xp")
+                print(f"Next level at {self.experience}/{Game.return_next_level(level)}xp")
 
         self.level = level
         return None
@@ -187,7 +175,7 @@ class Game(pygame.sprite.Sprite):
             match self.player_input:
 
                 case "help":
-                    os.system("clear")
+                    
                     print("""The Following Commands Are:
 
                         'Stats': To show your stats
@@ -199,16 +187,16 @@ class Game(pygame.sprite.Sprite):
                     continue
 
                 case "stats":
-                    os.system("clear")
+                    
                     print("WIP")
                     break
 
                 case "inv":
-                    os.system("clear")
+                    
                     tool.printingInv(self.inv)
 
                 case "adv":
-                    os.system("clear")
+                    
                     self.main_attack()
                     break
 
@@ -237,7 +225,7 @@ class Game(pygame.sprite.Sprite):
         while True:
             self.player_input = input('> ').lower()
             if self.player_input in ["attack", "atk", "attk", "q"]:
-                os.system("clear")
+                
 
                 attk = self.attk_RNGESUS(self.ccWeap, mobDefe)
                 print(f"attk: {attk}")
@@ -286,5 +274,5 @@ class Game(pygame.sprite.Sprite):
         tool.printingDrops(preinv, mob)
         
 if __name__ == "__main__":
-    main = Game(0)
-    print(main)
+    pygame.init()
+

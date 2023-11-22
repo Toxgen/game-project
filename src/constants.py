@@ -1,4 +1,4 @@
-from components.items import Armor, Consumable, Item, Weapons
+from src.components.items import Armor, Consumable, Item, Weapons
 from typing import Final
 
 # pygame constants

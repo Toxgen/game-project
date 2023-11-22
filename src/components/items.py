@@ -28,8 +28,8 @@ class Armor(Item):
     def __init__(self, name, description, buy, sell):
         super().__init__(name, description, buy, sell)
 
-    def equip(self):
-        pass
+    def equip(self, cls):
+        cls.cu
 
     def unequip(self):
         pass

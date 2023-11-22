@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from src.game import Game
 from src.tutorial import main_tutorial
 
@@ -21,6 +23,12 @@ def start() -> bool:
 def main():
     if isinstance(start(), bool):
         pass
+    
+    # else:
+    #     entity = Game()
 
 if __name__ == "__main__":
     main()
+
+# just make the background of the scence
+# then just check where the player is 

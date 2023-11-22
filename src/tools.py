@@ -92,34 +92,7 @@ def drops(mob: str) -> list[str]:
         if x <= value:
             returning.append(key)
           
-    return returning
-              
-def printingDrops(preinv: list[str], mob) -> None: # change this into blitting
-    """
-    print em drops
-    (the counted drop list, self.mob)
-    """
-
-    for q, x in enumerate(__mob_drops[mob]):
-
-        if not q:
-            print("+=======================+")
-
-        _amount = [m for m in preinv if m == x]
-
-        if len(_amount) > 1:
-            print(f"Earned {len(_amount)} {x}s")
-
-        elif len(_amount) == 0:
-            continue
-        
-        else:
-            print(f"Earned {len(_amount)} {x}")
-
-        time.sleep(0.33)
-
-    print("+=======================+")
-    return None
+    return returningS
 
 def printingInv(inv: dict) -> None: # change this into blitting
     """
