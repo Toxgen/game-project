@@ -116,15 +116,17 @@ class Game(pygame.sprite.Sprite):
         return
     """
     
-    def __init__(self, hp: int, 
+    def __init__(self, 
+                 hp: int,
+                 config: dict,
                  currentWeapon: str = "fist", 
                  gold: int = 0,
                  level: int = 0,
                  experience: int = 4,
                  inv: list = [], # plan to change this into a dictionary
-                 location: str = "woods",):
-                 #config: dict = Game.get_obj(config)): # can u do this?
-
+                 location: str = "woods"): 
+        
+        super.__init__()
         self.hp = hp
         self.defense = 0
         self.gold = gold
@@ -134,7 +136,7 @@ class Game(pygame.sprite.Sprite):
         self.experience = experience
         self.inv = inv
         self.location = location
-        #self.config = config# or do smth like if config == false or whatever
+        self.config = Game.get_obj(config=True)
 
     def xp(self) -> None: 
         possible_XPlevels = (0, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 14, 14, 15, 
