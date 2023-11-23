@@ -92,7 +92,7 @@ def drops(mob: str) -> list[str]:
         if x <= value:
             returning.append(key)
           
-    return returningS
+    return returning
 
 def printingInv(inv: dict) -> None: # change this into blitting
     """

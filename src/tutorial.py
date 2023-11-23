@@ -3,21 +3,29 @@
 import random
 import time
 from sys import exit
+import os
 
 import pygame
-import src.tools as tool  
-from src.components.attacking import Attacking
-from src.constants import X_pos, Y_pos, weapon_list
+try:
+    import src.tools as tool  
+    from src.components.attacking import Attacking
+    from src.constants import X_pos, Y_pos, weapon_list
+
+except ModuleNotFoundError:
+    import tools as tool
+    from components.attacking import Attacking
+    from constants import X_pos, Y_pos, weapon_list
 
 pygame.init()
 screen = pygame.display.set_mode((X_pos, Y_pos))
 font = pygame.font.Font(None, 30)
 
-pygame.display.set_caption('Game?')
+pygame.display.set_caption('Game')
 clock = pygame.time.Clock()
 
-bottomRect = pygame.Surface((X_pos, 100))
-bottomRect.fill("blue")
+bottomRect = pygame.image.load(os.path.join('Assets/AttackBar.png'))
+bottomRect = pygame.transform.scale(bottomRect, (600, 500))
+screen.blit(bottomRect, (0, 0))
 
 def overrideBlit(text, changeXY: bool = True) -> None:
 
@@ -31,7 +39,7 @@ def overrideBlit(text, changeXY: bool = True) -> None:
 
 
 def resetBottomRect() -> None:
-    screen.blit(bottomRect, (0, Y_pos - 100))
+    screen.blit(bottomRect, (0, 0))
     pygame.display.update()
 
 

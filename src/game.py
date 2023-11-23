@@ -19,11 +19,11 @@ Add like a dictionary for if they have finished like the tutorial or something
 class Game(pygame.sprite.Sprite):
 
     @staticmethod
-    def finishedAdv(mob, exp, preinv):
-        pass
+    def finishedAdv(mob:str , exp: int, preinv: dict) -> None:
+        pass # blits the finished stuff
     
     @staticmethod
-    def get_obj(config=False):
+    def get_obj(config=False) -> None:
         
         if config:
             try:

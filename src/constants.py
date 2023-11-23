@@ -1,4 +1,8 @@
-from src.components.items import Armor, Consumable, Item, Weapons
+try:
+    from src.components.items import Armor, Consumable, Item, Weapons
+
+except ModuleNotFoundError:
+    from components.items import Armor, Consumable, Item, Weapons
 from typing import Final
 
 # pygame constants
