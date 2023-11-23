@@ -58,9 +58,7 @@ def main_tutorial() -> tuple:
 
     print("tutorial!!", "=========", sep='\n')
 
-    print(
-        f"Encountered 'Goblin'! || Hp: {mobHp}, Attk: {mobAttk}, Def: {mobDefense}, Level: 1"
-    )
+    print(f"Encountered 'Goblin'! || Hp: {mobHp}, Attk: {mobAttk}, Def: {mobDefense}, Level: 1")
     print("Type attack to attack your opponent!")
 
     maxHp = hp
