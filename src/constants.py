@@ -1,11 +1,12 @@
-from components.items import Armor, Consumable, Item, Weapons
+from src.components.items import Armor, Consumable, Item, Weapons
 
 from typing import Final
 import pygame
 
 # pygame constants
-X_pos: Final = 768
-Y_pos: Final = 768
+# x=(20 32x32) y=(22, 32x32)
+Screen_dim: Final = (640, 704)
+
 
 # weapons
 # name, description, buy, sell, damage increase

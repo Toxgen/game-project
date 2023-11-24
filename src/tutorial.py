@@ -9,15 +9,15 @@ import pygame
 try:
     import src.tools as tool  
     from src.components.attacking import Attacking
-    from src.constants import X_pos, Y_pos, weapon_list
+    from src.constants import Screen_dim, Weapon_tuple
 
 except ModuleNotFoundError:
     import tools as tool
     from components.attacking import Attacking
-    from constants import X_pos, Y_pos, weapon_list
+    from constants import Screen_dim, Weapon_tuple
 
 pygame.init()
-screen = pygame.display.set_mode((X_pos, Y_pos))
+screen = pygame.display.set_mode(Screen_dim)
 font = pygame.font.Font(None, 30)
 
 pygame.display.set_caption('Game')
@@ -54,7 +54,7 @@ def main_tutorial() -> tuple:
     mobAttk = "2 - 3"
     mobDefense = 0
     entityAttack = False
-    attack = Attacking(weapon_list[0], defense)
+    attack = Attacking(Weapon_tuple[0], defense)
 
     print("tutorial!!", "=========", sep='\n')
 
@@ -67,7 +67,7 @@ def main_tutorial() -> tuple:
     # startup
     resetBottomRect()
     # mobile compability
-    pygame.draw.rect(screen, "pink", pygame.Rect((X_pos - 75, 0), (75, 75)))
+    pygame.draw.rect(screen, "pink", pygame.Rect((Screen_dim[0] - 75, 0), (75, 75)))
 
     while True:
         for event in pygame.event.get():
