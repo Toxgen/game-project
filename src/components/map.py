@@ -19,7 +19,7 @@ class Render:
         self.map = map
 
     def render(self, 
-               tile_size = 30):
+               tile_size = 2):
         
         for x, row in enumerate(self.map):
             for y, tile in enumerate(row):

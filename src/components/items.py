@@ -31,7 +31,7 @@ class Armor(Item):
     def equip(self, cls):
         cls.cu
 
-    def unequip(self):
+    def unequip(self, item):
         pass
 
     def returnBonus(self):
