@@ -1,8 +1,5 @@
-try:
-    from src.components.items import Armor, Consumable, Item, Weapons
+from src.components.items import Armor, Consumable, Item, Weapons
 
-except ModuleNotFoundError:
-    from components.items import Armor, Consumable, Item, Weapons
 from typing import Final
 
 # pygame constants
@@ -13,13 +10,16 @@ Y_pos: Final = 500
 # name, description, buy, sell, damage increase
 Fist = Weapons("Fist", "Your Fist", 0, 0, 2)
 Goblin_Sword = Weapons("Goblin_sword", "A green, wooden sword", 10, 5, 4)
-weapon_list = (Fist, Goblin_Sword)
+Weapon_tuple = (Fist, Goblin_Sword)
 
 # Items
 # name, description, buy, sell, effect
-sHP = Consumable("small_health_potion", "A small, red potion", 5, 5, 5)
-mHP = Consumable("medium_health_potion", "A medium, red potion", 20, 10, 10)
-lHP = Consumable("large_health_potion", "A large, red potion", 30, 15, 20)
-Potions = (sHP, mHP, lHP)
+Small_Health_Potion = Consumable("small_health_potion", "A small, red potion", 5, 5, 5) # maybe do id if names are too much
+Medium_Health_Potion = Consumable("medium_health_potion", "A medium, red potion", 20, 10, 10)
+Large_Health_Potion = Consumable("large_health_potion", "A large, red potion", 30, 15, 20)
+Potions = (Small_Health_Potion,
+           Medium_Health_Potion,
+           Large_Health_Potion)
 
-# just throw all of that into the main file as a list
+# Texture
+Dirt 

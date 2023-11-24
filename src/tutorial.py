@@ -23,7 +23,7 @@ font = pygame.font.Font(None, 30)
 pygame.display.set_caption('Game')
 clock = pygame.time.Clock()
 
-bottomRect = pygame.image.load(os.path.join('Assets/AttackBar.png'))
+bottomRect = pygame.image.load(os.path.join('Assets/AttackBar.png')).convert_alpha()
 bottomRect = pygame.transform.scale(bottomRect, (600, 500))
 screen.blit(bottomRect, (0, 0))
 
