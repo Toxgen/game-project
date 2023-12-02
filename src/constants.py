@@ -4,8 +4,6 @@ from typing import Final
 import pygame
 
 # pygame constants
-screen_x: Final = 1152
-screen_y: Final = 1024
 screen_dim: Final = (1152, 1024)
 
 # weapons
