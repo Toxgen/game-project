@@ -4,8 +4,8 @@ from typing import Final
 import pygame
 
 # pygame constants
-X_pos: Final = 768
-Y_pos: Final = 768
+screen_x: Final = 1152
+screen_y: Final = 1024
 
 # weapons
 # name, description, buy, sell, damage increase
@@ -27,16 +27,4 @@ Potions = (Small_Health_Potion,
 # Dirt = pygame.image.load()
 
 if __name__ == "__main__":
-    pygame.init()
-    screen = pygame.display.set_mode((X_pos, Y_pos))
-    font = pygame.font.Font(None, 30)
-
-    pygame.display.set_caption('Game')
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                import sys
-                pygame.quit()
-                sys.exit()
-
-        pygame.display.update()
+    pass

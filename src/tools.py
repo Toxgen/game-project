@@ -31,7 +31,7 @@ __drop_data = {
 __possible_locations = (
         "woods", "ruins"
 ) 
-class Mob():
+class Mob(pygame.sprite.DirtySprite):
 
     armorDefBonus = (
         "",

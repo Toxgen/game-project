@@ -2,11 +2,11 @@
 
 from src.game import Game
 from src.tutorial import main_tutorial
-
+from src.player import Player
 
 def start() -> bool:
     
-    config = Game.get_obj(config=True)
+    config = Player.load(config=True)
 
     if not config["tutorial_done?"]:
         _tut: tuple[int, str] = main_tutorial()
@@ -22,7 +22,8 @@ def start() -> bool:
     
 def main():
     if isinstance(start(), bool):
-        pass
+        game = Game()
+        game.run()
     
     # else:
     #     entity = Game()
