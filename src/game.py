@@ -4,6 +4,7 @@ import pygame
 
 
 from constants import screen_x, screen_y
+from level import Level
 
 class Game():
     def __init__(self):
@@ -18,7 +19,7 @@ class Game():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-
+            
             dt = self.clock.tick() / 1000
             pygame.display.update()
 if __name__ == "__main__":

@@ -13,14 +13,3 @@ class Tile:
         self.passable = passable
         self.terrain_type = terrain_type
         self.special = special
-    
-class Render:
-    def __init__(self, map):
-        self.map = map
-
-    def render(self, 
-               tile_size = 2):
-        
-        for x, row in enumerate(self.map):
-            for y, tile in enumerate(row):
-                pygame.blit(tile, (x * tile_size, y * tile_size))
