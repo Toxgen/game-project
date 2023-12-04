@@ -56,6 +56,7 @@ class Player(pygame.sprite.Sprite):
                 }
 
                 return obj
+                
     def __init__(self,
                  player: dict = {"hp": 0,
                                  "defense+": 0,
