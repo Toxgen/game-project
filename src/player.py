@@ -57,6 +57,9 @@ class Player(pygame.sprite.Sprite):
 
                 return obj
                 
+    def return_next_level(self):
+        return round(1.31(
+                
     def __init__(self,
                  player: dict = {"hp": 0,
                                  "defense+": 0,
