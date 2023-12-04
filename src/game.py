@@ -11,7 +11,7 @@ class Game():
         pygame.init()
         self.screen = pygame.display.set_mode(screen_x, screen_y)
         self.clock = pygame.time.Clock
-        #self.level = Level()
+        self.level = Level()
 
     def run(self):
         while True:
@@ -19,9 +19,11 @@ class Game():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-            
+
+            self.level
             dt = self.clock.tick() / 1000
             pygame.display.update()
+            
 if __name__ == "__main__":
     pygame.init()
 

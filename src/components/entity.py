@@ -11,21 +11,22 @@ class Mob(pygame.sprite.Sprite):
                  name: str, 
                  drops: tuple, 
                  stats: tuple,
-                 specialEffect: Optional[str] | None = None) -> None:
+                 specialEffect: Optional[str] | None = None,
+                 group = pygame.sprite.Group()) -> None:
         
         self.name = name
         self.drops = drops # dros (self explantory)
         self.stats = stats # name, health, r-attk1, r-attk2, defense, s-effect
         self.specialEffect = specialEffect
 
-        self.group = pygame.sprite.Group()
+        self.group = group
         self.rect = pygame.Rect(center = (0, 0))
-        
-    def returnArmorBonus(self) -> tuple[int]:
-       return 
 
-    def foo(self, 
-            heatlh: int = 0) -> tuple[int]:
+    @classmethod    
+    def returnArmorBonus(cls) -> tuple[int]:
+        pass
+    @classmethod
+    def addToClassGroup(self) -> None:
         pass
 
     def update(self) -> None:
@@ -35,13 +36,24 @@ class Goblin(Mob):
     def __init__(self, 
                  name: str, 
                  drops: tuple, 
-                 stats: tuple) -> None:
+                 stats: tuple,
+                 group) -> None:
         super().__init__(name, drops, 
-                         stats)
-
+                         stats, group)
+        
+    def update(self):
+        pass
 class Slime(Mob):
     def __init__(self, 
                 name: str, 
                 drops: tuple, 
-                stats: tuple) -> None:
-        super().__init__(name, drops, stats)
+                stats: tuple,
+                group) -> None:
+        super().__init__(name, drops, 
+                         stats, group)
+        
+    def update(self):
+        pass
+
+    def removeSpriteGroup(self):
+        pass
