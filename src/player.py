@@ -57,8 +57,8 @@ class Player(pygame.sprite.Sprite):
 
                 return obj
                 
-    def return_next_level(self):
-        return round(1.31(
+    def return_next_level(self) -> int:
+        return round((1.31 * player["level"] + 5)
                 
     def __init__(self,
                  player: dict = {"hp": 0,
@@ -91,7 +91,7 @@ class Player(pygame.sprite.Sprite):
         pre_hp = (self.player[level] * 5) + 100
 
         while True:
-            amt_exp = Player.return_next_level(level)
+            amt_exp = self.return_next_level(level)
             if exp >= amt_exp:
                 level += 1
                 exp -= amt_exp
@@ -107,12 +107,12 @@ class Player(pygame.sprite.Sprite):
                 print(f"Congrats! You gained {level - self.level} levels")
                 print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
                 self.hp = curMaxHp
-                print(f"Next level at {self.experience}/{Player.return_next_level(level)}xp")
+                print(f"Next level at {self.experience}/{self.return_next_level(level)}xp")
             else:
                 print(f"Congrats! You gained {level - self.level} level")
                 print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
                 self.hp = curMaxHp
-                print(f"Next level at {self.experience}/{Player.return_next_level(level)}xp")
+                print(f"Next level at {self.experience}/{self.return_next_level(level)}xp")
 
         self.player["level"] = level
         return 1
