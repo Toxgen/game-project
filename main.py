@@ -6,7 +6,8 @@ from src.player import Player
 
 def start() -> bool:
     
-    config = Player.load(config=True)
+    config = Player.load()
+    print(config)
 
     if not config["tutorial_done?"]:
         _tut: tuple[int, str] = main_tutorial()

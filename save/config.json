@@ -1,0 +1,10 @@
+{
+    "tutorial_done?": false,
+    "is_attacking?": false,
+    "hp": 0,
+    "gold": 0,
+    "current_weapon": "",
+    "level": 0,
+    "experience": 0,
+    "inventory": []
+}

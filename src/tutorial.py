@@ -9,23 +9,25 @@ import pygame
 try:
     import src.tools as tool  
     from src.components.attacking import Attacking
-    from src.constants import Screen_dim, Weapon_tuple
+    from src.constants import screen_dim, Weapon_tuple
 
 except ModuleNotFoundError:
     import tools as tool
     from components.attacking import Attacking
-    from constants import Screen_dim, Weapon_tuple
+    from constants import screen_dim, Weapon_tuple
 
 pygame.init()
-screen = pygame.display.set_mode(Screen_dim)
+screen = pygame.display.set_mode(screen_dim)
 font = pygame.font.Font(None, 30)
 
 pygame.display.set_caption('Game')
 clock = pygame.time.Clock()
 
-bottomRect = pygame.image.load(os.path.join('Assets/AttackBar.png')).convert_alpha()
-bottomRect = pygame.transform.scale(bottomRect, (600, 500))
-screen.blit(bottomRect, (0, 0))
+#bottomRect = pygame.image.load(os.path.join('Assets/AttackBar.png')).convert_alpha()
+#bottomRect = pygame.transform.scale(bottomRect, (600, 500))
+#bottomRect = pygame.Rect((100, 405), (200, 100))
+
+#screen.blit(bottomRect, (0, 0))
 
 def overrideBlit(text, changeXY: bool = True) -> None:
 
@@ -36,7 +38,6 @@ def overrideBlit(text, changeXY: bool = True) -> None:
         screen.blit(text, (25, 435))
         
     pygame.display.update()
-
 
 def resetBottomRect() -> None:
     screen.blit(bottomRect, (0, 0))

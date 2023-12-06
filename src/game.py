@@ -3,13 +3,13 @@ from sys import exit
 import pygame
 
 
-from constants import screen_x, screen_y
-from level import Level
+from src.constants import screen_dim
+from src.level import Level
 
 class Game():
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode(screen_x, screen_y)
+        self.screen = pygame.display.set_mode(screen_dim)
         self.clock = pygame.time.Clock
         self.level = Level()
 
@@ -20,10 +20,9 @@ class Game():
                     pygame.quit()
                     exit()
 
-            self.level
+            self.level()
             dt = self.clock.tick() / 1000
             pygame.display.update()
             
 if __name__ == "__main__":
-    pygame.init()
-
+    pass

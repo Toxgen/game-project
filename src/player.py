@@ -1,11 +1,9 @@
-import pygame, sys, json
-from constants import *
+import pygame, json
+from src.constants import *
 
 pygame.init()
 
 class Player(pygame.sprite.Sprite):
-
-    playerinput = ''
 
     def save(self) -> None:
 
@@ -15,50 +13,32 @@ class Player(pygame.sprite.Sprite):
             json.dump(obj, file, indent=4)
         
         obj = self.config
-
-        with open("save/config.json", "w") as file:        
-                json.dump(obj, file, indent=4)
-
-        return 1
     
     @staticmethod
     def load() -> None:
         
             try:
                 with open("save/data.json") as file:
-                    data = json.load(file)
+                    json.load(file)
 
             except json.decoder.JSONDecodeError as j:
                 print("first time saving: inputting standard form. error -> %s" % j)
                 obj = {
                     "tutorial_done?": False,
-                    "is_attacking?": False
-                }
+                    "is_attacking?": False,
+                    "hp": 0, "gold": 0,
+                    "current_weapon": "", "level": 0,
+                    "experience": 0,
+                    "inventory": []
+                    }
                     
                 with open("save/config.json", "w") as file:        
                     json.dump(obj, file, indent=4)
                         
                 return obj
-              
-            try:
-                with open("save/data.json") as file:
-                    data = json.load(file)
-
-            except json.decoder.JSONDecodeError as j:
-                print("first time saving: inputting standard form. error -> %s" % j)
-                obj = {
-                    "hp": 0, "gold": 0,
-                    "current_weapon": "", "level": 0,
-                    "experience": 0,
-                    "inventory": [
-                        "", ""
-                    ]
-                }
-
-                return obj
                 
     def return_next_level(self) -> int:
-        return round((1.31 * player["level"] + 5)
+        return round((1.31 * player["level"] + 5))
                 
     def __init__(self,
                  player: dict = {"hp": 0,
@@ -116,4 +96,11 @@ class Player(pygame.sprite.Sprite):
 
         self.player["level"] = level
         return 1
-        
+
+class PlayerMove(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        self.animation_frame = 0
+        self.rect = pygame.Rect(center = (x, y))
+
+    def update(self):
+        for keys in pygame.event.
