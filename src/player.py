@@ -1,5 +1,7 @@
-import pygame, json
+import pygame, sys, json
 from src.constants import *
+
+from src.components.support import *
 
 pygame.init()
 
@@ -13,34 +15,52 @@ class Player(pygame.sprite.Sprite):
             json.dump(obj, file, indent=4)
         
         obj = self.config
+
+        with open("save/config.json", "w") as file:        
+                json.dump(obj, file, indent=4)
+
+        return 1
     
     @staticmethod
     def load() -> None:
         
             try:
                 with open("save/data.json") as file:
-                    json.load(file)
+                    data = json.load(file)
 
             except json.decoder.JSONDecodeError as j:
                 print("first time saving: inputting standard form. error -> %s" % j)
                 obj = {
                     "tutorial_done?": False,
-                    "is_attacking?": False,
-                    "hp": 0, "gold": 0,
-                    "current_weapon": "", "level": 0,
-                    "experience": 0,
-                    "inventory": []
-                    }
+                    "is_attacking?": False
+                }
                     
                 with open("save/config.json", "w") as file:        
                     json.dump(obj, file, indent=4)
                         
                 return obj
+              
+            try:
+                with open("save/data.json") as file:
+                    data = json.load(file)
+
+            except json.decoder.JSONDecodeError as j:
+                print("first time saving: inputting standard form. error -> %s" % j)
+                obj = {
+                    "hp": 0, "gold": 0,
+                    "current_weapon": "", "level": 0,
+                    "experience": 0,
+                    "inventory": [
+                        "", ""
+                    ]
+                }
+
+                return obj
                 
     def return_next_level(self) -> int:
-        return round((1.31 * player["level"] + 5))
+        return round((1.31 * self.player["level"] + 5))
                 
-    def __init__(self,
+    def __init__(self, group,
                  player: dict = {"hp": 0,
                                  "defense+": 0,
                                  "gold": 0,
@@ -49,29 +69,72 @@ class Player(pygame.sprite.Sprite):
                                  "experience": 0},
 
                 inv: dict = {},
-                location: dict = {"x": 0, "y": 0,
+                location: dict = {"x": 250, "y": 250,
                                   "where": "woods"}): 
 
-        super().__init__()
+        super().__init__(group)
+
+        self.import_assets()
+
         self.player = player
         self.inv = inv
-        self.location = location    
-
-        self.image = pygame.Surface((64, 32))
+        self.location = location
+        
+        self.image = pygame.Surface((64, 64))
+        self.image.fill("yellow")
         self.rect = self.image.get_rect(center = (location["x"], location["y"]))
-        self.group = pygame.sprite.Group()
 
-    def update(self):
-         pass
+        self.direction = pygame.math.Vector2()
+        self.pos = pygame.math.Vector2(self.rect.center)
+        self.speed = 200
     
+    def import_assets(self):
+        self.animations = {'up': [], 'down': [], 'left': [], 'right': []}
+        for animation in self.animations.keys():
+            fullpath = "Assets/Resources/Character/" + animation
+            self.animations[animation] = import_folder(fullpath)
+        
+        print(self.animations)
+
+    def update(self, dt):
+         self.input()
+         self.move(dt)
+    
+    def input(self):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_UP]:
+            self.direction.y = -1
+        elif keys[pygame.K_DOWN]:
+            self.direction.y = 1
+        else:
+            self.direction.y = 0
+
+        if keys[pygame.K_RIGHT]:
+            self.direction.x = 1
+        elif keys[pygame.K_LEFT]:
+            self.direction.x = -1
+        else:
+            self.direction.x = 0
+
+    def move(self, dt):
+        
+        if self.direction.magnitude() > 0:
+            self.direction = self.direction.normalize()
+        
+        self.pos.x += self.direction.x * self.speed * dt
+        self.pos.y += self.direction.y * self.speed * dt
+
+        self.rect.centerx = self.pos.x
+        self.rect.centery = self.pos.y
+
     def xp(self) -> int: 
         
         exp = self.player["experience"]
-        level = self.player["level"]
-        pre_hp = (self.player[level] * 5) + 100
+        pre_hp = (self.player["level"] * 5) + 100
 
         while True:
-            amt_exp = self.return_next_level(level)
+            amt_exp = self.return_next_level(self.player["level"])
             if exp >= amt_exp:
                 level += 1
                 exp -= amt_exp
@@ -81,7 +144,7 @@ class Player(pygame.sprite.Sprite):
                 
         self.player["experience"] = exp
         
-        if level > self.level: # i mean just blit all of this out
+        if level > self.level:
             curMaxHp = (level * 5) + 100
             if level - 1 > level:
                 print(f"Congrats! You gained {level - self.level} levels")
@@ -96,11 +159,4 @@ class Player(pygame.sprite.Sprite):
 
         self.player["level"] = level
         return 1
-
-class PlayerMove(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        self.animation_frame = 0
-        self.rect = pygame.Rect(center = (x, y))
-
-    def update(self):
-        for keys in pygame.event.
+        

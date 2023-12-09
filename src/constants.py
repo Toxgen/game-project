@@ -4,7 +4,7 @@ from typing import Final
 import pygame
 
 # pygame constants
-screen_dim: Final = (1152, 1024)
+screen_dim: Final = (1152, 704) # 36 by 22 (x32)
 
 # weapons
 # name, description, buy, sell, damage increase
