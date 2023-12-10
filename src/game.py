@@ -2,7 +2,6 @@ from sys import exit
 
 import pygame
 
-
 from src.constants import screen_dim
 from src.level import Level
 

@@ -13,13 +13,8 @@ class Player(pygame.sprite.Sprite):
 
         with open("save/data.json", "w") as file:        
             json.dump(obj, file, indent=4)
-        
-        obj = self.config
 
-        with open("save/config.json", "w") as file:        
-                json.dump(obj, file, indent=4)
-
-        return 1
+        return None
     
     @staticmethod
     def load() -> None:
@@ -27,34 +22,13 @@ class Player(pygame.sprite.Sprite):
             try:
                 with open("save/data.json") as file:
                     data = json.load(file)
+                    return data
 
             except json.decoder.JSONDecodeError as j:
                 print("first time saving: inputting standard form. error -> %s" % j)
-                obj = {
-                    "tutorial_done?": False,
-                    "is_attacking?": False
-                }
-                    
-                with open("save/config.json", "w") as file:        
-                    json.dump(obj, file, indent=4)
+                obj = [{"tutorial_done?": False, "is_attacking?": False}, 
+                       [{"hp": 0, "gold": 0,"current_tool": "", "level": 0, "experience": 0}]]
                         
-                return obj
-              
-            try:
-                with open("save/data.json") as file:
-                    data = json.load(file)
-
-            except json.decoder.JSONDecodeError as j:
-                print("first time saving: inputting standard form. error -> %s" % j)
-                obj = {
-                    "hp": 0, "gold": 0,
-                    "current_weapon": "", "level": 0,
-                    "experience": 0,
-                    "inventory": [
-                        "", ""
-                    ]
-                }
-
                 return obj
                 
     def return_next_level(self) -> int:
@@ -79,6 +53,7 @@ class Player(pygame.sprite.Sprite):
         self.player = player
         self.inv = inv
         self.location = location
+        self.defense = 0 # maybe make method to find the total defense here
         
         self.image = pygame.Surface((64, 64))
         self.image.fill("yellow")

@@ -11,6 +11,7 @@ class Level(pygame.sprite.Sprite):
         self.setup()
 
     def setup(self):
+        _data = Player.load()
         self.player = Player(group=self.all_sprites)
 
     def run(self, dt): 
