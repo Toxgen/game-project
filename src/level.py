@@ -15,6 +15,6 @@ class Level(pygame.sprite.Sprite):
         self.player = Player(group=self.all_sprites)
 
     def run(self, dt): 
-        self.display_surface.fill('black')
+        self.display_surface.fill('blue')
         self.all_sprites.draw(self.display_surface)
         self.all_sprites.update(dt)

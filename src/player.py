@@ -49,14 +49,15 @@ class Player(pygame.sprite.Sprite):
         super().__init__(group)
 
         self.import_assets()
+        self.status = "down"
+        self.frame_index = 0
 
         self.player = player
         self.inv = inv
         self.location = location
         self.defense = 0 # maybe make method to find the total defense here
         
-        self.image = pygame.Surface((64, 64))
-        self.image.fill("yellow")
+        self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(center = (location["x"], location["y"]))
 
         self.direction = pygame.math.Vector2()
@@ -71,24 +72,41 @@ class Player(pygame.sprite.Sprite):
         
         print(self.animations)
 
+    def animation(self, dt):
+        self.frame_index += 4 * dt
+        if self.frame_index >= len(self.animations[self.status]):
+            self.frame_index = 0
+
+        self.image = self.animations[self.status][int(self.frame_index)]
+
+    def get_status(self):
+        if self.direction.magnitude() == 0:
+            self.status += self.status.split("_")[0] + "_idle"
+
     def update(self, dt):
          self.input()
+         self.get_status
          self.move(dt)
+         self.animation(dt)
     
     def input(self):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_w]:
             self.direction.y = -1
+            self.status = "up"
         elif keys[pygame.K_s]:
             self.direction.y = 1
+            self.status = "down"
         else:
             self.direction.y = 0
 
         if keys[pygame.K_d]:
             self.direction.x = 1
+            self.status = "right"
         elif keys[pygame.K_a]:
             self.direction.x = -1
+            self.status = "left"
         else:
             self.direction.x = 0
 
