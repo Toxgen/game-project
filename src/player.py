@@ -2,6 +2,7 @@ import pygame, sys, json
 from src.constants import *
 
 from src.components.support import *
+from src.components. import Item
 
 pygame.init()
 
