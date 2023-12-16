@@ -2,7 +2,6 @@ import pygame, sys, json
 from src.constants import *
 
 from src.components.support import *
-from src.components. import Item
 
 pygame.init()
 
@@ -154,6 +153,9 @@ class Player(pygame.sprite.Sprite):
         self.player["level"] = level
         return 1
     
-    def buy(self):
-        pass # 
+    def buy(self, item):
+        if item in inv:
+            item.buy() # jk i have no idea how to do this
+        else:
+            return False
         
