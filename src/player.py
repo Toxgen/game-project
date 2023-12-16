@@ -152,4 +152,7 @@ class Player(pygame.sprite.Sprite):
 
         self.player["level"] = level
         return 1
+    
+    def buy(self):
+        pass # 
         
