@@ -1,6 +1,7 @@
 import pygame, sys, json
-from src.constants import *
 
+
+from src.constants import *
 from src.components.support import *
 
 pygame.init()
@@ -126,36 +127,27 @@ class Player(pygame.sprite.Sprite):
         exp = self.player["experience"]
         pre_hp = (self.player["level"] * 5) + 100
 
-        while True:
+        while exp >= amt_exp:
             amt_exp = self.return_next_level(self.player["level"])
-            if exp >= amt_exp:
-                level += 1
-                exp -= amt_exp
-            
-            else:
-                break
+            level += 1
+            exp -= amt_exp
                 
         self.player["experience"] = exp
-        
-        if level > self.level:
-            curMaxHp = (level * 5) + 100
-            if level - 1 > level:
-                print(f"Congrats! You gained {level - self.level} levels")
-                print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
-                self.hp = curMaxHp
-                print(f"Next level at {self.experience}/{self.return_next_level(level)}xp")
-            else:
-                print(f"Congrats! You gained {level - self.level} level")
-                print(f"Yay! {pre_hp}hp -> {curMaxHp}hp")
-                self.hp = curMaxHp
-                print(f"Next level at {self.experience}/{self.return_next_level(level)}xp")
-
         self.player["level"] = level
-        return 1
-    
-    def buy(self, item):
-        if item in inv:
-            item.buy() # jk i have no idea how to do this
-        else:
-            return False
+
         
+    def buy_item(self, where, item):
+        if where in allowed_areas:
+            raise NotImplementedError
+        
+        else:
+            return 0
+
+    def equip(self, item):
+        raise NotImplementedError
+    
+    def unequip(self, item):
+        raise NotImplementedError
+    
+    def returnArmorBonus(self):
+        raise NotImplementedError
