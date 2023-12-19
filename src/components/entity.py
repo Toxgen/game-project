@@ -1,5 +1,7 @@
 import pygame
 
+from src.components.support import import_folder
+
 class Mob(pygame.sprite.Sprite):
 
     __mob_data = (
@@ -27,48 +29,29 @@ class Mob(pygame.sprite.Sprite):
 
     def __init__(self, 
                  name: str, 
-                 drops: tuple, 
-                 stats: tuple,
-                 specialEffect: bool = None,
-                 group = pygame.sprite.Group()) -> None:
+                 drops: dict, 
+                 stats: dict,
+                 group = pygame.sprite.Group(),
+                 pos: tuple[int, int] = (0, 0)) -> None:
         
         self.name = name
-        self.drops = drops # dros (self explantory)
-        self.stats = stats # name, health, r-attk1, r-attk2, defense, s-effect
-        self.specialEffect = specialEffect
+        self.drops = drops 
+        self.stats = stats 
 
         self.group = group
-        self.rect = pygame.Rect(center = (0, 0))
+        self.image = self.getImage()
+        self.rect = pygame.Rect(center = pos)
 
-    @classmethod    
-    def returnArmorBonus(cls) -> tuple[int]:
-        raise NotImplementedError
+    def getImage(self):
+        _fullpath = "Assets/Mob/" + self.name
+        return import_folder(_fullpath)
+
+    def returnAttackDamage(self) -> int:
+        from random import randint
+
+        return (round(randint(self.stats["attk1"], self.stats["attk2"]) * 1.2)) 
 
     def update(self) -> None:
         return None
-
-class Goblin(Mob):
-    def __init__(self, 
-                 name: str, 
-                 drops: tuple, 
-                 stats: tuple,
-                 group) -> None:
-        super().__init__(name, drops, 
-                         stats, group)
-        
-    def update(self):
-        pass
-class Slime(Mob):
-    def __init__(self, 
-                name: str, 
-                drops: tuple, 
-                stats: tuple,
-                group) -> None:
-        super().__init__(name, drops, 
-                         stats, group)
-        
-    def update(self):
-        pass
-
-    def removeSpriteGroup(self):
-        pass
+    
+    

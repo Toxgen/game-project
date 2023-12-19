@@ -8,6 +8,21 @@ pygame.init()
 
 class Player(pygame.sprite.Sprite):
 
+    @staticmethod
+    def load() -> None:
+        
+        with open("save/data.json") as file:
+            try:
+                data = json.load(file)
+                return data
+
+            except json.decoder.JSONDecodeError as j:
+                print("first time saving: inputting standard form. error -> %s" % j)
+                obj = [{"tutorial_done?": False, "is_attacking?": False}, # makee this not a static method pls
+                       [{"hp": 0, "gold": 0,"current_tool": "", "level": 0, "experience": 0}]]
+                        
+                return obj
+
     def save(self) -> None:
 
         obj = (self.player, self.inv, self.location)
@@ -16,21 +31,6 @@ class Player(pygame.sprite.Sprite):
             json.dump(obj, file, indent=4)
 
         return None
-    
-    @staticmethod
-    def load() -> None:
-        
-            try:
-                with open("save/data.json") as file:
-                    data = json.load(file)
-                    return data
-
-            except json.decoder.JSONDecodeError as j:
-                print("first time saving: inputting standard form. error -> %s" % j)
-                obj = [{"tutorial_done?": False, "is_attacking?": False}, 
-                       [{"hp": 0, "gold": 0,"current_tool": "", "level": 0, "experience": 0}]]
-                        
-                return obj
                 
     def return_next_level(self) -> int:
         return round((1.31 * self.player["level"] + 5))
@@ -71,8 +71,6 @@ class Player(pygame.sprite.Sprite):
             fullpath = "Assets/Resources/Character/" + animation
             self.animations[animation] = import_folder(fullpath)
         
-        print(self.animations)
-
     def animation(self, dt):
         self.frame_index += 4 * dt
         if self.frame_index >= len(self.animations[self.status]):
@@ -86,7 +84,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, dt):
          self.input()
-         self.get_status
+         self.get_status()
          self.move(dt)
          self.animation(dt)
     

@@ -1,4 +1,4 @@
-from src.components.items import Armor, Consumable, Item, Weapons
+from src.components.items import Consumable, Item
 
 from typing import Final
 import pygame
@@ -13,17 +13,14 @@ allowed_areas = (
 
 # weapons
 # name, description, buy, sell, damage increase
-Fist = Weapons("Fist", "Your Fist", 0, 0, 2)
-Goblin_Sword = Weapons("Goblin_sword", "A green, wooden sword", 10, 5, 4)
+Fist = Item("Fist", "Your Fist", 0, 0, 2)
+Goblin_Sword = Item("Goblin_sword", "A green, wooden sword", 10, 5, 4)
 
 # Items
 # name, description, buy, sell, effect
 Small_Health_Potion = Consumable("small_health_potion", "A small, red potion", 5, 5, 5) # maybe do id if names are too much
 Medium_Health_Potion = Consumable("medium_health_potion", "A medium, red potion", 20, 10, 10)
 Large_Health_Potion = Consumable("large_health_potion", "A large, red potion", 30, 15, 20)
-
-# Texture
-# Dirt = pygame.image.load()
 
 if __name__ == "__main__":
     pass

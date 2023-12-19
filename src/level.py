@@ -1,5 +1,6 @@
 import pygame
-import pytmx
+
+from src.components.entity import Mob
 from src.player import Player
 
 class Level(pygame.sprite.Sprite):
@@ -7,6 +8,7 @@ class Level(pygame.sprite.Sprite):
         self.display_surface = pygame.display.get_surface()
 
         self.all_sprites = pygame.sprite.Group()
+        self.enemys = pygame.sprite.Group()
 
         self.setup()
 
