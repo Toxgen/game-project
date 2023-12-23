@@ -1,4 +1,4 @@
-from src.components.items import Consumable, Item
+from src.components.items import Item
 
 from typing import Final
 import pygame
@@ -13,14 +13,19 @@ allowed_areas = (
 
 # weapons
 # name, description, buy, sell, damage increase
-Fist = Item("Fist", "Your Fist", 0, 0, 2)
-Goblin_Sword = Item("Goblin_sword", "A green, wooden sword", 10, 5, 4)
+Fist = Item("fist", "Your Fist", "weapon",
+            buy=-1, sell=-1, damage=2)
+Goblin_Sword = Item("goblin_sword", "A green, wooden sword", "weapon",
+                    buy=10, sell=5, damage=4)
 
 # Items
 # name, description, buy, sell, effect
-Small_Health_Potion = Consumable("small_health_potion", "A small, red potion", 5, 5, 5) # maybe do id if names are too much
-Medium_Health_Potion = Consumable("medium_health_potion", "A medium, red potion", 20, 10, 10)
-Large_Health_Potion = Consumable("large_health_potion", "A large, red potion", 30, 15, 20)
+Small_Health_Potion = Item("small_health_potion", "A small, red potion", "potion", 
+                           sell=10, buy=5, effect=5)
+Medium_Health_Potion = Item("medium_health_potion", "A medium, red potion", "potion",
+                            buy=20, sell=10, effect=10)
+Large_Health_Potion = Item("large_health_potion", "A large, red potion", "potion",
+                           buy=30, sell=15, effect=20)
 
 if __name__ == "__main__":
     pass

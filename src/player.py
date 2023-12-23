@@ -1,4 +1,4 @@
-import pygame, sys, json
+import pygame, sys, json, logging
 
 
 from src.constants import *
@@ -8,20 +8,23 @@ pygame.init()
 
 class Player(pygame.sprite.Sprite):
 
-    @staticmethod
-    def load() -> None:
+    def load(self) -> None:
         
         with open("save/data.json") as file:
             try:
                 data = json.load(file)
-                return data
+                mapping = [(self.player, data[0]), (self.inv, data[1]), (self.location, data[2])]
+
+                for obj, stuff in mapping:
+                    for key, value in stuff.items():
+                        obj[key] = value
+
+                self.pos.x = self.location["x"]
+                self.pos.y = self.location["y"]
 
             except json.decoder.JSONDecodeError as j:
                 print("first time saving: inputting standard form. error -> %s" % j)
-                obj = [{"tutorial_done?": False, "is_attacking?": False}, # makee this not a static method pls
-                       [{"hp": 0, "gold": 0,"current_tool": "", "level": 0, "experience": 0}]]
                         
-                return obj
 
     def save(self) -> None:
 
@@ -30,7 +33,6 @@ class Player(pygame.sprite.Sprite):
         with open("save/data.json", "w") as file:        
             json.dump(obj, file, indent=4)
 
-        return None
                 
     def return_next_level(self) -> int:
         return round((1.31 * self.player["level"] + 5))
@@ -44,8 +46,8 @@ class Player(pygame.sprite.Sprite):
                                  "experience": 0},
 
                 inv: dict = {},
-                location: dict = {"x": 250, "y": 250,
-                                  "where": "woods"}): 
+                location: dict = {"x": 500, "y": 500,
+                                  "location": "somewhere"}): 
 
         super().__init__(group)
 
@@ -66,21 +68,28 @@ class Player(pygame.sprite.Sprite):
         self.speed = 200
     
     def import_assets(self):
-        self.animations = {'up': [], 'down': [], 'left': [], 'right': []}
+        self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
+                           'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': []}
         for animation in self.animations.keys():
             fullpath = "Assets/Resources/Character/" + animation
             self.animations[animation] = import_folder(fullpath)
         
     def animation(self, dt):
-        self.frame_index += 4 * dt
-        if self.frame_index >= len(self.animations[self.status]):
-            self.frame_index = 0
+        try:
+            self.frame_index += 4 * dt
+            if self.frame_index >= len(self.animations[self.status]):
+                self.frame_index = 0
 
-        self.image = self.animations[self.status][int(self.frame_index)]
+            self.image = self.animations[self.status][int(self.frame_index)]
+
+        except (IndexError, Exception) as error:
+            self._log = f"self.status = {self.status}, self.frame_index = {self.frame_index}"
+            logging.warning(f"animation went wrong, {self._log}, error: {error}")
+            
 
     def get_status(self):
         if self.direction.magnitude() == 0:
-            self.status += self.status.split("_")[0] + "_idle"
+            self.status = self.status.split("_")[0] + "_idle"
 
     def update(self, dt):
          self.input()
@@ -119,6 +128,9 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.centerx = self.pos.x
         self.rect.centery = self.pos.y
+
+        self.location["x"] = self.pos.x
+        self.location["y"] = self.pos.y
 
     def xp(self) -> int: 
         

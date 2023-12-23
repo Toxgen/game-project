@@ -1,10 +1,11 @@
 class Item():
 
     def __init__(self, 
-                 name: str = "", 
-                 description: str = "", 
-                 buy: int = 0, 
-                 sell: int = 0,
+                 name: str, 
+                 description: str, 
+                 type: str,
+                 buy: int, 
+                 sell: int,
 
                  effect: tuple = None,
                  damage: int = None,
@@ -12,6 +13,8 @@ class Item():
         
         self.name = name
         self.description = description
+        self.type = type
+
         self.buy = buy
         self.sell = sell
 
@@ -20,5 +23,6 @@ class Item():
         self.defense = defense
         
     def returnEffect(self):
-        return self.effect # maybe do a if statement to check if it is potion
+        if self.type == "potion":
+            return self.effect
     

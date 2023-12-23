@@ -1,6 +1,6 @@
 import pygame
 
-from src.components.entity import Mob
+from src.components.entity import Entity
 from src.player import Player
 
 class Level(pygame.sprite.Sprite):
@@ -13,8 +13,11 @@ class Level(pygame.sprite.Sprite):
         self.setup()
 
     def setup(self):
-        _data = Player.load()
         self.player = Player(group=self.all_sprites)
+        self.player.load()
+
+    def save(self):
+        self.player.save()
 
     def run(self, dt): 
         self.display_surface.fill('blue')

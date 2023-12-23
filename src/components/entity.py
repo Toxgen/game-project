@@ -2,7 +2,7 @@ import pygame
 
 from src.components.support import import_folder
 
-class Mob(pygame.sprite.Sprite):
+class Entity(pygame.sprite.Sprite):
 
     __mob_data = (
     # woods [0][0 - 2]

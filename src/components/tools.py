@@ -1,8 +1,8 @@
-import pygame
 import random
-from random import randint
-import time
-from time import sleep
+
+import pygame
+
+from src.constants import __drop_data, __mob_data, __mob_drops, __possible_locations
 
 def drops(mob: str) -> list[str]:
     """
@@ -39,7 +39,6 @@ def printingInv(inv: dict) -> None: # change this into blitting
     count = 0
     for count, (key, value) in enumerate(inv.items()): 
 
-        time.sleep(0.075)
 
         if count % 8 != 0 or count == 0:
             print(f"+ {key} x {value}", end='\n')
