@@ -1,16 +1,11 @@
 [
-    {
-        "hp": 0,
-        "defense+": 0,
-        "gold": 0,
-        "currentTool": null,
-        "level": 0,
-        "experience": 0
-    },
+    0,
+    "nothing",
+    0,
+    "nothing",
     {},
     {
-        "x": 250.31267734613533,
-        "y": 437.7945817193342,
-        "location": "somewhere"
+        "x": 363.5523594404261,
+        "y": 464.138564286263
     }
 ]
