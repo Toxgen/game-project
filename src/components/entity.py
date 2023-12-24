@@ -28,21 +28,20 @@ class Entity(pygame.sprite.Sprite):
             ("goblin_helmet", 1))
     }
 
-    def __init__(self, 
+    def __init__(self, group,
                  name: str, 
-                 drops: dict, 
-                 stats: dict,
-                 group = pygame.sprite.Group(),
                  pos: tuple[int, int] = (0, 0)) -> None:
         
         self.name = name
-        self.drops = drops 
-        self.stats = stats 
-
-        self.group = group
+        
         self.image = self.getImage()
         self.rect = pygame.Rect(center = pos)
         self.speed = 150
+
+    def setup(self, group):
+
+        super().__init__(group)
+
 
     def getImage(self):
         _fullpath = "Assets/Mob/" + self.name
@@ -68,4 +67,3 @@ class Entity(pygame.sprite.Sprite):
             self.rect.x += dx * self.speed
             self.rect.y += dy * self.speed
         
-    

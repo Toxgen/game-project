@@ -13,6 +13,8 @@ allowed_areas = (
 )
 # enemies
 Goblin_1 = Entity("goblin")
+
+all_Enemies = (Goblin_1, )
 # weapons
 Fist = Item("fist", "Your Fist", "weapon",
             buy=-1, sell=-1, damage=2)

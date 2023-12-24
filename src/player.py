@@ -28,6 +28,9 @@ class Player(pygame.sprite.Sprite):
 
     def save(self) -> None:
 
+        self.selected_tool = self.selected_tool.name
+        self.tools_inv = [x.name for x in self.tools_inv]
+
         obj = (self.gold,
                self.selected_tool, self.tool_index,
                self.tools_inv, self.items_inv,
@@ -119,8 +122,10 @@ class Player(pygame.sprite.Sprite):
         self.dt = dt
         self.input()
         self.get_status()
+        
         if self.in_Attack:
             self.hit_enemy()
+            
         self.update_timers()
         self.move(dt)
         self.animation(dt)
@@ -189,8 +194,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def _get_hitboxes(self):
-
-        self.sword_hitbox = pygame.Rect(self.rect.center, (self.pos)) 
+        self.sword_hitbox = pygame.Rect(self.rect.center, (self.pos))
         self.sword_hitboxes = [] 
         arc_radius = 50
 
