@@ -1,4 +1,5 @@
 import pygame
+import math
 
 from src.components.support import import_folder
 
@@ -41,6 +42,7 @@ class Entity(pygame.sprite.Sprite):
         self.group = group
         self.image = self.getImage()
         self.rect = pygame.Rect(center = pos)
+        self.speed = 150
 
     def getImage(self):
         _fullpath = "Assets/Mob/" + self.name
@@ -51,7 +53,19 @@ class Entity(pygame.sprite.Sprite):
 
         return (round(randint(self.stats["attk1"], self.stats["attk2"]) * 1.2)) 
 
-    def update(self) -> None:
-        return None
-    
+    def update(self, player):
+        if self.rect.colliderect(player.rect.topleft, (player.rect.topleft - player.rect.bottomleft, 
+                                                       player.rect.topleft - player.rect.topright)):
+
+            dx = player.rect.centerx - self.rect.centerx
+            dy = player.rect.centery - self.rect.centery
+            distance = math.sqrt(dx**2 + dy**2)
+
+            if distance > 0: 
+                dx /= distance
+                dy /= distance
+
+            self.rect.x += dx * self.speed
+            self.rect.y += dy * self.speed
+        
     

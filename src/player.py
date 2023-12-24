@@ -1,4 +1,4 @@
-import pygame, json, logging
+import pygame, json, logging, math
 
 from src.constants import *
 from src.components.support import *
@@ -43,7 +43,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, 
                  group,
                  gold = 0,
-                 selected_tool: str = "nothing",
+                 selected_tool = Fist,
                  tool_index: int = 0,
                  tools_inv: tuple = ("nothing"),
                  items_inv: dict = {},
@@ -51,6 +51,8 @@ class Player(pygame.sprite.Sprite):
                  location: dict = {"x": 500, "y": 500}): 
 
         super().__init__(group)
+        self.in_Attack = False
+        self.angle = 0
 
         self.import_assets()
         self.status = "down"
@@ -78,11 +80,15 @@ class Player(pygame.sprite.Sprite):
         }
 
     def use_tool(self):
-        pass
+        match self.selected_tool.type:
+            case "weapon":
+                self.hit_enemy()
+                self.in_Attack = True
     
     def import_assets(self):
         self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
-                           'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': []}
+                           'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': [],
+                           "up_swing": [], "down_swing": [], "left_swing": [], "right_swing": []}
         
         for animation in self.animations.keys():
             fullpath = "Assets/Resources/Character/" + animation
@@ -110,8 +116,11 @@ class Player(pygame.sprite.Sprite):
 
 
     def update(self, dt):
+        self.dt = dt
         self.input()
         self.get_status()
+        if self.in_Attack:
+            self.hit_enemy()
         self.update_timers()
         self.move(dt)
         self.animation(dt)
@@ -178,18 +187,43 @@ class Player(pygame.sprite.Sprite):
                 
         self.player["experience"] = exp
 
-    def buy_item(self, where, item):
-        if where in allowed_areas:
-            raise NotImplementedError
-        
-        else:
-            return 0
 
-    def equip(self, item):
-        raise NotImplementedError
+    def _get_hitboxes(self):
+
+        self.sword_hitbox = pygame.Rect(self.rect.center, (self.pos)) 
+        self.sword_hitboxes = [] 
+        arc_radius = 50
+
+        for _ in range(5):
+            if self.status == 'up':
+                self.sword_hitbox.x = self.rect.centerx + arc_radius * math.cos(self.angle)
+                self.sword_hitbox.y = self.rect.centery - arc_radius * math.sin(self.angle)
+            elif self.status == 'down':
+                self.sword_hitbox.x = self.rect.centerx + arc_radius * math.cos(self.angle)
+                self.sword_hitbox.y = self.rect.centery + arc_radius * math.sin(self.angle)
+            elif self.status == 'left':
+                self.sword_hitbox.x = self.rect.centerx - arc_radius * math.cos(self.angle)
+                self.sword_hitbox.y = self.rect.centery + arc_radius * math.sin(self.angle)
+            elif self.status == 'right':
+                self.sword_hitbox.x = self.rect.centerx + arc_radius * math.cos(self.angle)
+                self.sword_hitbox.y = self.rect.centery + arc_radius * math.sin(self.angle)
+
+            self.sword_hitboxes.append(self.sword_hitbox)
+            self.angle += 3
+
+        return self.sword_hitboxes
     
-    def unequip(self, item):
-        raise NotImplementedError
-    
-    def returnArmorBonus(self):
-        raise NotImplementedError
+    def hit_enemy(self, enemy=None):
+        if self.hit_index >= 10:
+            self._hit_index = 0
+            self.in_Attack = False
+
+        else:
+            self._get_hitboxes()
+
+        for sword_hitbox in self.sword_hitboxes:
+
+            if sword_hitbox.colliderect(enemy.rect):
+                self._hit_index = 0
+                self.in_Attack = False
+                enemy.hit()

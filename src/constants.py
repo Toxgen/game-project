@@ -1,4 +1,5 @@
 from src.components.items import Item
+from src.components.entity import Entity
 
 from typing import Final
 import pygame
@@ -10,16 +11,15 @@ screen_dim: Final = (1152, 704) # 36 by 22 (x32)
 allowed_areas = (
     "placeholder",
 )
-
+# enemies
+Goblin_1 = Entity("goblin")
 # weapons
-# name, description, buy, sell, damage increase
 Fist = Item("fist", "Your Fist", "weapon",
             buy=-1, sell=-1, damage=2)
 Goblin_Sword = Item("goblin_sword", "A green, wooden sword", "weapon",
                     buy=10, sell=5, damage=4)
 
 # Items
-# name, description, buy, sell, effect
 Small_Health_Potion = Item("small_health_potion", "A small, red potion", "potion", 
                            sell=10, buy=5, effect=5)
 Medium_Health_Potion = Item("medium_health_potion", "A medium, red potion", "potion",
