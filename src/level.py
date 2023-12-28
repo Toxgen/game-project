@@ -1,10 +1,12 @@
 import pygame
+import pytmx
 
-from src.components.entity import Entity
 from src.player import Player
+from src.components.support import import_folder
 
 class Level(pygame.sprite.Sprite):
     def __init__(self):
+        self.tiled_maps = import_folder("Assets/Resources/Maps", map=True)
         self.display_surface = pygame.display.get_surface()
 
         self.all_sprites = CameraGroup()
@@ -12,6 +14,7 @@ class Level(pygame.sprite.Sprite):
         self.setup()
 
     def setup(self):
+
         self.player = Player(group=self.all_sprites)
         self.player.load()
 

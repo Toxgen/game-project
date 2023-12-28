@@ -32,17 +32,25 @@ class Entity(pygame.sprite.Sprite):
                  name: str, 
                  drops: dict, 
                  stats: dict,
-                 group = pygame.sprite.Group(),
+                 hp: int,
+                 defense: int,
+                 group,
                  pos: tuple[int, int] = (0, 0)) -> None:
         
         self.name = name
         self.drops = drops 
-        self.stats = stats 
+        self.stats = stats
+
+        self.hp = hp
+        self.defense = defense 
 
         self.group = group
         self.image = self.getImage()
         self.rect = pygame.Rect(center = pos)
+        self.pos = pygame.math.Vector2
         self.speed = 150
+
+        self.isAlive = False
 
     def getImage(self):
         _fullpath = "Assets/Mob/" + self.name

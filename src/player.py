@@ -52,6 +52,7 @@ class Player(pygame.sprite.Sprite):
 
         super().__init__(group)
         self.in_Attack = False
+        self._hit_index = 0
         self.angle = 0
 
         self.import_assets()
@@ -75,15 +76,13 @@ class Player(pygame.sprite.Sprite):
         self.speed = 200
 
         self.timer = {
-            "tool use": Timer(350, self.use_tool),
-            "tool swap": Timer(200)
+            "tool swap": Timer(200),
+            "weapon use": Timer(250, self.use_weapon)
         }
 
-    def use_tool(self):
-        match self.selected_tool.type:
-            case "weapon":
-                self.hit_enemy()
-                self.in_Attack = True
+    def use_weapon(self):
+        self.hit_enemy()
+        self.in_Attack = True
     
     def import_assets(self):
         self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
@@ -104,15 +103,15 @@ class Player(pygame.sprite.Sprite):
 
         except (IndexError, Exception) as error:
             self._log = f"self.status = {self.status}, self.frame_index = {self.frame_index}"
-            logging.warning(f"animation went wrong, {self._log}, error: {error}")
+            # logging.warning(f"animation went wrong, {self._log}, error: {error}")
             
 
     def get_status(self):
         if self.direction.magnitude() == 0:
             self.status = self.status.split("_")[0] + "_idle"
 
-        if self.timer["tool use"].active:
-            self.status = self.status.split("_")[0] + "_" + self.selected_tool
+        if self.timer["weapon use"].active:
+            self.status = self.status.split("_")[0] + "_" + self.selected_tool.name
 
 
     def update(self, dt):
@@ -120,14 +119,19 @@ class Player(pygame.sprite.Sprite):
         self.input()
         self.get_status()
         if self.in_Attack:
+            
             self.hit_enemy()
+
+        else:
+            logging.warning(self.in_Attack)
+        
         self.update_timers()
         self.move(dt)
         self.animation(dt)
     
     def input(self):
         keys = pygame.key.get_pressed()
-        if not self.timer["tool use"].active:
+        if not self.timer["weapon use"].active:
 
             if keys[pygame.K_w]:
                 self.direction.y = -1
@@ -148,7 +152,8 @@ class Player(pygame.sprite.Sprite):
                 self.direction.x = 0
 
             if keys[pygame.K_SPACE]:
-                self.timer["tool use"].activate()
+                logging.warning("whzhuexihefhuweuifyuei")
+                self.timer["weapon use"].activate()
                 self.direction = pygame.math.Vector2()
                 self.frame_index = 0
 
@@ -187,12 +192,16 @@ class Player(pygame.sprite.Sprite):
                 
         self.player["experience"] = exp
 
-
     def _get_hitboxes(self):
+        self._test = pygame.display.get_surface()
 
-        self.sword_hitbox = pygame.Rect(self.rect.center, (self.pos)) 
+        self.sword_hitbox = pygame.Rect(self.rect.midtop, (self.pos))
+
         self.sword_hitboxes = [] 
-        arc_radius = 50
+        arc_radius = 5
+
+        if not self.angle:
+            self.angle = 0
 
         for _ in range(5):
             if self.status == 'up':
@@ -208,22 +217,26 @@ class Player(pygame.sprite.Sprite):
                 self.sword_hitbox.x = self.rect.centerx + arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y = self.rect.centery + arc_radius * math.sin(self.angle)
 
+            self._test.fill("red", self.sword_hitbox)
+
             self.sword_hitboxes.append(self.sword_hitbox)
             self.angle += 3
 
-        return self.sword_hitboxes
-    
     def hit_enemy(self, enemy=None):
-        if self.hit_index >= 10:
+        if enemy is None:
+            logging.info("no enemy lol")
+
+        if self._hit_index >= 10:
             self._hit_index = 0
             self.in_Attack = False
 
         else:
             self._get_hitboxes()
+            self._hit_index += 1
 
         for sword_hitbox in self.sword_hitboxes:
 
-            if sword_hitbox.colliderect(enemy.rect):
+            if False:#sword_hitbox.colliderect(enemy.rect):
                 self._hit_index = 0
                 self.in_Attack = False
                 enemy.hit()
