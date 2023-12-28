@@ -13,14 +13,8 @@ class Player(pygame.sprite.Sprite):
         with open("save/data.json") as file:
             try:
                 data = json.load(file)
-                return data
-
-                # for obj, stuff in mapping:
-                #     for key, value in stuff.items():
-                #         obj[key] = value
-
-                # self.pos.x = self.location["x"]
-                # self.pos.y = self.location["y"]
+                # find a way to change a str into a cls :) actually kinda ez
+                # hope u know what i mean for loop and just check if item name == save n ame
 
             except json.decoder.JSONDecodeError as j:
                 logging.info(f"json load error: {j}")
@@ -28,10 +22,14 @@ class Player(pygame.sprite.Sprite):
 
     def save(self) -> None:
 
+        tools_inv = [x.name for x in self.items_inv]
+
         obj = (self.gold,
-               self.selected_tool, self.tool_index,
-               self.tools_inv, self.items_inv,
+               self.selected_tool.name, self.tool_index,
+               tools_inv, self.items_inv,
                self.location)
+        
+        print(obj)
 
         with open("save/data.json", "w") as file:        
             json.dump(obj, file, indent=4)
@@ -46,7 +44,7 @@ class Player(pygame.sprite.Sprite):
                  selected_tool = Fist,
                  tool_index: int = 0,
                  tools_inv: tuple = ("nothing"),
-                 items_inv: dict = {},
+                 items_inv: tuple = (),
 
                  location: dict = {"x": 500, "y": 500}): 
 
