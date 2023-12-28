@@ -216,12 +216,12 @@ class Player(pygame.sprite.Sprite):
         for _ in range(5):
             if self.status == 'up':
                 self.sword_hitbox.x += arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y += -arc_radius * math.sin(self.angle)
+                self.sword_hitbox.y += arc_radius * math.sin(self.angle)
             elif self.status == 'down':
                 self.sword_hitbox.x += arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y += arc_radius * math.sin(self.angle)
             elif self.status == 'left':
-                self.sword_hitbox.x += -arc_radius * math.cos(self.angle)
+                self.sword_hitbox.x += arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y += arc_radius * math.sin(self.angle)
             elif self.status == 'right':
                 self.sword_hitbox.x += arc_radius * math.cos(self.angle)
