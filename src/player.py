@@ -195,13 +195,10 @@ class Player(pygame.sprite.Sprite):
     def _get_hitboxes(self):
         self._test = pygame.display.get_surface()
 
-        self.sword_hitbox = pygame.Rect(self.rect.midtop, (self.pos))
+        self.sword_hitbox = pygame.Rect((self.rect.x + 27, self.rect.y + 17), (10, 10))
 
         self.sword_hitboxes = [] 
-        arc_radius = 5
-
-        if not self.angle:
-            self.angle = 0
+        arc_radius = 13
 
         for _ in range(5):
             if self.status == 'up':
@@ -214,17 +211,22 @@ class Player(pygame.sprite.Sprite):
                 self.sword_hitbox.x = self.rect.centerx - arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y = self.rect.centery + arc_radius * math.sin(self.angle)
             elif self.status == 'right':
-                self.sword_hitbox.x = self.rect.centerx + arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y = self.rect.centery + arc_radius * math.sin(self.angle)
+                self.sword_hitbox.x += arc_radius * math.cos(self.angle)
+                self.sword_hitbox.y += arc_radius * math.sin(self.angle)
 
             self._test.fill("red", self.sword_hitbox)
 
+            msg = f"""          x: {self.sword_hitbox.x}, y: {self.sword_hitbox.y},
+                      center: {self.sword_hitbox.center}"""
+            
+            print(msg)
+
             self.sword_hitboxes.append(self.sword_hitbox)
-            self.angle += 3
+            self.angle += 66
 
     def hit_enemy(self, enemy=None):
         if enemy is None:
-            logging.info("no enemy lol")
+            pass
 
         if self._hit_index >= 10:
             self._hit_index = 0
