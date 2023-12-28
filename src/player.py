@@ -195,21 +195,21 @@ class Player(pygame.sprite.Sprite):
     def _get_hitboxes(self):
         self._test = pygame.display.get_surface()
 
-        self.sword_hitbox = pygame.Rect((self.rect.x + 27, self.rect.y + 17), (10, 10))
+        self.sword_hitbox = pygame.Rect((self.rect.x + 27, self.rect.y + 17), (10, 10)) # just throw this into the if statements
 
         self.sword_hitboxes = [] 
         arc_radius = 13
 
         for _ in range(5):
             if self.status == 'up':
-                self.sword_hitbox.x = self.rect.centerx + arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y = self.rect.centery - arc_radius * math.sin(self.angle)
+                self.sword_hitbox.x += arc_radius * math.cos(self.angle)
+                self.sword_hitbox.y += -arc_radius * math.sin(self.angle)
             elif self.status == 'down':
-                self.sword_hitbox.x = self.rect.centerx + arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y = self.rect.centery + arc_radius * math.sin(self.angle)
+                self.sword_hitbox.x += arc_radius * math.cos(self.angle)
+                self.sword_hitbox.y += arc_radius * math.sin(self.angle)
             elif self.status == 'left':
-                self.sword_hitbox.x = self.rect.centerx - arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y = self.rect.centery + arc_radius * math.sin(self.angle)
+                self.sword_hitbox.x += -arc_radius * math.cos(self.angle)
+                self.sword_hitbox.y += arc_radius * math.sin(self.angle)
             elif self.status == 'right':
                 self.sword_hitbox.x += arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y += arc_radius * math.sin(self.angle)
