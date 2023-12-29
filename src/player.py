@@ -214,12 +214,12 @@ class Player(pygame.sprite.Sprite):
         for _ in range(5):
             if self.status == 'up':
                 self.sword_hitbox.x += arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y += arc_radius * math.sin(self.angle)
+                self.sword_hitbox.y += -arc_radius * math.sin(self.angle)
             elif self.status == 'down':
                 self.sword_hitbox.x += arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y += arc_radius * math.sin(self.angle)
             elif self.status == 'left':
-                self.sword_hitbox.x += arc_radius * math.cos(self.angle)
+                self.sword_hitbox.x += -arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y += arc_radius * math.sin(self.angle)
             elif self.status == 'right':
                 self.sword_hitbox.x += arc_radius * math.cos(self.angle)
@@ -228,11 +228,9 @@ class Player(pygame.sprite.Sprite):
             self._test.fill("red", self.sword_hitbox)
 
             self.sword_hitboxes.append(self.sword_hitbox)
-            self.angle += 66
+            self.angle += 66 # idk why it is 66, don't mess with it
 
     def hit_enemy(self, enemy=None):
-        if enemy is None:
-            pass
 
         if self._hit_index >= 10:
             self._hit_index = 0
@@ -241,10 +239,12 @@ class Player(pygame.sprite.Sprite):
         else:
             self._get_hitboxes()
             self._hit_index += 1
+            
+        if enemy is not None:
 
-        for sword_hitbox in self.sword_hitboxes:
+        	for sword_hitbox in self.sword_hitboxes:
 
-            if False:#sword_hitbox.colliderect(enemy.rect):
-                self._hit_index = 0
-                self.in_Attack = False
-                enemy.hit()
+            	if sword_hitbox.colliderect(enemy.rect):
+                	self._hit_index = 0
+                	self.in_Attack = False
+                	enemy.hit()
