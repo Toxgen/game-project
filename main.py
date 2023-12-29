@@ -6,6 +6,9 @@ from src.game import Game
     
 def main():
     logging.basicConfig(filename='_logging/_logs.log')
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+
     game = Game()
     game.run()
     
