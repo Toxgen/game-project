@@ -12,12 +12,16 @@ allowed_areas = (
     "placeholder",
 )
 # enemies
-# Goblin_1 = Entity("goblin")
+Goblin_1 = Entity("goblin", group=None)
 # weapons
+
 Fist = Item("fist", "Your Fist", "weapon",
             buy=-1, sell=-1, damage=2)
 Goblin_Sword = Item("goblin_sword", "A green, wooden sword", "weapon",
                     buy=10, sell=5, damage=4)
+
+weapons = {"fist": Fist,
+           "goblin_sword": Goblin_Sword}
 
 # Items
 Small_Health_Potion = Item("small_health_potion", "A small, red potion", "potion", 

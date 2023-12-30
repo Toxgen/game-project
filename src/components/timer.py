@@ -10,11 +10,9 @@ class Timer:
         self.start_time = 0
         self.active = False
 
-        logging.info(f"func: {func}, attacking: {self.attacking} init")
 
     def activate(self):
         if self.attacking:
-            logging.info(f"func: {self.func}, attacking: {self.attacking}")
             self.func()
 
         self.active = True

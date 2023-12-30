@@ -8,16 +8,12 @@ class Entity(pygame.sprite.Sprite):
     __mob_data = (
     # woods [0][0 - 2]
     ("goblin", 8, 2, 3, 1, None), # name, health, r-attk1, r-attk2, defense, s-effect
-    ("slime", 12, 3, 4, 3, None),
-    ("wolf", 7, 5, 7, 2, None)
     # plains [1][0 - ?]
     )
 
     __mob_drops = {
         "goblin": ("goblin_hide", "goblin_leg", "goblin_sword", "goblin_staff", 
                 "goblin_chestplate", "goblin_legging", "goblin_helmet"),
-        "slime": ("nothing u got scammed lol"),
-        "wolf": ("You also got scammed lol")
     }
 
 
@@ -30,24 +26,20 @@ class Entity(pygame.sprite.Sprite):
 
     def __init__(self, 
                  name: str, 
-                 drops: dict, 
-                 stats: dict,
-                 hp: int,
-                 defense: int,
+                #  drops: dict, 
+                #  stats: dict, just gets these from the dictionaries or just use args for those
+                #  hp: int,
+                #  defense: int,
                  group,
                  pos: tuple[int, int] = (0, 0)) -> None:
         
         self.name = name
-        self.drops = drops 
-        self.stats = stats
-
-        self.hp = hp
-        self.defense = defense 
 
         self.group = group
-        self.image = self.getImage()
-        self.rect = pygame.Rect(center = pos)
-        self.pos = pygame.math.Vector2
+        self.image = self.getImage() # debug this later
+
+        self.rect = self.image.get_rect(center = pos)
+        self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 150
 
         self.isAlive = False
@@ -59,11 +51,14 @@ class Entity(pygame.sprite.Sprite):
     def returnAttackDamage(self) -> int:
         from random import randint
 
-        return (round(randint(self.stats["attk1"], self.stats["attk2"]) * 1.2)) 
+        return (round(randint(self.stats["attk1"], self.stats["attk2"]) * 1.2))
+    
+    def hit(self):
+        raise NotImplementedError
 
     def update(self, player):
-        if self.rect.colliderect(player.rect.topleft, (player.rect.topleft - player.rect.bottomleft, 
-                                                       player.rect.topleft - player.rect.topright)):
+        screen_size = pygame.display.get_surface().get_size()
+        if (0 <= self.rect.x <= screen_size[0]) and (0 <= self.rect.y <= screen_size[1]):
 
             dx = player.rect.centerx - self.rect.centerx
             dy = player.rect.centery - self.rect.centery
@@ -76,4 +71,3 @@ class Entity(pygame.sprite.Sprite):
             self.rect.x += dx * self.speed
             self.rect.y += dy * self.speed
         
-    

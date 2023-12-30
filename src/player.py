@@ -13,34 +13,37 @@ class Player(pygame.sprite.Sprite):
         with open("save/data.json") as file:
             try:
                 data = json.load(file)
-                # find a way to change a str into a cls :) actually kinda ez
-                # hope u know what i mean for loop and just check if item name == save n ame
+
+                self.selected_tool = weapons[data[0]]
+                self.tool_index = data[1]
+                self.items_inv = data[2]
+                self.items_inv = data[3]
+                self.location = data[4]
+                self.status = data[5]
 
             except json.decoder.JSONDecodeError as j:
-                logging.info(f"json load error: {j}")
+                logging.warning(f"json load error: {j}")
                         
 
     def save(self) -> None:
 
-        tools_inv = [x.name for x in self.items_inv]
-
-        obj = (self.gold,
-               self.selected_tool.name, self.tool_index,
-               tools_inv, self.items_inv,
-               self.location)
-        
-        print(obj)
+        obj = (
+               self.selected_tool.name, 
+               self.tool_index,
+               [x.name for x in self.items_inv], 
+               self.items_inv,
+               self.location,
+               self.status)
 
         with open("save/data.json", "w") as file:        
             json.dump(obj, file, indent=4)
 
                 
-    def return_next_level(self) -> int:
-        return round((1.31 * self.player["level"] + 5))
+    # def return_next_level(self) -> int:
+    #     return round((1.31 * self.player["level"] + 5))
                 
     def __init__(self, 
                  group,
-                 gold = 0,
                  selected_tool = Fist,
                  tool_index: int = 0,
                  tools_inv: tuple = ("nothing"),
@@ -54,10 +57,10 @@ class Player(pygame.sprite.Sprite):
         self.angle = 0
 
         self.import_assets()
+
         self.status = "down"
         self.frame_index = 0
 
-        self.gold = gold
         self.selected_tool = selected_tool
         self.tool_index = tool_index
         self.tools_inv = tools_inv
@@ -65,9 +68,12 @@ class Player(pygame.sprite.Sprite):
         self.location = location
 
         self.defense = 0 # maybe make method to find the total defense here
+
+        self.load()
         
         self.image = self.animations[self.status][self.frame_index]
-        self.rect = self.image.get_rect(center = (location["x"], location["y"]))
+        self.rect = self.image.get_rect(center = (self.location["x"], self.location["y"]))
+
 
         self.direction = pygame.math.Vector2()
         self.pos = pygame.math.Vector2(self.rect.center)
@@ -84,8 +90,7 @@ class Player(pygame.sprite.Sprite):
     
     def import_assets(self):
         self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
-                           'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': [],
-                           "up_swing": [], "down_swing": [], "left_swing": [], "right_swing": []}
+                           'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': []}
         
         for animation in self.animations.keys():
             fullpath = "Assets/Resources/Character/" + animation
@@ -101,16 +106,12 @@ class Player(pygame.sprite.Sprite):
 
         except (IndexError, Exception) as error:
             self._log = f"self.status = {self.status}, self.frame_index = {self.frame_index}"
-            # logging.warning(f"animation went wrong, {self._log}, error: {error}")
+            logging.warning(f"animation went wrong, {self._log}, error: {error}")
             
 
     def get_status(self):
         if self.direction.magnitude() == 0:
             self.status = self.status.split("_")[0] + "_idle"
-
-        if self.timer["weapon use"].active:
-            self.status = self.status.split("_")[0] + "_" + self.selected_tool.name
-
 
     def update(self, dt):
         self.dt = dt
@@ -174,19 +175,8 @@ class Player(pygame.sprite.Sprite):
             if timer.active:
                 timer.update()
 
-    def xp(self) -> int:
-        
-        exp = self.player["experience"]
-
-        while exp >= amt_exp:
-            amt_exp = self.return_next_level(self.player["level"])
-            self.player["level"] += 1
-            exp -= amt_exp
-                
-        self.player["experience"] = exp
-
     def _get_hitboxes(self):
-        self._test = pygame.display.get_surface()
+        # self._test = pygame.display.get_surface()
 
         self.sword_hitbox = pygame.Rect((self.rect.x, self.rect.y), (10, 10)) 
 
@@ -220,7 +210,7 @@ class Player(pygame.sprite.Sprite):
                 self.sword_hitbox.x += arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y += arc_radius * math.sin(self.angle)
 
-            self._test.fill("red", self.sword_hitbox)
+            # self._test.fill("red", self.sword_hitbox)
 
             self.sword_hitboxes.append(self.sword_hitbox)
         
@@ -244,5 +234,15 @@ class Player(pygame.sprite.Sprite):
                     self._hit_index = 0
                     enemy.hit()
 
+    # def xp(self) -> int:
+        
+    #     exp = self.player["experience"]
+
+    #     while exp >= amt_exp:
+    #         amt_exp = self.return_next_level(self.player["level"])
+    #         self.player["level"] += 1
+    #         exp -= amt_exp
+                
+    #     self.player["experience"] = exp
 if __name__ == "__main__":
     pass
