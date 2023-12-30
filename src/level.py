@@ -15,7 +15,7 @@ class Level(pygame.sprite.Sprite):
     def setup(self):
         self.player = Player(group=self.all_sprites)
         for enemies in all_Enemies:
-            enemies.setup()
+            enemies.setup(self.enemies)
         self.player.load()
 
     def save(self):
