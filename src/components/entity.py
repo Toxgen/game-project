@@ -1,5 +1,6 @@
 import pygame
 import math
+import logging
 
 from src.components.support import import_folder
 
@@ -36,16 +37,17 @@ class Entity(pygame.sprite.Sprite):
         self.name = name
 
         self.group = group
-        self.image = self.getImage() # debug this later
+        self.image = self.getImage()
 
-        self.rect = self.image.get_rect(center = pos)
+        self.rect = self.image[0].get_rect(center = pos)
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 150
 
         self.isAlive = False
 
     def getImage(self):
-        _fullpath = "Assets/Mob/" + self.name
+        _fullpath = "Assets/Resources/Mob/" + self.name
+        logging.warning(f"full path = {_fullpath}")
         return import_folder(_fullpath)
 
     def returnAttackDamage(self) -> int:

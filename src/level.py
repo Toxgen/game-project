@@ -17,16 +17,17 @@ class Level(pygame.sprite.Sprite):
 
     def setup(self):
         self.player = Player(group=self.all_sprites)
-        self.all_sprites = Goblin_1.group
+        Goblin_1.group = self.all_sprites
+        
         self.enemy = Goblin_1
 
     def save(self):
         self.player.save()
 
-    def run(self, dt):
+    def run(self, dt, events):
         self.display_surface.blit(self.map, (0, 0))
         self.all_sprites.custom_draw()
-        self.all_sprites.update(dt)
+        self.all_sprites.update(dt, events)
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):

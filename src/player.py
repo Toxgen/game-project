@@ -113,9 +113,9 @@ class Player(pygame.sprite.Sprite):
         if self.direction.magnitude() == 0:
             self.status = self.status.split("_")[0] + "_idle"
 
-    def update(self, dt):
+    def update(self, dt, events):
         self.dt = dt
-        self.input()
+        self.input(events)
         self.get_status()
         if self.in_Attack:  
             self.hit_enemy()
@@ -123,8 +123,10 @@ class Player(pygame.sprite.Sprite):
         self.move(dt)
         self.animation(dt)
     
-    def input(self):
+    def input(self, events):
+        logging.info(f"events: {events}")
         keys = pygame.key.get_pressed()
+
         if not self.timer["weapon use"].active:
 
             if keys[pygame.K_w]:
@@ -145,7 +147,8 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.direction.x = 0
 
-            if keys[pygame.K_SPACE]:
+            if events["mouse_down"]:
+                logging.info(f"mouse should be down {events['mouse_down']}")
                 self.timer["weapon use"].activate()
                 self.direction = pygame.math.Vector2()
                 self.frame_index = 0
