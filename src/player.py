@@ -124,7 +124,9 @@ class Player(pygame.sprite.Sprite):
         self.animation(dt)
     
     def input(self, events):
-        logging.info(f"events: {events}")
+        if events["mouse_down"]:
+            logging.info(f"events: {events["mouse_down"]}")
+
         keys = pygame.key.get_pressed()
 
         if not self.timer["weapon use"].active:

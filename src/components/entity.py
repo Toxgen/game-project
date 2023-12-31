@@ -47,7 +47,6 @@ class Entity(pygame.sprite.Sprite):
 
     def getImage(self):
         _fullpath = "Assets/Resources/Mob/" + self.name
-        logging.warning(f"full path = {_fullpath}")
         return import_folder(_fullpath)
 
     def returnAttackDamage(self) -> int:
