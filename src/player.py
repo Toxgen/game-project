@@ -1,4 +1,7 @@
-import pygame, json, logging, math
+import pygame
+import json
+import logging
+import math
 
 from src.constants import *
 from src.components.support import *
