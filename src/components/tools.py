@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-from src.constants import __drop_data, __mob_data, __mob_drops, __possible_locations
+from ..constants import *
 
 def drops(mob: str) -> list[str]:
     """
@@ -14,7 +14,7 @@ def drops(mob: str) -> list[str]:
 
     returning = []
 
-    for counter, (key, value) in enumerate(__drop_data[mob]):
+    for counter, (key, value) in enumerate(drop_data[mob]):
 
         if not counter:
             returning.append(key)
@@ -60,7 +60,7 @@ def printingInv(inv: dict) -> None: # change this into blitting
         
 def returnMob(hp: int, location: str) -> list:
     
-    if location not in __possible_locations:
+    if location not in allowed_areas:
         return None
 
     if hp > 50:
@@ -76,11 +76,11 @@ def returnMob(hp: int, location: str) -> list:
         _index = 0 if chance < 4 else 1    
         _index = 2 if chance < 12 else 0
          
-        return [__mob_data[_index][0],  
-                __mob_data[_index][1] * (1 + _hp_multi),
-                __mob_data[_index][2] * (1 + _attk_multi),
-                __mob_data[_index][3] * (1 + _attk_multi),
-                __mob_data[_index][4] * (1 + _def_multi)]
+        return [mob_stats[_index][0],  
+                mob_stats[_index][1] * (1 + _hp_multi),
+                mob_stats[_index][2] * (1 + _attk_multi),
+                mob_stats[_index][3] * (1 + _attk_multi),
+                mob_stats[_index][4] * (1 + _def_multi)]
     
     match location:
         case "woods":
@@ -92,9 +92,9 @@ def returnMob(hp: int, location: str) -> list:
         
 def insertingMobDrops(preinv: list[str], mob: str, inv: dict = {}) -> dict:
 
-    for thing in __mob_drops[mob]: 
-        drop_index = __mob_drops[mob].index(thing)
-        _mob_drop = __mob_drops[mob][drop_index]
+    for thing in mob_drops[mob]: 
+        drop_index = mob_drops[mob].index(thing)
+        _mob_drop = mob_drops[mob][drop_index]
         check = [item for item in preinv if item == _mob_drop]
 
         if _mob_drop not in inv and _mob_drop in preinv:

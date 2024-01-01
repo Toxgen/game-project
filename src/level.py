@@ -1,5 +1,4 @@
 import pygame
-import pytmx
 
 from src.player import Player
 from src.components.support import import_folder

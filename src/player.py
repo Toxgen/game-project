@@ -56,7 +56,7 @@ class Player(pygame.sprite.Sprite):
 
         super().__init__(group)
         self.in_Attack = False
-        self._hit_index = 0
+        self.hit_index = 0
         self.angle = 0
 
         self.import_assets()
@@ -120,7 +120,7 @@ class Player(pygame.sprite.Sprite):
         self.dt = dt
         self.input(events)
         self.get_status()
-        if self.in_Attack:  
+        if self.in_Attack:
             self.hit_enemy()
         self.update_timers()
         self.move(dt)
@@ -153,7 +153,6 @@ class Player(pygame.sprite.Sprite):
                 self.direction.x = 0
 
             if events["mouse_down"]:
-                logging.info(f"mouse should be down {events['mouse_down']}")
                 self.timer["weapon use"].activate()
                 self.direction = pygame.math.Vector2()
                 self.frame_index = 0
@@ -184,7 +183,7 @@ class Player(pygame.sprite.Sprite):
                 timer.update()
 
     def _get_hitboxes(self):
-        # self._test = pygame.display.get_surface()
+        self._test = pygame.display.get_surface()
 
         self.sword_hitbox = pygame.Rect((self.rect.x, self.rect.y), (10, 10)) 
 
@@ -204,7 +203,7 @@ class Player(pygame.sprite.Sprite):
             self.sword_hitbox.x += 27
             self.sword_hitbox.y += 17
 
-        for _ in range(5):
+        for _ in range(200):
             if self.status == 'up':
                 self.sword_hitbox.x += -arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y += -arc_radius * math.sin(self.angle)
@@ -218,28 +217,30 @@ class Player(pygame.sprite.Sprite):
                 self.sword_hitbox.x += arc_radius * math.cos(self.angle)
                 self.sword_hitbox.y += arc_radius * math.sin(self.angle)
 
-            # self._test.fill("red", self.sword_hitbox)
+            self._test.fill("red", self.sword_hitbox)
 
             self.sword_hitboxes.append(self.sword_hitbox)
+
+            logging.info(f"x: {self.sword_hitbox.x}, y: {self.sword_hitbox.x}, \n")
         
             self.angle += 66 # somehow works, don't mess with it
 
     def hit_enemy(self, enemy=None):
 
-        if self._hit_index == 10:
-            self._hit_index = 0
+        if self.hit_index == 2:
+            self.hit_index = 0
             self.in_Attack = False
 
         else:
             self._get_hitboxes()
-            self._hit_index += 1
+            self.hit_index += 1
 
         if enemy is not None:
             
             for sword_hitbox in self.sword_hitboxes:
 
                 if sword_hitbox.colliderect(enemy.rect):
-                    self._hit_index = 0
+                    self.hit_index = 0
                     enemy.hit()
 
     # def xp(self) -> int:

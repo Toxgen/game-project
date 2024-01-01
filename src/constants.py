@@ -1,17 +1,35 @@
-from src.components.items import Item
-from src.components.entity import Entity
+from .components.items import Item
+from .components.entity import Entity
 
 from typing import Final
 import pygame
 
-# pygame constants
+# pygame constants & other constants
 screen_dim: Final = (1152, 704) # 36 by 22 (x32)
 
 # constants
 allowed_areas = (
     "placeholder",
 )
+
 # enemies
+mob_stats: tuple = ( # TODO change this into a tuple
+("goblin", 8, 2, 3, 1, None), # name, health, r-attk1, r-attk2, defense, s-effect
+)
+
+mob_drops: dict = {
+    "goblin": ("goblin_hide", "goblin_leg", "goblin_sword", "goblin_staff", 
+            "goblin_chestplate", "goblin_legging", "goblin_helmet"),
+}
+
+
+drop_data: dict = {
+    "goblin": (("goblin_hide", 25), ("goblin_leg", 12), 
+        ("goblin_sword", 8), ("goblin_staff", 5), 
+        ("goblin_chestplate", 3), ("goblin_legging", 2), 
+        ("goblin_helmet", 1))
+}
+
 Goblin_1 = Entity("goblin", group=None)
 # weapons
 
