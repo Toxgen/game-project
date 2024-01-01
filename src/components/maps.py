@@ -23,3 +23,11 @@ class Map(pygame.surface.Surface):
         temp_surface = pygame.Surface((self.width, self.height))
         self.render(temp_surface)
         return temp_surface
+    
+    def update(player=None):
+        if player is None:
+            return False # for some reason??
+        pass
+        # TODO just change the map tmx file name to the map
+        # then make a class variable dict that stores the location
+        # of where each rect is and check if it gets hit by the player arg
