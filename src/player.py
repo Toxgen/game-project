@@ -114,8 +114,14 @@ class Player(pygame.sprite.Sprite):
             
 
     def get_status(self):
-        if self.direction.magnitude() == 0:
-            self.status = self.status.split("_")[0] + "_idle"
+        try:
+            if self.direction.magnitude() == 0:
+                self.status = self.status.split("_")[0] + "_idle"
+            
+        except Exception as error:
+            self._log = f"func name: {self.get_status.__name__}, args: {locals()}"
+            logging.warning(f"getting status went wrong, {self._log}, error: {error}")
+            raise Exception
 
     def update(self, dt, events):
         self.dt = dt
