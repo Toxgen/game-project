@@ -84,7 +84,8 @@ class Player(pygame.sprite.Sprite):
 
         self.timer = {
             "tool swap": Timer(200),
-            "weapon use": Timer(250, True, self.use_weapon)
+            "weapon use": Timer(250, True, self.use_weapon),
+            "roll": Timer(100)
         }
 
     def use_weapon(self):
@@ -127,9 +128,6 @@ class Player(pygame.sprite.Sprite):
         self.animation(dt)
     
     def input(self, events):
-        if events["mouse_down"]:
-            logging.info(f"events: {events["mouse_down"]}")
-
         keys = pygame.key.get_pressed()
 
         if not self.timer["weapon use"].active:
@@ -162,6 +160,9 @@ class Player(pygame.sprite.Sprite):
                 self.tool_index += 1
                 self.tool_index = self.tool_index if self.tool_index > len(self.tools_inv) else 0
                 self.selected_tool = self.tools_inv[self.tool_index]
+            
+            if keys[pygame.KMOD_SHIFT]:
+                self.timer["roll"].activate()
 
     def move(self, dt):
         
