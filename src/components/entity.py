@@ -2,8 +2,11 @@ import pygame
 import math
 import logging
 
+from random import randint
+
 from src.components.support import import_folder
 from src.constants import *
+from src.components.timer import Timer
 
 class Entity(pygame.sprite.Sprite):
 
@@ -27,22 +30,31 @@ class Entity(pygame.sprite.Sprite):
         self.speed = 150
 
         self.isAlive = False
+        self.timer = {
+            "dead": Timer(30000)
+        }
 
     def getImage(self):
         _fullpath = "Assets/Resources/Mob/" + self.name
         return import_folder(_fullpath)
 
     def returnAttackDamage(self) -> int:
-        from random import randint
-
         return (round(randint(self.stats["attk1"], self.stats["attk2"]) * 1.2))
     
     def hit(self):
         raise NotImplementedError
 
     def update(self, player):
+        if not self.isAlive and self.timer["dead"].active:
+            self.
+        
         screen_size = pygame.display.get_surface().get_size()
-        if (0 <= self.rect.x <= screen_size[0]) and (0 <= self.rect.y <= screen_size[1]):
+        
+        if (0 <= self.rect.x <= screen_size[0]) and 
+            (0 <= self.rect.y <= screen_size[1]):
+
+            if self.hp < 0:
+                self.isAlive = False
 
             dx = player.rect.centerx - self.rect.centerx
             dy = player.rect.centery - self.rect.centery
@@ -54,4 +66,6 @@ class Entity(pygame.sprite.Sprite):
 
             self.rect.x += dx * self.speed
             self.rect.y += dy * self.speed
+
+
         
