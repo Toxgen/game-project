@@ -9,7 +9,7 @@ class Game():
         self.screen = pygame.display.set_mode((1152, 704))
         self.clock = pygame.time.Clock()
         self.events = {
-            "mouse_down": False
+            "mouse_down": False,
         }
         
         from src.level import Level
@@ -26,10 +26,10 @@ class Game():
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     self.events["mouse_down"] = True
                     logging.info(f"mouse is down")
-                    print(self.events)
 
                 else:
-                    self.events["mouse_down"] = False
+                    for events in self.events:
+                        self.events[events] = False
 
             dt = self.clock.tick(60) / 1000
             self.level.run(dt, self.events)

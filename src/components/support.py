@@ -18,7 +18,6 @@ def import_folder(path,
             surface_list.append(mapmap)
 
     else:
-
         for _, __, img_files in walk(path):
             for image in img_files:
                 full_path = path + '/' + image

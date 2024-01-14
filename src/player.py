@@ -1,7 +1,9 @@
-import pygame
 import json
 import logging
 import math
+from functools import partial
+
+import pygame
 
 from src.constants import *
 from src.components.support import *
@@ -49,13 +51,15 @@ class Player(pygame.sprite.Sprite):
                  group,
                  selected_tool = Fist,
                  tool_index: int = 0,
-                 tools_inv: tuple = ("nothing"),
+                 tools_inv: tuple = ("nothing",),
                  items_inv: tuple = (),
 
                  location: dict = {"x": 500, "y": 500}): 
 
         super().__init__(group)
         self.in_Attack = False
+        self.in_Roll = False
+
         self.hit_index = 0
         self.angle = 0
 
@@ -77,20 +81,27 @@ class Player(pygame.sprite.Sprite):
         self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(center = (self.location["x"], self.location["y"]))
 
-
         self.direction = pygame.math.Vector2()
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 200
 
+        attack_action = partial(self.action, attack=True)
+        roll_action = partial(self.action, roll=True)
+
         self.timer = {
             "tool swap": Timer(200),
-            "weapon use": Timer(250, True, self.use_weapon),
-            "roll": Timer(100)
+            "weapon use": Timer(250, True, attack_action),
+            "roll": Timer(100, True, roll_action)
         }
 
-    def use_weapon(self):
-        self.hit_enemy()
-        self.in_Attack = True
+    def action(self, attack=False, roll=False):
+        if attack:
+            self.hit_enemy()
+            self.in_Attack = True
+
+        if roll:
+            self.roll()
+            self.in_Roll = True
     
     def import_assets(self):
         self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
@@ -111,7 +122,6 @@ class Player(pygame.sprite.Sprite):
         except (IndexError, Exception) as error:
             self._log = f"self.status = {self.status}, self.frame_index = {self.frame_index}"
             logging.warning(f"animation went wrong, {self._log}, error: {error}")
-            
 
     def get_status(self):
         try:
@@ -136,7 +146,9 @@ class Player(pygame.sprite.Sprite):
     def input(self, events):
         keys = pygame.key.get_pressed()
 
-        if not self.timer["weapon use"].active:
+        timers_active = [timer for timer in self.timer.values() if timer.active]
+
+        if not len(timers_active):
 
             if keys[pygame.K_w]:
                 self.direction.y = -1
@@ -167,7 +179,7 @@ class Player(pygame.sprite.Sprite):
                 self.tool_index = self.tool_index if self.tool_index > len(self.tools_inv) else 0
                 self.selected_tool = self.tools_inv[self.tool_index]
             
-            if keys[pygame.KMOD_SHIFT]:
+            if pygame.key.get_mods() & pygame.KMOD_LSHIFT:
                 self.timer["roll"].activate()
 
     def move(self, dt):
@@ -227,8 +239,6 @@ class Player(pygame.sprite.Sprite):
             self._test.fill("red", self.sword_hitbox)
 
             self.sword_hitboxes.append(self.sword_hitbox)
-
-            logging.info(f"x: {self.sword_hitbox.x}, y: {self.sword_hitbox.x}, \n")
         
             self.angle += 66 # somehow works, don't mess with it
 
@@ -249,6 +259,9 @@ class Player(pygame.sprite.Sprite):
                 if sword_hitbox.colliderect(enemy.rect):
                     self.hit_index = 0
                     enemy.hit()
+
+    def roll(self):
+        logging.info("roll init")
 
     # def xp(self) -> int:
         

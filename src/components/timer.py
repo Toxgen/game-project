@@ -2,17 +2,17 @@ import pygame
 import logging
 class Timer:
     def __init__(self, duration, 
-                 attacking=False, func=None):
+                 first=False, func=None):
         
         self.duration = duration
         self.func = func
-        self.attacking = attacking
+        self.first = first
         self.start_time = 0
         self.active = False
 
 
     def activate(self):
-        if self.attacking:
+        if self.first:
             self.func()
 
         self.active = True
@@ -26,5 +26,5 @@ class Timer:
         current_time = pygame.time.get_ticks()
         if current_time - self.start_time >= self.duration:
             self.deactivate()   
-            if self.func and not self.attacking:
+            if self.func and not self.first:
                 self.func()
