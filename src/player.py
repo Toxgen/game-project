@@ -91,14 +91,16 @@ class Player(pygame.sprite.Sprite):
             "roll": Timer(100, True, roll_action)
         }
 
-    def action(self, attack=False, roll=False):
+    def action(self, attack=False, roll=False) -> None:
         if attack:
             self.hit_enemy()
             self.in_Attack = True
+            return
 
         if roll:
             self.roll()
             self.in_Roll = True
+            return
     
     def import_assets(self):
         self.animations = {
@@ -182,8 +184,7 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_q] and not self.timer["tool swap"].active:
                 self.timer['tool swap'].activate()
                 self.tool_index += 1
-                self.tool_index = self.tool_index if self.tool_index > len(
-                    self.tools_inv) else 0
+                self.tool_index = self.tool_index if self.tool_index > len(self.tools_inv) else 0
                 self.selected_tool = self.tools_inv[self.tool_index]
             
             if pygame.key.get_mods() & pygame.KMOD_LSHIFT:
