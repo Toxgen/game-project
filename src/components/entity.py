@@ -45,13 +45,13 @@ class Entity(pygame.sprite.Sprite):
         raise NotImplementedError
 
     def update(self, player):
-        if not self.isAlive and self.timer["dead"].active:
-            self.
+        # if not self.isAlive and self.timer["dead"].active:
+        #     self.
         
         screen_size = pygame.display.get_surface().get_size()
         
-        if (0 <= self.rect.x <= screen_size[0]) and 
-            (0 <= self.rect.y <= screen_size[1]):
+        if ((0 <= self.rect.x <= screen_size[0]) and 
+            (0 <= self.rect.y <= screen_size[1])):
 
             if self.hp < 0:
                 self.isAlive = False
@@ -66,6 +66,4 @@ class Entity(pygame.sprite.Sprite):
 
             self.rect.x += dx * self.speed
             self.rect.y += dy * self.speed
-
-
-        
+            

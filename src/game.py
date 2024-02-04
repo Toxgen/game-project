@@ -15,6 +15,10 @@ class Game():
         from src.level import Level
         self.level = Level()
 
+        from src.level import _map_prop
+        # the map props class gives me the props things
+        # so like just check if the player is in the _map_props things
+
     def run(self):
         while True:
             for event in pygame.event.get():

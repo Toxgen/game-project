@@ -8,7 +8,6 @@ from src.components.maps import Map
 def import_folder(path,
                   map=False):
     
-    
     surface_list = []
 
     if map:

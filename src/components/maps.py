@@ -4,11 +4,17 @@ import logging
 
 class Map(pygame.surface.Surface):
 
+    map_prop = {
+        "test": {"tp_point_1": (0, 0, 500, 1000, "Foo")}
+    }
+
     def __init__(self, filename):
         tm = pytmx.load_pygame(filename, pixelalpha = True)
         self.width = tm.width * tm.tilewidth
         self.height = tm.height * tm.tileheight
         self.tmxdata = tm
+
+        self.filename = filename
 
     def render(self, surface):
         ti = self.tmxdata.get_tile_image_by_gid

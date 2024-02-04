@@ -10,6 +10,8 @@ class Level(pygame.sprite.Sprite):
         self.display_surface = pygame.display.get_surface()
         self.map = self.tiled_maps[0].make_map()
 
+        self._map_prop = MapProperties(self.map.map_prop[self.map.filename])
+
         self.all_sprites = CameraGroup()
 
         self.setup()
@@ -36,4 +38,10 @@ class CameraGroup(pygame.sprite.Group):
     def custom_draw(self):
         for sprite in self.sprites():
             self.display_surface.blit(sprite.image, sprite.rect)
-            
+
+class MapProperties():
+    def __init__(self, props: tuple) -> None:
+        self.props = props
+
+    def get(self) -> tuple:
+        return self.props

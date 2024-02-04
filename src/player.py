@@ -9,9 +9,6 @@ from src.constants import *
 from src.components.support import *
 from src.components.timer import Timer
 
-pygame.init()
-
-
 class Player(pygame.sprite.Sprite):
 
     def load(self) -> None:
@@ -44,7 +41,7 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self,
                  group,
-                 selected_tool=Fist,
+                 selected_tool = Fist,
                  tool_index: int = 0,
                  tools_inv: tuple = ("nothing",),
                  items_inv: tuple = (),
