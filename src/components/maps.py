@@ -14,7 +14,9 @@ class Map(pygame.surface.Surface):
         self.height = tm.height * tm.tileheight
         self.tmxdata = tm
 
-        self.filename = filename
+        self.filename = filename.split('/')[-1].split(".")[0]
+
+        logging.info(filename)
 
     def render(self, surface):
         ti = self.tmxdata.get_tile_image_by_gid

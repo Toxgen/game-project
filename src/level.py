@@ -1,8 +1,11 @@
+import logging
+
 import pygame
 
 from src.player import Player
 from src.components.support import import_folder
 from src.constants import *
+from src.components.maps import Map
 
 class Level(pygame.sprite.Sprite):
     def __init__(self):
@@ -10,7 +13,7 @@ class Level(pygame.sprite.Sprite):
         self.display_surface = pygame.display.get_surface()
         self.map = self.tiled_maps[0].make_map()
 
-        self._map_prop = MapProperties(self.map.map_prop[self.map.filename])
+        self._map_prop = MapProperties(Map.map_prop[self.tiled_maps[0].filename])
 
         self.all_sprites = CameraGroup()
 
