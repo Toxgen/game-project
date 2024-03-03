@@ -38,3 +38,6 @@ class Transition:
 
         if self.rects[-1].left() > self.width and self.touched:
             self.transitioning = False
+
+if __name__ == "__main__":
+    pass
