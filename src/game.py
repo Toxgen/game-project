@@ -13,7 +13,10 @@ class Game():
         }
         
         from src.level import Level
-        self.level = Level()
+        self.level = Level
+
+        from src.components.transition import Transition
+        self.transition = Transition
 
         self.level.map_prop = None
 
@@ -38,8 +41,11 @@ class Game():
                         self.events[events] = False
 
             dt = self.clock.tick(60) / 1000
-            self.level.run(dt, self.events)
+            player = self.level.run(dt, self.events)
+
+            if (player.pos.x 
             pygame.display.update()
             
 if __name__ == "__main__":
     pass
+    # TODO test out the transitions along side with the map_props var, use the if in game.py

@@ -28,10 +28,11 @@ class Level(pygame.sprite.Sprite):
     def save(self):
         self.player.save()
 
-    def run(self, dt, events):
+    def run(self, dt, events) -> Player:
         self.display_surface.blit(self.map, (0, 0))
         self.all_sprites.custom_draw()
         self.all_sprites.update(dt, events)
+        return self.player
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):
