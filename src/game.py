@@ -3,7 +3,7 @@ from sys import exit
 import pygame
 import logging
 
-class Game():
+class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((1152, 704))
@@ -18,11 +18,15 @@ class Game():
         from src.components.transition import Transition
         self.transition = Transition
 
-        self.level.map_prop = None
+        self.level.map_prop = None # ??
 
         # the map props class gives me the props things
         # so like just check if the player is in the _map_props things
         # i think i meant by if the player is in the x and y cords?
+    
+    @staticmethod
+    def evnt(cls, info):
+        pass
 
     def run(self):
         while True:
@@ -41,9 +45,10 @@ class Game():
                         self.events[events] = False
 
             dt = self.clock.tick(60) / 1000
-            player = self.level.run(dt, self.events)
+            (player, info) = self.level.run(dt, self.events)
 
-            if (player.pos.x 
+            Game.evnt(player, info)
+ 
             pygame.display.update()
             
 if __name__ == "__main__":
