@@ -210,46 +210,33 @@ class Player(pygame.sprite.Sprite):
         self._test = pygame.display.get_surface()
 
         self.sword_hitbox = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
+        # polish this so the square goes inside character
+        # for diagonals just find the center of the diagnol
+        # very easy
+        match self.status.split("_")[0]:
+            case "up":
+                self.sword_hitbox.x += 2
+                self.sword_hitbox.y -= 9
+                self.sword_hitbox.width += 19
+            case 'down':
+                self.sword_hitbox.x += 4
+                self.sword_hitbox.y += 38
+                self.sword_hitbox.width += 19
+            case 'left':
+                self.sword_hitbox.x -= 8
+                self.sword_hitbox.y += 8
+                self.sword_hitbox.height += 20
+            case 'right':
+                self.sword_hitbox.x += 29
+                self.sword_hitbox.y += 7
+                self.sword_hitbox.height += 20
 
-        self.sword_hitboxes = []
-        arc_radius = 13 
-
-        if self.status == 'up':
-            self.sword_hitbox.x += 10
-            self.sword_hitbox.y += 2
-        elif self.status == 'down':
-            self.sword_hitbox.x += 12
-            self.sword_hitbox.y += 30
-        elif self.status == 'left':
-            self.sword_hitbox.x -= 2
-            self.sword_hitbox.y += 17
-        elif self.status == 'right':
-            self.sword_hitbox.x += 27
-            self.sword_hitbox.y += 17
-
-        for _ in range(200):
-            if self.status == 'up':
-                self.sword_hitbox.x += -arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y += -arc_radius * math.sin(self.angle)
-            elif self.status == 'down':
-                self.sword_hitbox.x += arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y += arc_radius * math.sin(self.angle)
-            elif self.status == 'left':
-                self.sword_hitbox.x += -arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y += -arc_radius * math.sin(self.angle)
-            elif self.status == 'right':
-                self.sword_hitbox.x += arc_radius * math.cos(self.angle)
-                self.sword_hitbox.y += arc_radius * math.sin(self.angle)
-
-            self._test.fill("red", self.sword_hitbox)
-
-            self.sword_hitboxes.append(self.sword_hitbox)
+        self._test.fill("red", self.sword_hitbox)
         
-            self.angle += 66 # somehow works, don't mess with it
 
     def hit_enemy(self, enemy=None):
 
-        if self.hit_index == 2:
+        if self.hit_index:
             self.hit_index = 0
             self.in_Attack = False
 

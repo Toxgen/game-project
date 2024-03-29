@@ -1,43 +1,99 @@
 import pygame
-
+import logging
+import os
 class Transition:
-    def __init__(self):
-        self.width, self.height = pygame.display.get_window_size()
+    def __init__(self) -> None:
+        """
+        init for transition
+        """
+        self.screen = None
+
+        self.overlay = pygame.Surface((pygame.display.get_window_size()))
         self.display = pygame.display.get_surface()
         self.transitioning = True
-        self.touched = False
 
-        self.size = 32
-        self.amount = 22
-
+        self.size = 16
         self.rects = []
 
-        for i in range(self.amount):
-            self.rects.append(pygame.Rect(0, i*32), 32, 32)
+        self.speed = 1
+        self.width = 0
+        self.height = 0
+        self.final = False
 
-        self.speed = 300
+        for x in range(36):
+            for y in range(22):
+                self.rects.append(pygame.Rect((x*32 - 10, y*32 - 10), (4, 4)))
 
-        self.move_r = 0
-        self.move_l = 0
+    def type(self) -> str:
+        """
+        returns class type
+        """
+        return "transition"
 
-    def update(self, dt):
 
-        self.move_r += self.speed * dt
-        self.move_l -= -self.speed * dt
+    def update(self) -> None:
+        """
+        updates screen periodically
+        """
+        self.overlay.fill((0, 0, 0))
+        self.display.blit(self.overlay, (0, 0))
+
+        if self.final:
+            self.width = self.rects[0].width - 2
+            self.height = self.rects[0].height - 2
+        else:
+            self.width = self.rects[0].width * self.speed + 1
+            self.height = self.rects[0].height * self.speed + 1
+
+        # logging.log(50, f"speed: {self.speed}, width: {self.width}")
+        # logging.log(50, f"after: {self.width}")
+        # logging.log(logging.INFO, msg="transitioning")
 
         for rect in self.rects:
-            pygame.rect.draw(self.display, (255, 255, 255), 0)
+            rect.width = self.width
+            rect.height = self.height
+            self.display.fill("red", rect)
 
-            rect.move_ip(self.move_r, 0)
+        if rect.width < 44:
+            self.speed += 0.00001  
+        else:
+            self.final = True            
 
         self.finished()
 
     def finished(self):
-        if self.rects[0].left > self.width:
-            self.touched = True
-
-        if self.rects[-1].left() > self.width and self.touched:
+        """
+        checks if transition has finished
+        restarts it back to original setting
+        """
+        if self.width < 0 and self.final:
             self.transitioning = False
+            self.final = False
+            self.speed = 0
+            self.width = 0
+            self.height = 0
+            logging.log(logging.INFO, msg="finished transitioning")
 
 if __name__ == "__main__":
-    pass
+    # testing
+    try:  
+        path = r"C:\Users\yao\OneDrive\Documents/vscode-src\game-project"
+        handler = logging.FileHandler(os.path.join(path, '_logging/_logs.log'))
+
+    except Exception:
+        logging.log(level=40, msg="Logging defining went wrong")
+
+    finally:
+        logger = logging.getLogger()
+        logger.setLevel(logging.DEBUG)
+        logger.addHandler(handler)
+
+    Transition.screen = pygame.display.set_mode((1152, 704))
+    test = Transition()
+
+    while test.transitioning:
+        test.update()
+        pygame.time.Clock().tick(60)
+        pygame.display.update()
+else:
+    Transition.screen = pygame.display.get_surface()

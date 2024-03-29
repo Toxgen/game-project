@@ -8,15 +8,18 @@ class Game:
         pygame.init()
         self.screen = pygame.display.set_mode((1152, 704))
         self.clock = pygame.time.Clock()
-        self.events = {
+        self.keys = {
             "mouse_down": False,
+        }
+        self.events = {
+            "transitioning": Transition(),
         }
         
         from src.level import Level
-        self.level = Level
+        self.level = Level()
 
         from src.components.transition import Transition
-        self.transition = Transition
+        self.transition = Transition()
 
         self.level.map_prop = None # ??
 
@@ -24,9 +27,17 @@ class Game:
         # so like just check if the player is in the _map_props things
         # i think i meant by if the player is in the x and y cords?
     
-    @staticmethod
-    def evnt(cls, info):
-        pass
+    def evnt(self, cls, info):
+        for event in self.events:
+
+            if event.type() == "teleportation":
+                pass
+                # uhhh it has to transition than load the island
+            if event.type() == "transition":
+                while event.transition:
+                    event.update()
+                    #should save after probably
+            
 
     def run(self):
         while True:
@@ -37,15 +48,15 @@ class Game:
                     exit()
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    self.events["mouse_down"] = True
+                    self.keys["mouse_down"] = True
                     logging.info(f"mouse is down")
 
                 else:
-                    for events in self.events:
-                        self.events[events] = False
+                    for events in self.keys:
+                        self.keys[events] = False
 
             dt = self.clock.tick(60) / 1000
-            (player, info) = self.level.run(dt, self.events)
+            (player, info) = self.level.run(dt, self.keys)
 
             Game.evnt(player, info)
  
