@@ -5,29 +5,39 @@ import logging
 
 class Game:
     def __init__(self):
+        """
+        initalize game class
+        sets screen
+        the clock
+        keys and level and events
+        """
         pygame.init()
         self.screen = pygame.display.set_mode((1152, 704))
         self.clock = pygame.time.Clock()
         self.keys = {
             "mouse_down": False,
         }
-        self.events = {
-            "transitioning": Transition(),
-        }
         
         from src.level import Level
         self.level = Level()
 
         from src.components.transition import Transition
-        self.transition = Transition()
+        self.events = {
+            "transitioning": Transition(),
+        }
+        
 
-        self.level.map_prop = None # ??
 
         # the map props class gives me the props things
         # so like just check if the player is in the _map_props things
         # i think i meant by if the player is in the x and y cords?
     
-    def evnt(self, cls, info):
+    def evnt(self, plr, info) -> None:
+        """
+        return None
+        loops through events that i made, not pygame
+        """
+        info = info.get()
         for event in self.events:
 
             if event.type() == "teleportation":
@@ -39,7 +49,11 @@ class Game:
                     #should save after probably
             
 
-    def run(self):
+    def run(self) -> None:
+        """
+        returns none
+        main running function that holds all components
+        """
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

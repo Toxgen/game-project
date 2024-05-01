@@ -9,6 +9,10 @@ from src.components.maps import Map
 
 class Level(pygame.sprite.Sprite):
     def __init__(self):
+        """
+        initalize level
+        makes the map and sprite
+        """
         self.tiled_maps = import_folder("Assets/Resources/Maps", map=True)
         self.display_surface = pygame.display.get_surface()
         self.map = self.tiled_maps[0].make_map()
@@ -19,16 +23,29 @@ class Level(pygame.sprite.Sprite):
 
         self.setup()
 
-    def setup(self):
+    def setup(self) -> None:
+        """
+        return None
+        setups up the player
+        """
         self.player = Player(group=self.all_sprites)
         Goblin_1.group = self.all_sprites
         
         self.enemy = Goblin_1
 
-    def save(self):
+    def save(self) -> None:
+        """
+        return None
+        saves current player data
+        """
         self.player.save()
 
     def run(self, dt, events) -> tuple:
+        """
+        return tuple (for the game function to utilize)
+        secondary game function
+        draws map and sprites
+        """
         self.display_surface.blit(self.map, (0, 0))
         self.all_sprites.custom_draw()
         self.all_sprites.update(dt, events)

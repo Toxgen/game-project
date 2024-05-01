@@ -12,6 +12,11 @@ from src.components.timer import Timer
 class Player(pygame.sprite.Sprite):
 
     def load(self) -> None:
+        """
+        returns None
+        loads player data
+        sets variables, no return
+        """
 
         with open("save/data.json") as file:
             try:
@@ -28,6 +33,10 @@ class Player(pygame.sprite.Sprite):
                 logging.warning(f"json load error: {j}")
 
     def save(self) -> None:
+        """
+        return None
+        saves
+        """
 
         obj = (self.selected_tool.name, self.tool_index,
                [x.name for x in self.items_inv
@@ -49,6 +58,10 @@ class Player(pygame.sprite.Sprite):
                      "x": 500,
                      "y": 500
                  }):
+        
+        """
+        initalize all player elements
+        """
 
         super().__init__(group)
         self.in_Attack = False
@@ -89,6 +102,10 @@ class Player(pygame.sprite.Sprite):
         }
 
     def action(self, attack=False, roll=False) -> None:
+        """
+        return None
+        starts events for the player
+        """
         if attack:
             self.hit_enemy()
             self.in_Attack = True
@@ -99,7 +116,12 @@ class Player(pygame.sprite.Sprite):
             self.in_Roll = True
             return
     
-    def import_assets(self):
+    def import_assets(self) -> None:
+        """
+        return None
+        imports all current animations for player
+        TODO: give credits
+        """
         self.animations = {
             'up': [],
             'down': [],
@@ -115,7 +137,11 @@ class Player(pygame.sprite.Sprite):
             fullpath = "Assets/Resources/Character/" + animation
             self.animations[animation] = import_folder(fullpath)
 
-    def animation(self, dt):
+    def animation(self, dt) -> None:
+        """
+        return None
+        shows current animation frame
+        """
         try:
             self.frame_index += 4 * dt
             if self.frame_index >= len(self.animations[self.status]):
@@ -127,7 +153,11 @@ class Player(pygame.sprite.Sprite):
             self._log = f"self.status = {self.status}, self.frame_index = {self.frame_index}"
             logging.warning(f"animation went wrong, {self._log}, error: {error}")
 
-    def get_status(self):
+    def get_status(self) -> None:
+        """
+        return None
+        shows if the player is idle or nah
+        """
         try:
             if self.direction.magnitude() == 0:
                 self.status = self.status.split("_")[0] + "_idle"
@@ -138,7 +168,13 @@ class Player(pygame.sprite.Sprite):
                 f"getting status went wrong, {self._log}, error: {error}")
             raise Exception
 
-    def update(self, dt, events):
+    def update(self, dt, events) -> None:
+        """
+        return None
+        where all player events are held
+        TODO: ? maybe make another function to make this
+        look a lil cleaner
+        """
         self.dt = dt
         self.input(events)
         self.get_status()
@@ -148,7 +184,12 @@ class Player(pygame.sprite.Sprite):
         self.move(dt)
         self.animation(dt)
 
-    def input(self, events):
+    def input(self, events) -> None:
+        """
+        return None
+        checks for user input
+        timer checks for stuff
+        """
         keys = pygame.key.get_pressed()
 
         timers_active = [timer for timer in self.timer.values() if timer.active]
@@ -187,8 +228,11 @@ class Player(pygame.sprite.Sprite):
             if pygame.key.get_mods() & pygame.KMOD_LSHIFT:
                 self.timer["roll"].activate()
 
-    def move(self, dt):
-
+    def move(self, dt) -> None:
+        """
+        return None
+        calculates the movement for player
+        """
         if self.direction.magnitude() > 0:
             self.direction = self.direction.normalize()
 
@@ -201,12 +245,22 @@ class Player(pygame.sprite.Sprite):
         self.location["x"] = self.pos.x
         self.location["y"] = self.pos.y
 
-    def update_timers(self):
+    def update_timers(self) -> None:
+        """
+        return None
+        updates current ACTIVE timers 
+        """
         for timer in self.timer.values():
             if timer.active:
                 timer.update()
 
-    def _get_hitboxes(self):
+    def _get_hitboxes(self) -> None:
+        """
+        return None
+        gets the hitboxes for the sword
+        TODO: ? maybe return rect locations bc how it gonna check
+        if it hit the enemy ??
+        """
         self._test = pygame.display.get_surface()
 
         self.sword_hitbox = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
@@ -234,7 +288,11 @@ class Player(pygame.sprite.Sprite):
         self._test.fill("red", self.sword_hitbox)
         
 
-    def hit_enemy(self, enemy=None):
+    def hit_enemy(self, enemy=None) -> None:
+        """
+        return None
+        checks if it hit the enemy
+        """
 
         if self.hit_index:
             self.hit_index = 0
@@ -252,7 +310,11 @@ class Player(pygame.sprite.Sprite):
                     self.hit_index = 0
                     enemy.hit()
 
-    def roll(self):
+    def roll(self) -> None:
+        """
+        return None
+        WIP
+        """
         logging.info("roll init")
 
     # def xp(self) -> int:
