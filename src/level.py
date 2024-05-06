@@ -40,15 +40,17 @@ class Level(pygame.sprite.Sprite):
         """
         self.player.save()
 
-    def run(self, dt, events) -> tuple:
+    def run(self, dt, events, flags) -> tuple:
         """
         return tuple (for the game function to utilize)
         secondary game function
         draws map and sprites
         """
-        self.display_surface.blit(self.map, (0, 0))
-        self.all_sprites.custom_draw()
-        self.all_sprites.update(dt, events)
+        a = [flag.value for flag in flags if flag.value]
+        if a:
+            self.display_surface.blit(self.map, (0, 0))
+            self.all_sprites.custom_draw()
+            self.all_sprites.update(dt, events)
         return (self.player, self.map_prop)
 
 class CameraGroup(pygame.sprite.Group):

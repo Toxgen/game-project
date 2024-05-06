@@ -25,6 +25,9 @@ class Game:
         self.events = {
             "transitioning": Transition(),
         }
+        self.flags = {
+            "transition": False,
+        }
         
 
 
@@ -32,7 +35,7 @@ class Game:
         # so like just check if the player is in the _map_props things
         # i think i meant by if the player is in the x and y cords?
     
-    def evnt(self, plr, info) -> None:
+    def evnt(self, plr, info, dt) -> None:
         """
         return None
         loops through events that i made, not pygame
@@ -44,9 +47,11 @@ class Game:
                 pass
                 # uhhh it has to transition than load the island
             if event.type() == "transition":
-                while event.transition:
+                logging.info("transitioning rn")
+                if event.transition:
                     event.update()
                     #should save after probably
+                    # reset flags
             
 
     def run(self) -> None:
@@ -72,7 +77,7 @@ class Game:
             dt = self.clock.tick(60) / 1000
             (player, info) = self.level.run(dt, self.keys)
 
-            Game.evnt(player, info)
+            Game.evnt(player, info, dt=dt)
  
             pygame.display.update()
             

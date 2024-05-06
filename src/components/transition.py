@@ -27,23 +27,25 @@ class Transition:
     def type(self) -> str:
         """
         returns class type
+        depracted, whats the point??
         """
         return "transition"
 
 
-    def update(self) -> None:
+    def update(self, dt) -> None:
         """
         updates screen periodically
+        TODO: use delta time?
         """
         self.overlay.fill((0, 0, 0))
         self.display.blit(self.overlay, (0, 0))
 
         if self.final:
-            self.width = self.rects[0].width - 2
-            self.height = self.rects[0].height - 2
+            self.width = self.rects[0].width - 2 * dt
+            self.height = self.rects[0].height - 2 * dt
         else:
-            self.width = self.rects[0].width * self.speed + 1
-            self.height = self.rects[0].height * self.speed + 1
+            self.width = self.rects[0].width * self.speed + 1 * dt
+            self.height = self.rects[0].height * self.speed + 1 * dt
 
         # logging.log(50, f"speed: {self.speed}, width: {self.width}")
         # logging.log(50, f"after: {self.width}")
