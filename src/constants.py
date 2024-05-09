@@ -2,6 +2,7 @@ from .components.items import Item
 from .components.entity import Entity
 
 from typing import Final
+from pygame import Rect
 
 # pygame constants & other constants
 screen_dim: Final = (1152, 704)  # 36 by 22 (x32)
@@ -9,8 +10,15 @@ screen_dim: Final = (1152, 704)  # 36 by 22 (x32)
 # constants
 allowed_areas = ("placeholder", )
 
+# map teleport points
+teleports = {
+    "test": {
+        "pnt1": Rect((200, 200), (300, 200)) # (far x?, far y?) (length?, width?)
+    }
+}
+
 # enemies
-mob_stats: tuple = (  # TODO change this into a tuple
+mob_stats: tuple = ( 
     ("goblin", 8, 2, 3, 1,
      None),  # name, health, r-attk1, r-attk2, defense, s-effect
 )

@@ -22,4 +22,15 @@ def main():
     game.run()
     
 if __name__ == "__main__":
-    main() 
+    main()
+
+
+
+"""
+main things
+-----------
+
+change map when collidrect
+check if player collidrect
+transition??
+"""

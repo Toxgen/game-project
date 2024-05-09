@@ -5,7 +5,6 @@ import pygame
 from src.player import Player
 from src.components.support import import_folder
 from src.constants import *
-from src.components.maps import Map
 
 class Level(pygame.sprite.Sprite):
     def __init__(self):
@@ -17,7 +16,7 @@ class Level(pygame.sprite.Sprite):
         self.display_surface = pygame.display.get_surface()
         self.map = self.tiled_maps[0].make_map()
 
-        self.map_prop = MapProperties(Map.map_prop[self.tiled_maps[0].filename])
+        self.map_prop = MapProperties((self.tiled_maps[0].__name__, teleports)) # gotta save what map they're in
 
         self.all_sprites = CameraGroup()
 
@@ -40,17 +39,18 @@ class Level(pygame.sprite.Sprite):
         """
         self.player.save()
 
-    def run(self, dt, events, flags) -> tuple:
+    def run(self, dt, events, flags: dict) -> tuple:
         """
         return tuple (for the game function to utilize)
         secondary game function
         draws map and sprites
         """
-        a = [flag.value for flag in flags if flag.value]
+        a = [flag for flag in flags.values() if flag]
         if a:
             self.display_surface.blit(self.map, (0, 0))
-            self.all_sprites.custom_draw()
+            self.all_sprites.custom_draw() # do a return statemne w/ rect
             self.all_sprites.update(dt, events)
+            # detect if the player hit the rect for the map
         return (self.player, self.map_prop)
 
 class CameraGroup(pygame.sprite.Group):

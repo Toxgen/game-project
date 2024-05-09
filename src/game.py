@@ -27,13 +27,10 @@ class Game:
         }
         self.flags = {
             "transition": False,
+            "teleportation": False
         }
-        
 
-
-        # the map props class gives me the props things
-        # so like just check if the player is in the _map_props things
-        # i think i meant by if the player is in the x and y cords?
+        #just have to check what map it is
     
     def evnt(self, plr, info, dt) -> None:
         """
@@ -41,17 +38,25 @@ class Game:
         loops through events that i made, not pygame
         """
         info = info.get()
-        for event in self.events:
+        print(plr)
+        for event in self.events.keys():
 
-            if event.type() == "teleportation":
+            if event.value == "teleportation" and self.keys:
                 pass
                 # uhhh it has to transition than load the island
-            if event.type() == "transition":
+            if event.value == "transition":
                 logging.info("transitioning rn")
-                if event.transition:
-                    event.update()
-                    #should save after probably
-                    # reset flags
+                try:
+                    if event.transition:
+                        event.update(dt)
+                        #should save after probably
+                        # reset flags
+                except Exception as e:
+                    logging.log(logging.WARNING, f"transition fail msg: {e}")
+                    raise Exception
+        else:
+            for flag in self.flags:
+                self.flags[flag] = False
             
 
     def run(self) -> None:
@@ -75,9 +80,10 @@ class Game:
                         self.keys[events] = False
 
             dt = self.clock.tick(60) / 1000
-            (player, info) = self.level.run(dt, self.keys)
 
-            Game.evnt(player, info, dt=dt)
+            player, info = self.level.run(dt, self.keys, self.flags)
+
+            self.evnt(player, info, dt)
  
             pygame.display.update()
             

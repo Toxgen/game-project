@@ -4,13 +4,6 @@ import logging
 
 class Map(pygame.surface.Surface):
 
-    map_prop = {
-        "test": {"tp_point_1": (0, 0, 500, 1000, "Foo")}
-    }
-    def make_points(self, tl, tr, bl, br):
-        pass # make the rect to teleport ig 
-    # and return it so in game.py it can check if it's hitten
-
     def __init__(self, filename):
         tm = pytmx.load_pygame(filename, pixelalpha = True)
         self.width = tm.width * tm.tilewidth
@@ -18,6 +11,9 @@ class Map(pygame.surface.Surface):
         self.tmxdata = tm
 
         self.filename = filename.split('/')[-1].split(".")[0]
+
+    def __name__(self):
+        return self.filename
 
     def render(self, surface):
         ti = self.tmxdata.get_tile_image_by_gid

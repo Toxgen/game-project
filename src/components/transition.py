@@ -16,8 +16,8 @@ class Transition:
         self.rects = []
 
         self.speed = 1
-        self.width = 0
-        self.height = 0
+        self.width = 4
+        self.height = 4
         self.final = False
 
         for x in range(36):
@@ -35,17 +35,17 @@ class Transition:
     def update(self, dt) -> None:
         """
         updates screen periodically
-        TODO: use delta time?
         """
         self.overlay.fill((0, 0, 0))
         self.display.blit(self.overlay, (0, 0))
 
         if self.final:
-            self.width = self.rects[0].width - 2 * dt
-            self.height = self.rects[0].height - 2 * dt
+            self.width += (self.width * -dt - 0.1)
+            self.height += (self.width * -dt - 0.1)
+
         else:
-            self.width = self.rects[0].width * self.speed + 1 * dt
-            self.height = self.rects[0].height * self.speed + 1 * dt
+            self.width += (self.width * self.speed * dt)
+            self.height += (self.width * self.speed * dt)
 
         # logging.log(50, f"speed: {self.speed}, width: {self.width}")
         # logging.log(50, f"after: {self.width}")
@@ -56,8 +56,8 @@ class Transition:
             rect.height = self.height
             self.display.fill("red", rect)
 
-        if rect.width < 44:
-            self.speed += 0.00001  
+        if self.width < 44:
+            self.speed += 0.0001 
         else:
             self.final = True            
 
@@ -92,10 +92,11 @@ if __name__ == "__main__":
 
     Transition.screen = pygame.display.set_mode((1152, 704))
     test = Transition()
+    clock = pygame.time.Clock()
 
     while test.transitioning:
-        test.update()
-        pygame.time.Clock().tick(60)
+        dt = clock.tick(60) / 1000
+        test.update(dt)
         pygame.display.update()
 else:
     Transition.screen = pygame.display.get_surface()

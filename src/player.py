@@ -36,6 +36,7 @@ class Player(pygame.sprite.Sprite):
         """
         return None
         saves
+        TODO: save what map player is in
         """
 
         obj = (self.selected_tool.name, self.tool_index,
