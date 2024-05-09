@@ -39,9 +39,9 @@ class Game:
         """
         info = info.get()
         print(plr)
-        for event in self.events.keys():
+        for event in self.events.items():
 
-            if event.value == "teleportation" and self.keys:
+            if event.value == "teleportation" and self.flags["teleportation"]: # check if it collidrect with the thig
                 pass
                 # uhhh it has to transition than load the island
             if event.value == "transition":
