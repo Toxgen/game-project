@@ -23,14 +23,3 @@ def main():
     
 if __name__ == "__main__":
     main()
-
-
-
-"""
-main things
------------
-
-change map when collidrect
-check if player collidrect
-transition??
-"""

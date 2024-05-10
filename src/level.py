@@ -16,7 +16,7 @@ class Level(pygame.sprite.Sprite):
         self.display_surface = pygame.display.get_surface()
         self.map = self.tiled_maps[0].make_map()
 
-        self.map_prop = MapProperties((self.tiled_maps[0].__name__, teleports)) # gotta save what map they're in
+        self.map_prop = MapInformation((self.tiled_maps[0].__name__)) # gotta save what map they're in
 
         self.all_sprites = CameraGroup()
 
@@ -39,19 +39,24 @@ class Level(pygame.sprite.Sprite):
         """
         self.player.save()
 
-    def run(self, dt, events, flags: dict) -> tuple:
+    def run(self, dt: float, keys: dict, flags: dict) -> tuple:
         """
         return tuple (for the game function to utilize)
         secondary game function
         draws map and sprites
+
+        dt: delta time
+        keys: keys pressed
+        flags: flags to check if other events are happening, ex: teleportation
         """
+
         a = [flag for flag in flags.values() if flag]
         if a:
             self.display_surface.blit(self.map, (0, 0))
             self.all_sprites.custom_draw() # do a return statemne w/ rect
-            self.all_sprites.update(dt, events)
+            flags = self.all_sprites.update(dt, keys)
             # detect if the player hit the rect for the map
-        return (self.player, self.map_prop)
+        return (flags, self.map_prop)
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):
@@ -62,9 +67,18 @@ class CameraGroup(pygame.sprite.Group):
         for sprite in self.sprites():
             self.display_surface.blit(sprite.image, sprite.rect)
 
-class MapProperties():
-    def __init__(self, props: tuple) -> None:
-        self.props = props
+class MapInformation():
 
-    def get(self) -> tuple:
-        return self.props
+
+    def __init__(self, name: str) -> None:
+        self.name = name
+        self.teleports = {
+
+                "test": {
+                    "pnt1": Rect((200, 200), (300, 200)) # (far x?, far y?) (length?, width?)
+                }
+
+            }
+        
+    def __name__(self):
+        return self.name

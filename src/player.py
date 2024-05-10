@@ -169,21 +169,29 @@ class Player(pygame.sprite.Sprite):
                 f"getting status went wrong, {self._log}, error: {error}")
             raise Exception
 
-    def update(self, dt, events) -> None:
+    def update(self, dt: float, keys: dict, mapInfo: dict) -> None:
         """
         return None
         where all player events are held
-        TODO: ? maybe make another function to make this
-        look a lil cleaner
+
+        dt: delta time
+        keys: keys pressed
+        mapInfo: information about the maps teleport places
         """
+
         self.dt = dt
-        self.input(events)
+        self.input(keys)
         self.get_status()
+
         if self.in_Attack:
+            # prob a better way to do this tbh
             self.hit_enemy()
+
         self.update_timers()
         self.move(dt)
         self.animation(dt)
+
+        return self.check_teleport(self, mapInfo)
 
     def input(self, events) -> None:
         """
@@ -226,7 +234,7 @@ class Player(pygame.sprite.Sprite):
                 self.tool_index = self.tool_index if self.tool_index > len(self.tools_inv) else 0
                 self.selected_tool = self.tools_inv[self.tool_index]
             
-            if pygame.key.get_mods() & pygame.KMOD_LSHIFT:
+            if pygame.key.get_mods() and pygame.KMOD_LSHIFT:
                 self.timer["roll"].activate()
 
     def move(self, dt) -> None:
@@ -318,17 +326,19 @@ class Player(pygame.sprite.Sprite):
         """
         logging.info("roll init")
 
-    # def xp(self) -> int:
+    def check_teleport(self, mapProp) -> (str | None):
+        """
+        return str, (the name of the teleport point)
 
-    #     exp = self.player["experience"]
+        checks if the player rect collides with a map teleport pnt
+        """
+        cc_map: dict = mapProp.teleports[mapProp.__name__]
 
-    #     while exp >= amt_exp:
-    #         amt_exp = self.return_next_level(self.player["level"])
-    #         self.player["level"] += 1
-    #         exp -= amt_exp
-
-    #     self.player["experience"] = exp
-
+        for k, rect in cc_map.items():
+            if self.rect.collidrect(rect):
+                return k
+            
+        return None
 
 if __name__ == "__main__":
     pass

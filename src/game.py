@@ -32,13 +32,14 @@ class Game:
 
         #just have to check what map it is
     
-    def evnt(self, plr, info, dt) -> None:
+    def evnt(self, plrFlags, mapInfo, dt) -> None:
         """
         return None
         loops through events that i made, not pygame
         """
-        info = info.get()
-        print(plr)
+        if plrFlags:
+            self.flags["teleportation"]
+
         for event in self.events.items():
 
             if event.value == "teleportation" and self.flags["teleportation"]: # check if it collidrect with the thig
@@ -81,12 +82,11 @@ class Game:
 
             dt = self.clock.tick(60) / 1000
 
-            player, info = self.level.run(dt, self.keys, self.flags)
+            plrInfo, mapInfo = self.level.run(dt, self.keys, self.flags)
 
-            self.evnt(player, info, dt)
+            self.evnt(plrInfo, mapInfo, dt)
  
             pygame.display.update()
             
 if __name__ == "__main__":
     pass
-    # TODO test out the transitions along side with the map_props var, use the if in game.py
