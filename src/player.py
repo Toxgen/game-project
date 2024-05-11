@@ -106,6 +106,9 @@ class Player(pygame.sprite.Sprite):
         """
         return None
         starts events for the player
+
+        do i really need to do this??
+        cant i just make 1 function for either action??
         """
         if attack:
             self.hit_enemy()
