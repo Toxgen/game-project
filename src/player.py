@@ -180,12 +180,12 @@ class Player(pygame.sprite.Sprite):
         """
 
         self.dt = dt
-        if not self.in_Roll:
+        if not self.in_Roll: # better way to do this
             self.get_status()
 
         self.input(keys)
 
-        if self.in_Attack:
+        if self.in_Attack: # better way to do tis
             # prob a better way to do this tbh
             self.hit_enemy()
 
