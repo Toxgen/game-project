@@ -27,7 +27,6 @@ class Game:
         }
         self.flags = {
             "transition": False,
-            "teleportation": False
         }
 
         #just have to check what map it is
@@ -37,21 +36,17 @@ class Game:
         return None
         loops through events that i made, not pygame
         """
-        if plrFlags:
-            self.flags["teleportation"]
+        if plrFlags: # do we need len?
+            self.flags["transition"] = True
 
-        for event in self.events.items():
+        for event in self.events.values():
+            if event.__name__ == "transition":
 
-            if event.value == "teleportation" and self.flags["teleportation"]: # check if it collidrect with the thig
-                pass
-                # uhhh it has to transition than load the island
-            if event.value == "transition":
                 logging.info("transitioning rn")
                 try:
-                    if event.transition:
+                    if self.flags["transition"] and not event.transitioning:
                         event.update(dt)
                         #should save after probably
-                        # reset flags
                 except Exception as e:
                     logging.log(logging.WARNING, f"transition fail msg: {e}")
                     raise Exception
@@ -74,7 +69,7 @@ class Game:
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     self.keys["mouse_down"] = True
-                    logging.info(f"mouse is down")
+                    logging.info("mouse is down")
 
                 else:
                     for events in self.keys:

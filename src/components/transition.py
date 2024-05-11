@@ -24,13 +24,8 @@ class Transition:
             for y in range(22):
                 self.rects.append(pygame.Rect((x*32 - 10, y*32 - 10), (4, 4)))
 
-    def type(self) -> str:
-        """
-        returns class type
-        depracted, whats the point??
-        """
+    def __name__(self) -> str:
         return "transition"
-
 
     def update(self, dt) -> None:
         """

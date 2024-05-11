@@ -13,9 +13,9 @@ class Player(pygame.sprite.Sprite):
 
     def load(self) -> None:
         """
-        returns None
+        returns None \n
         loads player data
-        sets variables, no return
+        sets variables
         """
 
         with open("save/data.json") as file:
@@ -99,7 +99,7 @@ class Player(pygame.sprite.Sprite):
         self.timer = {
             "tool swap": Timer(200),
             "weapon use": Timer(250, True, attack_action),
-            "roll": Timer(100, True, roll_action)
+            "roll": Timer(300, True, roll_action),
         }
 
     def action(self, attack=False, roll=False) -> None:
@@ -169,7 +169,7 @@ class Player(pygame.sprite.Sprite):
                 f"getting status went wrong, {self._log}, error: {error}")
             raise Exception
 
-    def update(self, dt: float, keys: dict, mapInfo: dict) -> None:
+    def update(self, dt: float, keys: dict, mapProp) -> None:
         """
         return None
         where all player events are held
@@ -180,8 +180,10 @@ class Player(pygame.sprite.Sprite):
         """
 
         self.dt = dt
+        if not self.in_Roll:
+            self.get_status()
+
         self.input(keys)
-        self.get_status()
 
         if self.in_Attack:
             # prob a better way to do this tbh
@@ -191,7 +193,7 @@ class Player(pygame.sprite.Sprite):
         self.move(dt)
         self.animation(dt)
 
-        return self.check_teleport(self, mapInfo)
+        return self.check_teleport(mapProp)
 
     def input(self, events) -> None:
         """
@@ -202,6 +204,7 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         timers_active = [timer for timer in self.timer.values() if timer.active]
+        logging.log(logging.INFO, f"{timers_active}, num")
 
         if not len(timers_active):
 
@@ -234,7 +237,7 @@ class Player(pygame.sprite.Sprite):
                 self.tool_index = self.tool_index if self.tool_index > len(self.tools_inv) else 0
                 self.selected_tool = self.tools_inv[self.tool_index]
             
-            if pygame.key.get_mods() and pygame.KMOD_LSHIFT:
+            if keys[pygame.K_LSHIFT] and not self.timer["roll"].active:
                 self.timer["roll"].activate()
 
     def move(self, dt) -> None:
@@ -323,6 +326,7 @@ class Player(pygame.sprite.Sprite):
         """
         return None
         WIP
+        what if player rolls into teleport -> stop rolling ig
         """
         logging.info("roll init")
 
@@ -332,10 +336,11 @@ class Player(pygame.sprite.Sprite):
 
         checks if the player rect collides with a map teleport pnt
         """
-        cc_map: dict = mapProp.teleports[mapProp.__name__]
+
+        cc_map: dict = mapProp.teleports[str(mapProp)]
 
         for k, rect in cc_map.items():
-            if self.rect.collidrect(rect):
+            if self.rect.colliderect(rect):
                 return k
             
         return None

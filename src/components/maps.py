@@ -12,7 +12,7 @@ class Map(pygame.surface.Surface):
 
         self.filename = filename.split('/')[-1].split(".")[0]
 
-    def __name__(self):
+    def __str__(self):
         return self.filename
 
     def render(self, surface):

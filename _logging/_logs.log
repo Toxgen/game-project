@@ -1,831 +1,609 @@
-speed: 1, width: 4.064
-after: 4.064
-transitioning
-speed: 1.0001, width: 4.1330949088
-after: 4.1330949088
-transitioning
-speed: 1.0002, width: 4.20337157477229
-after: 4.20337157477229
-transitioning
-speed: 1.0003, width: 4.2748503287384505
-after: 4.2748503287384505
-transitioning
-speed: 1.0004, width: 4.34327529304037
-after: 4.34327529304037
-transitioning
-speed: 1.0005, width: 4.41280244393136
-after: 4.41280244393136
-transitioning
-speed: 1.0006, width: 4.483449645937724
-after: 4.483449645937724
-transitioning
-speed: 1.0007, width: 4.555235054908762
-after: 4.555235054908762
-transitioning
-speed: 1.0008, width: 4.632736002038957
-after: 4.632736002038957
-transitioning
-speed: 1.0009, width: 4.71156339493445
-after: 4.71156339493445
-transitioning
-speed: 1.001, width: 4.7870237942677205
-after: 4.7870237942677205
-transitioning
-speed: 1.0010999999999999, width: 4.863700426594783
-after: 4.863700426594783
-transitioning
-speed: 1.0011999999999999, width: 4.94161301646849
-after: 4.94161301646849
-transitioning
-speed: 1.0012999999999999, width: 5.025729647396118
-after: 5.025729647396118
-transitioning
-speed: 1.0013999999999998, width: 5.106253898098558
-after: 5.106253898098558
-transitioning
-speed: 1.0014999999999998, width: 5.1880765105616895
-after: 5.1880765105616895
-transitioning
-speed: 1.0015999999999998, width: 5.271218549489347
-after: 5.271218549489347
-transitioning
-speed: 1.0016999999999998, width: 5.355701423425722
-after: 5.355701423425722
-transitioning
-speed: 1.0017999999999998, width: 5.441546890401528
-after: 5.441546890401528
-transitioning
-speed: 1.0018999999999998, width: 5.528777063673421
-after: 5.528777063673421
-transitioning
-speed: 1.0019999999999998, width: 5.622954252176034
-after: 5.622954252176034
-transitioning
-speed: 1.0020999999999998, width: 5.713110451473724
-after: 5.713110451473724
-transitioning
-speed: 1.0021999999999998, width: 5.8047213201851955
-after: 5.8047213201851955
-transitioning
-speed: 1.0022999999999997, width: 5.897810475052742
-after: 5.897810475052742
-transitioning
-speed: 1.0023999999999997, width: 5.992401918575828
-after: 5.992401918575828
-transitioning
-speed: 1.0024999999999997, width: 6.094527428273157
-after: 6.094527428273157
-transitioning
-speed: 1.0025999999999997, width: 6.192293399466544
-after: 6.192293399466544
-transitioning
-speed: 1.0026999999999997, width: 6.291637600932865
-after: 6.291637600932865
-transitioning
-speed: 1.0027999999999997, width: 6.3925856679123125
-after: 6.3925856679123125
-transitioning
-speed: 1.0028999999999997, width: 6.495163654573901
-after: 6.495163654573901
-transitioning
-speed: 1.0029999999999997, width: 6.599398040902503
-after: 6.599398040902503
-transitioning
-speed: 1.0030999999999997, width: 6.705315739699771
-after: 6.705315739699771
-transitioning
-speed: 1.0031999999999996, width: 6.819670876450907
-after: 6.819670876450907
-transitioning
-speed: 1.0032999999999996, width: 6.929145689096398
-after: 6.929145689096398
-transitioning
-speed: 1.0033999999999996, width: 7.047341670431867
-after: 7.047341670431867
-transitioning
-speed: 1.0034999999999996, width: 7.160493788292321
-after: 7.160493788292321
-transitioning
-speed: 1.0035999999999996, width: 7.2754741333472035
-after: 7.2754741333472035
-transitioning
-speed: 1.0036999999999996, width: 7.392312427549453
-after: 7.392312427549453
-transitioning
-speed: 1.0037999999999996, width: 7.51103887898584
-after: 7.51103887898584
-transitioning
-speed: 1.0038999999999996, width: 7.631684189875662
-after: 7.631684189875662
-transitioning
-speed: 1.0039999999999996, width: 7.754279564701824
-after: 7.754279564701824
-transitioning
-speed: 1.0040999999999995, width: 7.886642790587415
-after: 7.886642790587415
-transitioning
-speed: 1.0041999999999995, width: 8.02127882432265
-after: 8.02127882432265
-transitioning
-speed: 1.0042999999999995, width: 8.150171149494925
-after: 8.150171149494925
-transitioning
-speed: 1.0043999999999995, width: 8.281147659935769
-after: 8.281147659935769
-transitioning
-speed: 1.0044999999999995, width: 8.422560677950662
-after: 8.422560677950662
-transitioning
-speed: 1.0045999999999995, width: 8.55794154926377
-after: 8.55794154926377
-transitioning
-speed: 1.0046999999999995, width: 8.695512171256494
-after: 8.695512171256494
-transitioning
-speed: 1.0047999999999995, width: 8.835308181331351
-after: 8.835308181331351
-transitioning
-speed: 1.0048999999999995, width: 8.97736580039407
-after: 8.97736580039407
-transitioning
-speed: 1.0049999999999994, width: 9.121721842464407
-after: 9.121721842464407
-transitioning
-speed: 1.0050999999999994, width: 9.277581967070043
-after: 9.277581967070043
-transitioning
-speed: 1.0051999999999994, width: 9.426795173362825
-after: 9.426795173362825
-transitioning
-speed: 1.0052999999999994, width: 9.587900045555113
-after: 9.587900045555113
-transitioning
-speed: 1.0053999999999994, width: 9.74213484084793
-after: 9.74213484084793
-transitioning
-speed: 1.0054999999999994, width: 9.908662022749963
-after: 9.908662022749963
-transitioning
-speed: 1.0055999999999994, width: 10.078052581761279
-after: 10.078052581761279
-transitioning
-speed: 1.0056999999999994, width: 10.240220541464916
-after: 10.240220541464916
-transitioning
-speed: 1.0057999999999994, width: 10.405014362594603
-after: 10.405014362594603
-transitioning
-speed: 1.0058999999999994, width: 10.572476825751945
-after: 10.572476825751945
-transitioning
-speed: 1.0059999999999993, width: 10.742651412739248
-after: 10.742651412739248
-transitioning
-speed: 1.0060999999999993, width: 10.926390499707315
-after: 10.926390499707315
-transitioning
-speed: 1.0061999999999993, width: 11.113290779761009
-after: 11.113290779761009
-transitioning
-speed: 1.0062999999999993, width: 11.292223651947785
-after: 11.292223651947785
-transitioning
-speed: 1.0063999999999993, width: 11.474055554080909
-after: 11.474055554080909
-transitioning
-speed: 1.0064999999999993, width: 11.67038238163901
-after: 11.67038238163901
-transitioning
-speed: 1.0065999999999993, width: 11.870088299030094
-after: 11.870088299030094
-transitioning
-speed: 1.0066999999999993, width: 12.06128218528023
-after: 12.06128218528023
-transitioning
-speed: 1.0067999999999993, width: 12.255574967746472
-after: 12.255574967746472
-transitioning
-speed: 1.0068999999999992, width: 12.453017182706855
-after: 12.453017182706855
-transitioning
-speed: 1.0069999999999992, width: 12.653660195554627
-after: 12.653660195554627
-transitioning
-speed: 1.0070999999999992, width: 12.87029971566466
-after: 12.87029971566466
-transitioning
-speed: 1.0071999999999992, width: 13.090670135516156
-after: 13.090670135516156
-transitioning
-speed: 1.0072999999999992, width: 13.314836079983747
-after: 13.314836079983747
-transitioning
-speed: 1.0073999999999992, width: 13.542863299722333
-after: 13.542863299722333
-transitioning
-speed: 1.0074999999999992, width: 13.774818690888328
-after: 13.774818690888328
-transitioning
-speed: 1.0075999999999992, width: 14.010770315208292
-after: 14.010770315208292
-transitioning
-speed: 1.0076999999999992, width: 14.236668767154459
-after: 14.236668767154459
-transitioning
-speed: 1.0077999999999991, width: 14.46623220369107
-after: 14.46623220369107
-transitioning
-speed: 1.0078999999999991, width: 14.699520450700675
-after: 14.699520450700675
-transitioning
-speed: 1.0079999999999991, width: 14.936594316529575
-after: 14.936594316529575
-transitioning
-speed: 1.008099999999999, width: 15.17751560821747
-after: 15.17751560821747
-transitioning
-speed: 1.008199999999999, width: 15.422347147996748
-after: 15.422347147996748
-transitioning
-speed: 1.008299999999999, width: 15.686703142695274
-after: 15.686703142695274
-transitioning
-speed: 1.008399999999999, width: 15.95561715732987
-after: 15.95561715732987
-transitioning
-speed: 1.008499999999999, width: 16.213076995780543
-after: 16.213076995780543
-transitioning
-speed: 1.008599999999999, width: 16.47471714710765
-after: 16.47471714710765
-transitioning
-speed: 1.008699999999999, width: 16.74060590208825
-after: 16.74060590208825
-transitioning
-speed: 1.008799999999999, width: 17.027700597066705
-after: 17.027700597066705
-transitioning
-speed: 1.008899999999999, width: 17.302568551184795
-after: 17.302568551184795
-transitioning
-speed: 1.008999999999999, width: 17.599359509543266
-after: 17.599359509543266
-transitioning
-speed: 1.009099999999999, width: 17.901271242121627
-after: 17.901271242121627
-transitioning
-speed: 1.009199999999999, width: 18.19032664912241
-after: 18.19032664912241
-transitioning
-speed: 1.009299999999999, width: 18.484078596113758
-after: 18.484078596113758
-transitioning
-speed: 1.009399999999999, width: 18.80126168800735
-after: 18.80126168800735
-transitioning
-speed: 1.009499999999999, width: 19.104939666792045
-after: 19.104939666792045
-transitioning
-speed: 1.009599999999999, width: 19.41355322019354
-after: 19.41355322019354
-transitioning
-speed: 1.009699999999999, width: 19.746784919862836
-after: 19.746784919862836
-transitioning
-speed: 1.009799999999999, width: 20.085770077868155
-after: 20.085770077868155
-transitioning
-speed: 1.009899999999999, width: 20.41032398509438
-after: 20.41032398509438
-transitioning
-speed: 1.009999999999999, width: 20.740154820693505
-after: 20.740154820693505
-transitioning
-speed: 1.0100999999999989, width: 21.075348906843626
-after: 21.075348906843626
-transitioning
-speed: 1.0101999999999989, width: 21.437284303760414
-after: 21.437284303760414
-transitioning
-speed: 1.0102999999999989, width: 21.78381371707384
-after: 21.78381371707384
-transitioning
-speed: 1.0103999999999989, width: 22.135979563149544
-after: 22.135979563149544
-transitioning
-speed: 1.0104999999999988, width: 22.516242488075108
-after: 22.516242488075108
-transitioning
-speed: 1.0105999999999988, width: 22.903076037268736
-after: 22.903076037268736
-transitioning
-speed: 1.0106999999999988, width: 23.296594399433484
-after: 23.296594399433484
-transitioning
-speed: 1.0107999999999988, width: 23.67336556133664
-after: 23.67336556133664
-transitioning
-speed: 1.0108999999999988, width: 24.056268045271924
-after: 24.056268045271924
-transitioning
-speed: 1.0109999999999988, width: 24.469723124166013
-after: 24.469723124166013
-transitioning
-speed: 1.0110999999999988, width: 24.890325854030365
-after: 24.890325854030365
-transitioning
-speed: 1.0111999999999988, width: 25.31820051159149
-after: 25.31820051159149
-transitioning
-speed: 1.0112999999999988, width: 25.75347354660682
-after: 25.75347354660682
-transitioning
-speed: 1.0113999999999987, width: 26.170226556927428
-after: 26.170226556927428
-transitioning
-speed: 1.0114999999999987, width: 26.59376550352474
-after: 26.59376550352474
-transitioning
-speed: 1.0115999999999987, width: 27.02420155445859
-after: 27.02420155445859
-transitioning
-speed: 1.0116999999999987, width: 27.46164770986092
-after: 27.46164770986092
-transitioning
-speed: 1.0117999999999987, width: 27.906218832306315
-after: 27.906218832306315
-transitioning
-speed: 1.0118999999999987, width: 28.35803167768889
-after: 28.35803167768889
-transitioning
-speed: 1.0119999999999987, width: 28.817204926614025
-after: 28.817204926614025
-transitioning
-speed: 1.0120999999999987, width: 29.28385921631364
-after: 29.28385921631364
-transitioning
-speed: 1.0121999999999987, width: 29.758117173093684
-after: 29.758117173093684
-transitioning
-speed: 1.0122999999999986, width: 30.27022758733717
-after: 30.27022758733717
-transitioning
-speed: 1.0123999999999986, width: 30.760556841887894
-after: 30.760556841887894
-transitioning
-speed: 1.0124999999999986, width: 31.290022926528888
-after: 31.290022926528888
-transitioning
-speed: 1.0125999999999986, width: 31.796971361975338
-after: 31.796971361975338
-transitioning
-speed: 1.0126999999999986, width: 32.34438484124597
-after: 32.34438484124597
-transitioning
-speed: 1.0127999999999986, width: 32.86851912872139
-after: 32.86851912872139
-transitioning
-speed: 1.0128999999999986, width: 33.4011994971291
-after: 33.4011994971291
-transitioning
-speed: 1.0129999999999986, width: 33.976401553669156
-after: 33.976401553669156
-transitioning
-speed: 1.0130999999999986, width: 34.52714543229351
-after: 34.52714543229351
-transitioning
-speed: 1.0131999999999985, width: 35.086871892325505
-after: 35.086871892325505
-transitioning
-speed: 1.0132999999999985, width: 35.69128185622989
-after: 35.69128185622989
-transitioning
-speed: 1.0133999999999985, width: 36.30616412179265
-after: 36.30616412179265
-transitioning
-speed: 1.0134999999999985, width: 36.931701176529074
-after: 36.931701176529074
-transitioning
-speed: 1.0135999999999985, width: 37.56807870584208
-after: 37.56807870584208
-transitioning
-speed: 1.0136999999999985, width: 38.177402887987874
-after: 38.177402887987874
-transitioning
-speed: 1.0137999999999985, width: 38.79667090475335
-after: 38.79667090475335
-transitioning
-speed: 1.0138999999999985, width: 39.42604601883862
-after: 39.42604601883862
-transitioning
-speed: 1.0139999999999985, width: 40.10567220011136
-after: 40.10567220011136
-transitioning
-speed: 1.0140999999999984, width: 40.79708195713962
-after: 40.79708195713962
-transitioning
-speed: 1.0141999999999984, width: 41.45910436547451
-after: 41.45910436547451
-transitioning
-speed: 1.0142999999999984, width: 42.131935878400924
-after: 42.131935878400924
-transitioning
-speed: 1.0143999999999984, width: 42.85849268623677
-after: 42.85849268623677
-transitioning
-speed: 1.0144999999999984, width: 43.55417173951977
-after: 43.55417173951977
-transitioning
-speed: 1.0145999999999984, width: 44.30540280451735
-after: 44.30540280451735
-transitioning
-speed: 1.0145999999999984, width: 43.45221095684055
-after: 43.45221095684055
-transitioning
-speed: 1.0146999999999984, width: 42.65697558153111
-after: 42.65697558153111
-transitioning
-speed: 1.0147999999999984, width: 41.83180699664508
-after: 41.83180699664508
-transitioning
-speed: 1.0148999999999984, width: 41.02066627770211
-after: 41.02066627770211
-transitioning
-speed: 1.0149999999999983, width: 40.26433561725888
-after: 40.26433561725888
-transitioning
-speed: 1.0150999999999983, width: 39.479841911765476
-after: 39.479841911765476
-transitioning
-speed: 1.0151999999999983, width: 38.70868459926546
-after: 38.70868459926546
-transitioning
-speed: 1.0152999999999983, width: 37.95063696107795
-after: 37.95063696107795
-transitioning
-speed: 1.0153999999999983, width: 37.20547613273962
-after: 37.20547613273962
-transitioning
-speed: 1.0154999999999983, width: 36.510188514615784
-after: 36.510188514615784
-transitioning
-speed: 1.0155999999999983, width: 35.78951530986732
-after: 35.78951530986732
-transitioning
-speed: 1.0156999999999983, width: 35.08109354959957
-after: 35.08109354959957
-transitioning
-speed: 1.0157999999999983, width: 34.38471495925638
-after: 34.38471495925638
-transitioning
-speed: 1.0158999999999982, width: 33.734559519908274
-after: 33.734559519908274
-transitioning
-speed: 1.0159999999999982, width: 33.061072008069836
-after: 33.061072008069836
-transitioning
-speed: 1.0160999999999982, width: 32.39903378393265
-after: 32.39903378393265
-transitioning
-speed: 1.0161999999999982, width: 31.78064924338973
-after: 31.78064924338973
-transitioning
-speed: 1.0162999999999982, width: 31.172158855495493
-after: 31.172158855495493
-transitioning
-speed: 1.0163999999999982, width: 30.573404313807565
-after: 30.573404313807565
-transitioning
-speed: 1.0164999999999982, width: 29.953656440472837
-after: 29.953656440472837
-transitioning
-speed: 1.0165999999999982, width: 29.37439793742527
-after: 29.37439793742527
-transitioning
-speed: 1.0166999999999982, width: 28.804407570426466
-after: 28.804407570426466
-transitioning
-speed: 1.0167999999999981, width: 28.243537049299643
-after: 28.243537049299643
-transitioning
-speed: 1.0168999999999981, width: 27.69164045651085
-after: 27.69164045651085
-transitioning
-speed: 1.0169999999999981, width: 27.148574209206675
-after: 27.148574209206675
-transitioning
-speed: 1.0170999999999981, width: 26.61419702185937
-after: 26.61419702185937
-transitioning
-speed: 1.017199999999998, width: 26.08836986950962
-after: 26.08836986950962
-transitioning
-speed: 1.017299999999998, width: 25.544867581727956
-after: 25.544867581727956
-transitioning
-speed: 1.017399999999998, width: 25.03614970042031
-after: 25.03614970042031
-transitioning
-speed: 1.017499999999998, width: 24.535571305213587
-after: 24.535571305213587
-transitioning
-speed: 1.017599999999998, width: 24.018466593024957
-after: 24.018466593024957
-transitioning
-speed: 1.017699999999998, width: 23.53417112753656
-after: 23.53417112753656
-transitioning
-speed: 1.017799999999998, width: 23.034090218368437
-after: 23.034090218368437
-transitioning
-speed: 1.017899999999998, width: 22.542510684656172
-after: 22.542510684656172
-transitioning
-speed: 1.017999999999998, width: 22.08183051370167
-after: 22.08183051370167
-transitioning
-speed: 1.018099999999998, width: 21.628521225482444
-after: 21.628521225482444
-transitioning
-speed: 1.018199999999998, width: 21.182464885874726
-after: 21.182464885874726
-transitioning
-speed: 1.018299999999998, width: 20.722362982814854
-after: 20.722362982814854
-transitioning
-speed: 1.018399999999998, width: 20.290805175089815
-after: 20.290805175089815
-transitioning
-speed: 1.018499999999998, width: 19.86615229228838
-after: 19.86615229228838
-transitioning
-speed: 1.018599999999998, width: 19.42842770331948
-after: 19.42842770331948
-transitioning
-speed: 1.018699999999998, width: 19.017572860066366
-after: 19.017572860066366
-transitioning
-speed: 1.018799999999998, width: 18.59427412144524
-after: 18.59427412144524
-transitioning
-speed: 1.018899999999998, width: 18.196765735502115
-after: 18.196765735502115
-transitioning
-speed: 1.018999999999998, width: 17.78742071799858
-after: 17.78742071799858
-transitioning
-speed: 1.019099999999998, width: 17.402821986510602
-after: 17.402821986510602
-transitioning
-speed: 1.0191999999999979, width: 17.024376834726432
-after: 17.024376834726432
-transitioning
-speed: 1.0192999999999979, width: 16.65198680537081
-after: 16.65198680537081
-transitioning
-speed: 1.0193999999999979, width: 16.285555016484878
-after: 16.285555016484878
-transitioning
-speed: 1.0194999999999979, width: 15.908700581204634
-after: 15.908700581204634
-transitioning
-speed: 1.0195999999999978, width: 15.538252671324155
-after: 15.538252671324155
-transitioning
-speed: 1.0196999999999978, width: 15.18964062858297
-after: 15.18964062858297
-transitioning
-speed: 1.0197999999999978, width: 14.846606378525642
-after: 14.846606378525642
-transitioning
-speed: 1.0198999999999978, width: 14.494214070090706
-after: 14.494214070090706
-transitioning
-speed: 1.0199999999999978, width: 14.147812430899164
-after: 14.147812430899164
-transitioning
-speed: 1.0200999999999978, width: 13.821447432004778
-after: 13.821447432004778
-transitioning
-speed: 1.0201999999999978, width: 13.486482825660696
-after: 13.486482825660696
-transitioning
-speed: 1.0202999999999978, width: 13.170699100450125
-after: 13.170699100450125
-transitioning
-speed: 1.0203999999999978, width: 12.846797215742473
-after: 12.846797215742473
-transitioning
-speed: 1.0204999999999977, width: 12.541248460290594
-after: 12.541248460290594
-transitioning
-speed: 1.0205999999999977, width: 12.240588484925945
-after: 12.240588484925945
-transitioning
-speed: 1.0206999999999977, width: 11.944739069167131
-after: 11.944739069167131
-transitioning
-speed: 1.0207999999999977, width: 11.653623244060457
-after: 11.653623244060457
-transitioning
-speed: 1.0208999999999977, width: 11.36716527215549
-after: 11.36716527215549
-transitioning
-speed: 1.0209999999999977, width: 11.085290627801001
-after: 11.085290627801001
-transitioning
-speed: 1.0210999999999977, width: 10.796840687128384
-after: 10.796840687128384
-transitioning
-speed: 1.0211999999999977, width: 10.52409123613433
-after: 10.52409123613433
-transitioning
-speed: 1.0212999999999977, width: 10.245181685120047
-after: 10.245181685120047
-transitioning
-speed: 1.0213999999999976, width: 9.981258778158125
-after: 9.981258778158125
-transitioning
-speed: 1.0214999999999976, width: 9.711577378929437
-after: 9.711577378929437
-transitioning
-speed: 1.0215999999999976, width: 9.446480563487636
-after: 9.446480563487636
-transitioning
-speed: 1.0216999999999976, width: 9.195336874471835
-after: 9.195336874471835
-transitioning
-speed: 1.0217999999999976, width: 8.939016147605814
-after: 8.939016147605814
-transitioning
-speed: 1.0218999999999976, width: 8.687052873096516
-after: 8.687052873096516
-transitioning
-speed: 1.0219999999999976, width: 8.44806002712697
-after: 8.44806002712697
-transitioning
-speed: 1.0220999999999976, width: 8.21289106669294
-after: 8.21289106669294
-transitioning
-speed: 1.0221999999999976, width: 7.981484809625853
-after: 7.981484809625853
-transitioning
-speed: 1.0222999999999975, width: 7.753781052671839
-after: 7.753781052671839
-transitioning
-speed: 1.0223999999999975, width: 7.521966774776418
-after: 7.521966774776418
-transitioning
-speed: 1.0224999999999975, width: 7.301615306379995
-after: 7.301615306379995
-transitioning
-speed: 1.0225999999999975, width: 7.084789461477915
-after: 7.084789461477915
-transitioning
-speed: 1.0226999999999975, width: 6.864348040632791
-after: 6.864348040632791
-transitioning
-speed: 1.0227999999999975, width: 6.654518471982667
-after: 6.654518471982667
-transitioning
-speed: 1.0228999999999975, width: 6.441391657958961
-after: 6.441391657958961
-transitioning
-speed: 1.0229999999999975, width: 6.238329391431618
-after: 6.238329391431618
-transitioning
-speed: 1.0230999999999975, width: 6.038516121168712
-after: 6.038516121168712
-transitioning
-speed: 1.0231999999999974, width: 5.8418998632300125
-after: 5.8418998632300125
-transitioning
-speed: 1.0232999999999974, width: 5.6484294654183325
-after: 5.6484294654183325
-transitioning
-speed: 1.0233999999999974, width: 5.452406164506221
-after: 5.452406164506221
-transitioning
-speed: 1.0234999999999974, width: 5.2597152597096155
-after: 5.2597152597096155
-transitioning
-speed: 1.0235999999999974, width: 5.075559815554262
-after: 5.075559815554262
-transitioning
-speed: 1.0236999999999974, width: 4.894350858505393
-after: 4.894350858505393
-transitioning
-speed: 1.0237999999999974, width: 4.716041244769307
-after: 4.716041244769307
-transitioning
-speed: 1.0238999999999974, width: 4.535868543608228
-after: 4.535868543608228
-transitioning
-speed: 1.0239999999999974, width: 4.3632946469104965
-after: 4.3632946469104965
-transitioning
-speed: 1.0240999999999973, width: 4.193481932559928
-after: 4.193481932559928
-transitioning
-speed: 1.0241999999999973, width: 4.026386221638969
-after: 4.026386221638969
-transitioning
-speed: 1.0242999999999973, width: 3.8619640420927457
-after: 3.8619640420927457
-transitioning
-speed: 1.0243999999999973, width: 3.7001726174192617
-after: 3.7001726174192617
-transitioning
-speed: 1.0244999999999973, width: 3.5409698555405535
-after: 3.5409698555405535
-transitioning
-speed: 1.0245999999999973, width: 3.380773367996364
-after: 3.380773367996364
-transitioning
-speed: 1.0246999999999973, width: 3.223300220740426
-after: 3.223300220740426
-transitioning
-speed: 1.0247999999999973, width: 3.0717274172085793
-after: 3.0717274172085793
-transitioning
-speed: 1.0248999999999973, width: 2.922579778533242
-after: 2.922579778533242
-transitioning
-speed: 1.0249999999999972, width: 2.772895922298177
-after: 2.772895922298177
-transitioning
-speed: 1.0250999999999972, width: 2.625756691619108
-after: 2.625756691619108
-transitioning
-speed: 1.0251999999999972, width: 2.481118827861583
-after: 2.481118827861583
-transitioning
-speed: 1.0252999999999972, width: 2.3389398077879364
-after: 2.3389398077879364
-transitioning
-speed: 1.0253999999999972, width: 2.1991778310555414
-after: 2.1991778310555414
-transitioning
-speed: 1.0254999999999972, width: 2.063990985758653
-after: 2.063990985758653
-transitioning
-speed: 1.0255999999999972, width: 1.9309671299865145
-after: 1.9309671299865145
-transitioning
-speed: 1.0256999999999972, width: 1.8000716559067302
-after: 1.8000716559067302
-transitioning
-speed: 1.0257999999999972, width: 1.6694704377563159
-after: 1.6694704377563159
-transitioning
-speed: 1.0258999999999971, width: 1.5410894403144586
-after: 1.5410894403144586
-transitioning
-speed: 1.0259999999999971, width: 1.4148909198291129
-after: 1.4148909198291129
-transitioning
-speed: 1.0260999999999971, width: 1.292252665111847
-after: 1.292252665111847
-transitioning
-speed: 1.0261999999999971, width: 1.1715766224700574
-after: 1.1715766224700574
-transitioning
-speed: 1.026299999999997, width: 1.0528313965105365
-after: 1.0528313965105365
-transitioning
-speed: 1.026399999999997, width: 0.9349332627698573
-after: 0.9349332627698573
-transitioning
-speed: 1.026499999999997, width: 0.8199743305655396
-after: 0.8199743305655396
-transitioning
-speed: 1.026599999999997, width: 0.706854741276491
-after: 0.706854741276491
-transitioning
-speed: 1.026699999999997, width: 0.5955450654160671
-after: 0.5955450654160671
-transitioning
-speed: 1.026799999999997, width: 0.48601634436941005
-after: 0.48601634436941005
-transitioning
-speed: 1.026899999999997, width: 0.3782400828594995
-after: 0.3782400828594995
-transitioning
-speed: 1.026999999999997, width: 0.2721882415337475
-after: 0.2721882415337475
-transitioning
-speed: 1.027099999999997, width: 0.16783322966920752
-after: 0.16783322966920752
-transitioning
-speed: 1.027199999999997, width: 0.064980064764831
-after: 0.064980064764831
-transitioning
-speed: 1.027299999999997, width: -0.03612459633617114
-after: -0.03612459633617114
-transitioning
-finished transitioning
+roll init
+roll init
+roll init
+roll init
+roll init
+roll init
+roll init
+roll init
+roll init
+roll init
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
 mouse is down
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
 mouse is down
-mouse is down
-mouse is down
-mouse is down
+[], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[<src.components.timer.Timer object at 0x00000169303A4E30>], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+[], num
+[], num
+[], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+roll init
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[<src.components.timer.Timer object at 0x000001693225E2D0>], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num
+[], num

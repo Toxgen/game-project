@@ -16,7 +16,8 @@ class Level(pygame.sprite.Sprite):
         self.display_surface = pygame.display.get_surface()
         self.map = self.tiled_maps[0].make_map()
 
-        self.map_prop = MapInformation((self.tiled_maps[0].__name__)) # gotta save what map they're in
+
+        self.map_prop = MapInformation(str(self.tiled_maps[0])) # gotta save what map they're in
 
         self.all_sprites = CameraGroup()
 
@@ -41,7 +42,7 @@ class Level(pygame.sprite.Sprite):
 
     def run(self, dt: float, keys: dict, flags: dict) -> tuple:
         """
-        return tuple (for the game function to utilize)
+        return tuple (player flags, map properties -> teleport locations)
         secondary game function
         draws map and sprites
 
@@ -51,11 +52,10 @@ class Level(pygame.sprite.Sprite):
         """
 
         a = [flag for flag in flags.values() if flag]
-        if a:
+        if not a:
             self.display_surface.blit(self.map, (0, 0))
-            self.all_sprites.custom_draw() # do a return statemne w/ rect
-            flags = self.all_sprites.update(dt, keys)
-            # detect if the player hit the rect for the map
+            self.all_sprites.custom_draw() 
+            flags = self.all_sprites.update(dt, keys, self.map_prop)            # check if player can move during it
         return (flags, self.map_prop)
 
 class CameraGroup(pygame.sprite.Group):
@@ -75,10 +75,11 @@ class MapInformation():
         self.teleports = {
 
                 "test": {
-                    "pnt1": Rect((200, 200), (300, 200)) # (far x?, far y?) (length?, width?)
+                    "pnt1": Rect((200, 200), (300, 200)),
+                    "pnt2": Rect((100, 100), (100, 100))# (far x?, far y?) (length?, width?)
                 }
 
             }
         
-    def __name__(self):
+    def __str__(self):
         return self.name

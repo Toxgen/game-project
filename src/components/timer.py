@@ -4,6 +4,13 @@ class Timer:
     def __init__(self, duration, 
                  first=False, func=None):
         
+        """
+        init for timer class
+        duration: how long
+        func: what function to execute
+        first: if you want to execute it before the timer
+        """
+        
         self.duration = duration
         self.func = func
         self.first = first
