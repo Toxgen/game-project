@@ -99,7 +99,7 @@ class Player(pygame.sprite.Sprite):
         self.timer = {
             "tool swap": Timer(200),
             "weapon use": Timer(250, True, attack_action),
-            "roll": Timer(300, True, roll_action),
+            "roll": Timer(500, True, roll_action),
         }
 
     def action(self, attack=False, roll=False) -> None:
@@ -207,7 +207,6 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         timers_active = [timer for timer in self.timer.values() if timer.active]
-        logging.log(logging.INFO, f"{timers_active}, num")
 
         if not len(timers_active):
 
@@ -301,8 +300,8 @@ class Player(pygame.sprite.Sprite):
                 self.sword_hitbox.height += 20
 
         self._test.fill("red", self.sword_hitbox)
+        # return hitbox??
         
-
     def hit_enemy(self, enemy=None) -> None:
         """
         return None
@@ -325,13 +324,16 @@ class Player(pygame.sprite.Sprite):
                     self.hit_index = 0
                     enemy.hit()
 
+                    # it has to check all enemies that it hitss
+
     def roll(self) -> None:
         """
         return None
         WIP
         what if player rolls into teleport -> stop rolling ig
+        what if player hits border
         """
-        logging.info("roll init")
+    
 
     def check_teleport(self, mapProp) -> (str | None):
         """
