@@ -131,6 +131,14 @@ class Player(pygame.sprite.Sprite):
             'down': [],
             'left': [],
             'right': [],
+            "up_left": [],
+            "up_right": [],
+            "down_left": [],
+            "down_right": [],
+            "up_left_idle": [],
+            "up_right_idle": [],
+            "down_left_idle": [],
+            "down_right_idle": [],
             'up_idle': [],
             'down_idle': [],
             'left_idle': [],
@@ -228,6 +236,8 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.direction.x = 0
 
+            self.movement_check()
+
             if events["mouse_down"]:
                 self.timer["weapon use"].activate()
                 self.direction = pygame.math.Vector2()
@@ -241,6 +251,22 @@ class Player(pygame.sprite.Sprite):
             
             if keys[pygame.K_LSHIFT] and not self.timer["roll"].active:
                 self.timer["roll"].activate()
+
+    def movement_check(self):
+        a = self.direction.x
+        b = self.direction.y
+        
+        if a == -1 and b == -1:
+            self.status = "up_left"
+
+        elif a == 1 and b == -1:
+            self.status = "up_right"
+
+        elif a == 1 and b == -1:
+            self.status = "down_left"
+
+        elif a == 1 and b == 1:
+            self.status = "down_right"
 
     def move(self, dt) -> None:
         """
