@@ -102,6 +102,9 @@ class Player(pygame.sprite.Sprite):
             "roll": Timer(500, True, roll_action),
         }
 
+        # testing
+        self._test = pygame.display.get_surface()
+
     def action(self, attack=False, roll=False) -> None:
         """
         return None
@@ -300,8 +303,8 @@ class Player(pygame.sprite.Sprite):
         gets the hitboxes for the sword
         TODO: ? maybe return rect locations bc how it gonna check
         if it hit the enemy ??
+        TODO: ? do this for when going diagonal 
         """
-        self._test = pygame.display.get_surface()
 
         self.sword_hitbox = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
         # polish this so the square goes inside character
@@ -371,6 +374,7 @@ class Player(pygame.sprite.Sprite):
         cc_map: dict = mapProp.teleports[str(mapProp)]
 
         for k, rect in cc_map.items():
+            self._test.fill("blue", rect)
             if self.rect.colliderect(rect):
                 return k
             
