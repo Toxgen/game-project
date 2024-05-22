@@ -24,7 +24,6 @@ class Entity(pygame.sprite.Sprite):
         self.group = group
         self.image = self.getImage()
 
-
         self.rect = self.image[0].get_rect(center = pos)
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 150
@@ -41,8 +40,11 @@ class Entity(pygame.sprite.Sprite):
     def returnAttackDamage(self) -> int:
         return (round(randint(self.stats["attk1"], self.stats["attk2"]) * 1.2))
     
-    def hit(self):
-        raise NotImplementedError
+    def hit(self, hit: bool = False):
+        if hit:
+            self.hp -= 1
+            if not self.hp:
+                self.isAlive = False
 
     def update(self, player):
         # if not self.isAlive and self.timer["dead"].active:
@@ -66,4 +68,3 @@ class Entity(pygame.sprite.Sprite):
 
             self.rect.x += dx * self.speed
             self.rect.y += dy * self.speed
-            

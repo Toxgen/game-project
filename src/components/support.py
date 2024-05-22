@@ -12,10 +12,12 @@ def import_folder(path,
 
     if map:
         for _, __, map_files in walk(path):
-            full_path = path + '/' + map_files[0]
-            mapmap = Map(full_path)
-            surface_list.append(mapmap)
-
+            for map in map_files:
+                print(map)
+                full_path = path + '/' + map
+                mapmap = Map(full_path)
+                surface_list.append(mapmap)
+                print(surface_list)
     else:
         for _, __, img_files in walk(path):
             for image in img_files:

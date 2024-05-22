@@ -68,9 +68,6 @@ class Player(pygame.sprite.Sprite):
         self.in_Attack = False
         self.in_Roll = False
 
-        self.hit_index = 0
-        self.angle = 0
-
         self.import_assets()
 
         self.status = "down"
@@ -91,7 +88,7 @@ class Player(pygame.sprite.Sprite):
 
         self.direction = pygame.math.Vector2()
         self.pos = pygame.math.Vector2(self.rect.center)
-        self.speed = 200
+        self.speed = 300
 
         attack_action = partial(self.action, attack=True)
         roll_action = partial(self.action, roll=True)
@@ -152,13 +149,13 @@ class Player(pygame.sprite.Sprite):
             fullpath = "Assets/Resources/Character/" + animation
             self.animations[animation] = import_folder(fullpath)
 
-    def animation(self, dt) -> None:
+    def animation(self) -> None:
         """
         return None
         shows current animation frame
         """
         try:
-            self.frame_index += 4 * dt
+            self.frame_index += 4 *  self.dt
             if self.frame_index >= len(self.animations[self.status]):
                 self.frame_index = 0
 
@@ -170,7 +167,7 @@ class Player(pygame.sprite.Sprite):
 
     def get_status(self) -> None:
         """
-        return None
+        return None \n
         shows if the player is idle or nah
         """
         try:
@@ -204,8 +201,8 @@ class Player(pygame.sprite.Sprite):
             self.hit_enemy()
 
         self.update_timers()
-        self.move(dt)
-        self.animation(dt)
+        self.move()
+        self.animation()
 
         return self.check_teleport(mapProp)
 
@@ -271,7 +268,7 @@ class Player(pygame.sprite.Sprite):
         elif a == 1 and b == 1:
             self.status = "down_right"
 
-    def move(self, dt) -> None:
+    def move(self) -> None:
         """
         return None
         calculates the movement for player
@@ -279,8 +276,8 @@ class Player(pygame.sprite.Sprite):
         if self.direction.magnitude() > 0:
             self.direction = self.direction.normalize()
 
-        self.pos.x += self.direction.x * self.speed * dt
-        self.pos.y += self.direction.y * self.speed * dt
+        self.pos.x += self.direction.x * self.speed * self.dt
+        self.pos.y += self.direction.y * self.speed * self.dt
 
         self.rect.centerx = self.pos.x
         self.rect.centery = self.pos.y
@@ -329,7 +326,6 @@ class Player(pygame.sprite.Sprite):
                 self.sword_hitbox.height += 20
 
         self._test.fill("red", self.sword_hitbox)
-        # return hitbox??
         
     def hit_enemy(self, enemy=None) -> None:
         """
@@ -337,20 +333,12 @@ class Player(pygame.sprite.Sprite):
         checks if it hit the enemy
         """
 
-        if self.hit_index:
-            self.hit_index = 0
-            self.in_Attack = False
-
-        else:
-            self._get_hitboxes()
-            self.hit_index += 1
-
         if enemy is not None:
 
             for sword_hitbox in self.sword_hitboxes:
 
                 if sword_hitbox.colliderect(enemy.rect):
-                    self.hit_index = 0
+
                     enemy.hit()
 
                     # it has to check all enemies that it hitss

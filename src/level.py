@@ -14,8 +14,9 @@ class Level(pygame.sprite.Sprite):
         """
         self.tiled_maps = import_folder("Assets/Resources/Maps", map=True)
         self.display_surface = pygame.display.get_surface()
-        self.map = self.tiled_maps[0].make_map()
-
+        print(self.tiled_maps)
+        self.map = self.tiled_maps[1]
+        self.surf = self.map.make_map()
 
         self.map_prop = MapInformation(str(self.tiled_maps[0])) # gotta save what map they're in
 
@@ -29,9 +30,7 @@ class Level(pygame.sprite.Sprite):
         setups up the player
         """
         self.player = Player(group=self.all_sprites)
-        Goblin_1.group = self.all_sprites
-        
-        self.enemy = Goblin_1
+        self.enemy = Entity("Goblin", group=self.all_sprites)
 
     def save(self) -> None:
         """
@@ -53,8 +52,7 @@ class Level(pygame.sprite.Sprite):
 
         a = [flag for flag in flags.values() if flag]
         if not a:
-            self.display_surface.blit(self.map, (0, 0))
-            self.all_sprites.custom_draw() 
+            self.all_sprites.custom_draw(self.player, self.map)
             flags = self.all_sprites.update(dt, keys, self.map_prop)            # check if player can move during it
         return (flags, self.map_prop)
 
@@ -62,10 +60,22 @@ class CameraGroup(pygame.sprite.Group):
     def __init__(self):
         super().__init__()
         self.display_surface = pygame.display.get_surface()
+        self.offset = pygame.math.Vector2()
 
-    def custom_draw(self):
+    def custom_draw(self, player, map):
+        self.offset.x = player.rect.centerx - screen_dim[0] / 2
+        self.offset.y = player.rect.centery - screen_dim[1] / 2
+
+        logging.log(logging.INFO, f'offset: {self.offset}')
+        self.display_surface.fill((0, 0, 0))
+        self.surf = map.make_map(self.offset)
+        self.display_surface.blit(self.surf, (0, 0))
+    
         for sprite in self.sprites():
+            offset_rect = sprite.rect.copy()
+            offset_rect.center -= self.offset
             self.display_surface.blit(sprite.image, sprite.rect)
+            
 
 class MapInformation():
 
