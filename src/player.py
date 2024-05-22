@@ -359,12 +359,12 @@ class Player(pygame.sprite.Sprite):
         checks if the player rect collides with a map teleport pnt
         """
 
-        cc_map: dict = mapProp.teleports[str(mapProp)]
+       # cc_map: dict = mapProp.teleports[str(mapProp)]
 
-        for k, rect in cc_map.items():
-            self._test.fill("blue", rect)
-            if self.rect.colliderect(rect):
-                return k
+    #    for k, rect in cc_map.items():
+      #      self._test.fill("blue", rect)
+    #        if self.rect.colliderect(rect):
+    #            return k
             
         return None
 

@@ -14,7 +14,7 @@ class Level(pygame.sprite.Sprite):
         """
         self.tiled_maps = import_folder("Assets/Resources/Maps", map=True)
         self.display_surface = pygame.display.get_surface()
-        print(self.tiled_maps)
+        
         self.map = self.tiled_maps[1]
         self.surf = self.map.make_map()
 
@@ -30,7 +30,7 @@ class Level(pygame.sprite.Sprite):
         setups up the player
         """
         self.player = Player(group=self.all_sprites)
-        self.enemy = Entity("Goblin", group=self.all_sprites)
+        self.enemy = Entity("goblin", group=self.all_sprites)
 
     def save(self) -> None:
         """
