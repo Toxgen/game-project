@@ -8,7 +8,8 @@ from pygame import Rect
 screen_dim: Final = (1152, 704)  # 36 by 22 (x32)
 
 # constants
-allowed_areas = ("placeholder", )
+layers = {"grass": 1, 
+           "water": 2}
 
 # enemies
 mob_stats: tuple = ( 

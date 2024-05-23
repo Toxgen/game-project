@@ -204,7 +204,7 @@ class Player(pygame.sprite.Sprite):
         self.move()
         self.animation()
 
-        return self.check_teleport(mapProp)
+        # return self.check_teleport(mapProp)
 
     def input(self, events) -> None:
         """
@@ -352,21 +352,21 @@ class Player(pygame.sprite.Sprite):
         """
     
 
-    def check_teleport(self, mapProp) -> (str | None):
-        """
-        return str, (the name of the teleport point)
+    # def check_teleport(self, mapProp) -> (str | None):
+    #     """
+    #     return str, (the name of the teleport point)
 
-        checks if the player rect collides with a map teleport pnt
-        """
+    #     checks if the player rect collides with a map teleport pnt
+    #     """
 
-       # cc_map: dict = mapProp.teleports[str(mapProp)]
+    #    # cc_map: dict = mapProp.teleports[str(mapProp)]
 
-    #    for k, rect in cc_map.items():
-      #      self._test.fill("blue", rect)
-    #        if self.rect.colliderect(rect):
-    #            return k
+    # #    for k, rect in cc_map.items():
+    #   #      self._test.fill("blue", rect)
+    # #        if self.rect.colliderect(rect):
+    # #            return k
             
-        return None
+    #     return None
 
 if __name__ == "__main__":
     pass

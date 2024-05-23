@@ -1,10 +1,12 @@
 import logging
+import pytmx
 
 import pygame
 
 from src.player import Player
 from src.components.support import import_folder
 from src.constants import *
+from src.components.surfaces import *
 
 class Level(pygame.sprite.Sprite):
     def __init__(self):
@@ -15,12 +17,15 @@ class Level(pygame.sprite.Sprite):
         self.tiled_maps = import_folder("Assets/Resources/Maps", map=True)
         self.display_surface = pygame.display.get_surface()
         
-        self.map = self.tiled_maps[1]
-        self.surf = self.map.make_map()
-
-        self.map_prop = MapInformation(str(self.tiled_maps[0])) # gotta save what map they're in
-
+        self.map = self.tiled_maps[0]
+        self.surf = self.map.make_map()        
         self.all_sprites = CameraGroup()
+        
+        for x, y, surf in self.map.tmx_data.get_layer_by_name(layers).tiles():
+            Other((x*32, y*32), surf, self.all_sprites)
+
+
+        self.map_prop = MapInformation(str(self.tiled_maps[1])) # gotta save what map they're in
 
         self.setup()
 
@@ -66,7 +71,6 @@ class CameraGroup(pygame.sprite.Group):
         self.offset.x = player.rect.centerx - screen_dim[0] / 2
         self.offset.y = player.rect.centery - screen_dim[1] / 2
 
-        logging.log(logging.INFO, f'offset: {self.offset}')
         self.display_surface.fill((0, 0, 0))
         self.surf = map.make_map(self.offset)
         self.display_surface.blit(self.surf, (0, 0))
@@ -74,7 +78,7 @@ class CameraGroup(pygame.sprite.Group):
         for sprite in self.sprites():
             offset_rect = sprite.rect.copy()
             offset_rect.center -= self.offset
-            self.display_surface.blit(sprite.image, sprite.rect)
+            self.display_surface.blit(sprite.image, offset_rect)
             
 
 class MapInformation():

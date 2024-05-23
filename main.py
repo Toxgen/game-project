@@ -9,7 +9,6 @@ from src.game import Game
 def main():
     try:  
         path = pathlib.Path(__file__).parent.resolve()
-       # path = r"C:\Users\yao\OneDrive\Documents/vscode-src\game-project"
         handler = logging.FileHandler(os.path.join(path, '_logging/_logs.log'))
 
     except Exception:

@@ -2,7 +2,7 @@ from os import walk
 import pygame
 import logging
 
-from src.components.maps import Map
+from src.components.surfaces import Map
 
 
 def import_folder(path,
