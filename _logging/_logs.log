@@ -1,8 +1,7 @@
-map: <class 'map'>
-map: <class 'map'>
-map: test
 mouse is down
-map: dwada
+mouse is down
+mouse is down
+rect: (495, 651), frame: {'frame_index': 2, 'current_pos': <rect(463, 619, 64, 64)>, 'to_where': <Vector2(0, 0)>}
 mouse is down
 mouse is down
 mouse is down

@@ -1,7 +1,5 @@
 import json
 import logging
-import math
-from functools import partial
 
 import pygame
 
@@ -90,13 +88,16 @@ class Player(pygame.sprite.Sprite):
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 300
 
-        attack_action = partial(self.action, attack=True)
-        roll_action = partial(self.action, roll=True)
+        self.roll_var = {
+            "frame_index": 1,
+            "current_pos": pygame.math.Vector2(),
+            "to_where": pygame.math.Vector2()
+        }
 
         self.timer = {
             "tool swap": Timer(200),
-            "weapon use": Timer(250, True, attack_action),
-            "roll": Timer(500, True, roll_action),
+            "weapon use": Timer(250),
+            "roll": Timer(500),
         }
 
         # testing
@@ -116,6 +117,8 @@ class Player(pygame.sprite.Sprite):
             return
 
         if roll:
+            self.roll_var["current_pos"] = self.rect.copy()
+            self.roll_var["to_where"] = self.roll_var["current_pos"] + pygame.math.Vec
             self.roll()
             self.in_Roll = True
             return
@@ -170,6 +173,9 @@ class Player(pygame.sprite.Sprite):
         return None \n
         shows if the player is idle or nah
         """
+        if self.in_Roll:
+            return None
+            
         try:
             if self.direction.magnitude() == 0:
                 self.status = self.status.split("_")[0] + "_idle"
@@ -191,9 +197,8 @@ class Player(pygame.sprite.Sprite):
         """
 
         self.dt = dt
-        if not self.in_Roll: # better way to do this
-            self.get_status()
-
+        
+        self.get_status()
         self.input(keys)
 
         if self.in_Attack: # better way to do tis
@@ -251,6 +256,7 @@ class Player(pygame.sprite.Sprite):
             
             if keys[pygame.K_LSHIFT] and not self.timer["roll"].active:
                 self.timer["roll"].activate()
+                self.action(roll=True)
 
     def movement_check(self):
         a = self.direction.x
@@ -273,11 +279,12 @@ class Player(pygame.sprite.Sprite):
         return None
         calculates the movement for player
         """
-        if self.direction.magnitude() > 0:
-            self.direction = self.direction.normalize()
-
-        self.pos.x += self.direction.x * self.speed * self.dt
-        self.pos.y += self.direction.y * self.speed * self.dt
+        if not self.in_Roll:
+            if self.direction.magnitude() > 0:
+                self.direction = self.direction.normalize()
+    
+            self.pos.x += self.direction.x * self.speed * self.dt
+            self.pos.y += self.direction.y * self.speed * self.dt
 
         self.rect.centerx = self.pos.x
         self.rect.centery = self.pos.y
@@ -349,7 +356,18 @@ class Player(pygame.sprite.Sprite):
         WIP
         what if player rolls into teleport -> stop rolling ig
         what if player hits border
+        gotta make the animation
+        easing the roll/ tweening
         """
+
+        self.rect.center += self.roll_var["to_where"] / self.roll_var["frame_index"] * self.dt
+
+        self.roll_var["frame_index"] += 1
+        logging.log(logging.INFO, f"rect: {self.rect.center}, frame: {self.roll_var}")
+        
+        if self.roll_var["frame_index"] > 10:
+            self.roll_var["frame_index"] = 0
+            self.in_Roll = False
     
 
     # def check_teleport(self, mapProp) -> (str | None):
