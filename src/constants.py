@@ -2,14 +2,13 @@ from .components.items import Item
 from .components.entity import Entity
 
 from typing import Final
-from pygame import Rect
 
 # pygame constants & other constants
 screen_dim: Final = (1152, 704)  # 36 by 22 (x32)
 
 # constants
 layers = {"grass": 1, 
-           "water": 2}
+          "water": 2}
 
 # enemies
 mob_stats: tuple = ( 
@@ -31,7 +30,13 @@ drop_data: dict = {
 Goblin_1 = Entity("goblin", group=None)
 # weapons
 
-Fist = Item("fist", "Your Fist", "weapon", buy=-1, sell=-1, damage=2)
+Fist = Item("fist", 
+            "Your Fist", 
+            "weapon", 
+            buy=-1, 
+            sell=-1, 
+            damage=2)
+
 Goblin_Sword = Item("goblin_sword",
                     "A green, wooden sword",
                     "weapon",

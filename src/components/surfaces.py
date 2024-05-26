@@ -1,8 +1,7 @@
 import pytmx
 import pygame
 import logging
-from .. import constants
-from constants import *
+from src.constants import layers
 
 class Map(pygame.surface.Surface):
 

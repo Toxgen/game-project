@@ -2,15 +2,14 @@ from os import walk
 import pygame
 import logging
 
-from src.components.surfaces import Map
-
-
 def import_folder(path,
                   map=False):
     
     surface_list = []
 
     if map:
+        from src.components.surfaces import Map
+        
         for _, __, map_files in walk(path):
             for map in map_files:
                 full_path = path + '/' + map

@@ -11,8 +11,9 @@ def main():
         path = pathlib.Path(__file__).parent.resolve()
         handler = logging.FileHandler(os.path.join(path, '_logging/_logs.log'))
 
-    except Exception:
+    except Exception as e:
         logging.log(level=40, msg="Logging defining went wrong")
+        raise e
 
     finally:
         logger = logging.getLogger()

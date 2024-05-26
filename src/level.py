@@ -21,8 +21,8 @@ class Level(pygame.sprite.Sprite):
         self.surf = self.map.make_map()        
         self.all_sprites = CameraGroup()
         
-        for x, y, surf in self.map.tmx_data.get_layer_by_name(layers).tiles():
-            Other((x*32, y*32), surf, self.all_sprites)
+        # for x, y, surf in self.map.tmx_data.get_layer_by_name(layers).tiles():
+            # Other((x*32, y*32), surf, self.all_sprites)
 
 
         self.map_prop = MapInformation(str(self.tiled_maps[1])) # gotta save what map they're in
@@ -86,14 +86,14 @@ class MapInformation():
 
     def __init__(self, name: str) -> None:
         self.name = name
-        self.teleports = {
+        # self.teleports = {
 
-                "test": {
-                    "pnt1": Rect((200, 200), (300, 200)),
-                    "pnt2": Rect((100, 100), (100, 100))# (far x?, far y?) (length?, width?)
-                }
+                # "test": {
+                    # "pnt1": Rect((200, 200), (300, 200)),
+                    # "pnt2": Rect((100, 100), (100, 100))# (far x?, far y?) (length?, width?)
+                # }
 
-            }
+          #  }
         
     def __str__(self):
         return self.name
