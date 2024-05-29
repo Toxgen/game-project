@@ -3,6 +3,7 @@ from sys import exit
 import pygame
 import logging
 
+
 class Game:
     def __init__(self):
         """

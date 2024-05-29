@@ -20,10 +20,6 @@ class Level(pygame.sprite.Sprite):
         self.map = self.tiled_maps[0]
         self.surf = self.map.make_map()        
         self.all_sprites = CameraGroup()
-        
-        # for x, y, surf in self.map.tmx_data.get_layer_by_name(layers).tiles():
-            # Other((x*32, y*32), surf, self.all_sprites)
-
 
         self.map_prop = MapInformation(str(self.tiled_maps[1])) # gotta save what map they're in
 
@@ -58,7 +54,8 @@ class Level(pygame.sprite.Sprite):
         a = [flag for flag in flags.values() if flag]
         if not a:
             self.all_sprites.custom_draw(self.player, self.map)
-            flags = self.all_sprites.update(dt, keys, self.map_prop)            # check if player can move during it
+            player_flags = self.player.update(dt, keys, self.map_prop)
+            self.all_sprites.update(player_flags)            # check if player can move during it
         return (flags, self.map_prop)
 
 class CameraGroup(pygame.sprite.Group):
@@ -75,7 +72,7 @@ class CameraGroup(pygame.sprite.Group):
         self.surf = map.make_map(self.offset)
         self.display_surface.blit(self.surf, (0, 0))
     
-        for sprite in self.sprites():
+        for sprite in sorted(self.sprites(), key = lambda x : self.sprites()):
             offset_rect = sprite.rect.copy()
             offset_rect.center -= self.offset
             self.display_surface.blit(sprite.image, offset_rect)

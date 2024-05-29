@@ -20,11 +20,12 @@ class Entity(pygame.sprite.Sprite):
                  pos: tuple[int, int] = (0, 0)) -> None:
         
         self.name = name
+        self.screen_size = pygame.display.get_surface().get_size()
 
         self.group = group
         self.image = self.getImage()
 
-        self.rect = self.image[0].get_rect(center = pos)
+        self.rect: pygame.Rect = self.image[0].get_rect(center = pos)
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 150
 
@@ -40,20 +41,19 @@ class Entity(pygame.sprite.Sprite):
     def returnAttackDamage(self) -> int:
         return (round(randint(self.stats["attk1"], self.stats["attk2"]) * 1.2))
     
-    def hit(self, hit: bool = False):
-        if hit:
-            self.hp -= 1
-            if not self.hp:
-                self.isAlive = False
+    def hit(self):
+        self.hp -= 1
+        if not self.hp:
+            self.isAlive = False
 
-    def update(self, player):
+    def update(self, flags):
+        if flags != None and self.rect.collidrect(flags):
+            self.hit()
         # if not self.isAlive and self.timer["dead"].active:
         #     self.
         
-        screen_size = pygame.display.get_surface().get_size()
-        
-        if ((0 <= self.rect.x <= screen_size[0]) and 
-            (0 <= self.rect.y <= screen_size[1])):
+        if ((0 <= self.rect.x <= self.screen_size[0]) and 
+            (0 <= self.rect.y <= self.screen_size[1])):
 
             if self.hp < 0:
                 self.isAlive = False

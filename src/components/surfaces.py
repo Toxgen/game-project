@@ -37,6 +37,7 @@ class Map(pygame.surface.Surface):
                         
     def make_map(self, offset=pygame.Vector2(0, 0)):
         temp_surface = pygame.Surface((self.width, self.height))
+        
         self.render(temp_surface, offset)
         return temp_surface
     

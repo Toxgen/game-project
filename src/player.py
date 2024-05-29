@@ -44,9 +44,6 @@ class Player(pygame.sprite.Sprite):
         with open("save/data.json", "w") as file:
             json.dump(obj, file, indent=4)
 
-    # def return_next_level(self) -> int:
-    #     return round((1.31 * self.player["level"] + 5))
-
     def __init__(self,
                  group,
                  selected_tool = Fist,
@@ -108,20 +105,21 @@ class Player(pygame.sprite.Sprite):
         return None
         starts events for the player
 
-        do i really need to do this??
-        cant i just make 1 function for either action??
         """
-        if attack:
-            self.hit_enemy()
-            self.in_Attack = True
-            return
-
         if roll:
             self.roll_var["current_pos"] = self.rect.copy()
-            self.roll_var["to_where"] = self.roll_var["current_pos"] + pygame.math.Vec
+            self.roll_var["to_where"] = self.roll_var["current_pos"] + pygame.math.Vector2 #<==== TODO: ???
             self.roll()
             self.in_Roll = True
             return
+        
+        if attack:
+            self._get_hitboxes()
+            self.in_Attack = True
+            return
+        
+        else:
+            self.sword_hitbox = None
     
     def import_assets(self) -> None:
         """
@@ -186,9 +184,9 @@ class Player(pygame.sprite.Sprite):
                 f"getting status went wrong, {self._log}, error: {error}")
             raise Exception
 
-    def update(self, dt: float, keys: dict, mapProp) -> None:
+    def update(self, dt: float, keys: dict) -> None:
         """
-        return None
+        returns the swords hitbox
         where all player events are held
 
         dt: delta time
@@ -201,15 +199,11 @@ class Player(pygame.sprite.Sprite):
         self.get_status()
         self.input(keys)
 
-        if self.in_Attack: # better way to do tis
-            # prob a better way to do this tbh
-            self.hit_enemy()
-
         self.update_timers()
         self.move()
         self.animation()
 
-        # return self.check_teleport(mapProp)
+        if self.sword_hitbox != None: return self.sword_hitbox 
 
     def input(self, events) -> None:
         """
@@ -333,22 +327,6 @@ class Player(pygame.sprite.Sprite):
                 self.sword_hitbox.height += 20
 
         self._test.fill("red", self.sword_hitbox)
-        
-    def hit_enemy(self, enemy=None) -> None:
-        """
-        return None
-        checks if it hit the enemy
-        """
-
-        if enemy is not None:
-
-            for sword_hitbox in self.sword_hitboxes:
-
-                if sword_hitbox.colliderect(enemy.rect):
-
-                    enemy.hit()
-
-                    # it has to check all enemies that it hitss
 
     def roll(self) -> None:
         """
@@ -358,6 +336,7 @@ class Player(pygame.sprite.Sprite):
         what if player hits border
         gotta make the animation
         easing the roll/ tweening
+        use the self.direction vector to help go where to go in direction ig lol
         """
 
         self.rect.center += self.roll_var["to_where"] / self.roll_var["frame_index"] * self.dt
