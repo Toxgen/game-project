@@ -2,6 +2,7 @@ import json
 import logging
 
 import pygame
+from pygame import Vector2
 
 from src.constants import *
 from src.components.support import *
@@ -81,14 +82,13 @@ class Player(pygame.sprite.Sprite):
         self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(center = (self.location["x"], self.location["y"]))
 
-        self.direction = pygame.math.Vector2()
-        self.pos = pygame.math.Vector2(self.rect.center)
+        self.direction = Vector2()
+        self.pos = Vector2(self.rect.center)
         self.speed = 300
 
         self.roll_var = {
             "frame_index": 1,
-            "current_pos": pygame.math.Vector2(),
-            "to_where": pygame.math.Vector2()
+            "to_where": Vector2()
         }
 
         self.timer = {
@@ -107,8 +107,7 @@ class Player(pygame.sprite.Sprite):
 
         """
         if roll:
-            self.roll_var["current_pos"] = self.rect.copy()
-            self.roll_var["to_where"] = self.roll_var["current_pos"] + pygame.math.Vector2 #<==== TODO: ???
+            self.roll_var["to_where"] = Vector2(self.rect.copy().x, self.rect.copy().y) + Vector2(50, 50)
             self.roll()
             self.in_Roll = True
             return
@@ -193,8 +192,14 @@ class Player(pygame.sprite.Sprite):
         keys: keys pressed
         mapInfo: information about the maps teleport places
         """
+        if keys is None: # this is to prevent the player from updating again
+            return
+        
+        if self.in_Roll:
+            self.roll()
 
         self.dt = dt
+        self.sword_hitbox = None # might mess things up??
         
         self.get_status()
         self.input(keys)
@@ -239,7 +244,7 @@ class Player(pygame.sprite.Sprite):
 
             if events["mouse_down"]:
                 self.timer["weapon use"].activate()
-                self.direction = pygame.math.Vector2()
+                self.direction = Vector2()
                 self.frame_index = 0
 
             if keys[pygame.K_q] and not self.timer["tool swap"].active:
@@ -250,6 +255,7 @@ class Player(pygame.sprite.Sprite):
             
             if keys[pygame.K_LSHIFT] and not self.timer["roll"].active:
                 self.timer["roll"].activate()
+                logging.log(logging.INFO, "clicked shift")
                 self.action(roll=True)
 
     def movement_check(self):
@@ -338,15 +344,24 @@ class Player(pygame.sprite.Sprite):
         easing the roll/ tweening
         use the self.direction vector to help go where to go in direction ig lol
         """
-
-        self.rect.center += self.roll_var["to_where"] / self.roll_var["frame_index"] * self.dt
+        # logging.log(10, f"bruh: {self.rect.center}")
+        self.rect.center += (self.roll_var["to_where"] / self.roll_var["frame_index"])# * self.dt
+        # logging.log(10, f"sigma: {self.rect.center}")
 
         self.roll_var["frame_index"] += 1
-        logging.log(logging.INFO, f"rect: {self.rect.center}, frame: {self.roll_var}")
+        # logging.log(logging.INFO, f"where: {self.rect.center}, \n frame: {self.roll_var},")
         
         if self.roll_var["frame_index"] > 10:
-            self.roll_var["frame_index"] = 0
+            self.roll_var["frame_index"] = 1 # cant be 0 because of division of zero :(
             self.in_Roll = False
+
+        """
+        for tiled make a trees pixel image 64 by 64 -> 128x
+        then just automically throw it into the map class
+        use the offset
+        y-axis should be a lil more complicated but shouldne be hard
+        lambda x: self.whatever i dont really know
+        """
     
 
     # def check_teleport(self, mapProp) -> (str | None):

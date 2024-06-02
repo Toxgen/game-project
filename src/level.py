@@ -54,8 +54,8 @@ class Level(pygame.sprite.Sprite):
         a = [flag for flag in flags.values() if flag]
         if not a:
             self.all_sprites.custom_draw(self.player, self.map)
-            player_flags = self.player.update(dt, keys, self.map_prop)
-            self.all_sprites.update(player_flags)            # check if player can move during it
+            player_flags = self.player.update(dt, keys)
+            self.all_sprites.update(player_flags, keys=None)            # check if player can move during it
         return (flags, self.map_prop)
 
 class CameraGroup(pygame.sprite.Group):
@@ -72,7 +72,7 @@ class CameraGroup(pygame.sprite.Group):
         self.surf = map.make_map(self.offset)
         self.display_surface.blit(self.surf, (0, 0))
     
-        for sprite in sorted(self.sprites(), key = lambda x : self.sprites()):
+        for sprite in self.sprites():
             offset_rect = sprite.rect.copy()
             offset_rect.center -= self.offset
             self.display_surface.blit(sprite.image, offset_rect)

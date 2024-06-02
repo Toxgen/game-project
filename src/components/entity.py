@@ -46,7 +46,7 @@ class Entity(pygame.sprite.Sprite):
         if not self.hp:
             self.isAlive = False
 
-    def update(self, flags):
+    def update(self, flags, player):
         if flags != None and self.rect.collidrect(flags):
             self.hit()
         # if not self.isAlive and self.timer["dead"].active:
@@ -60,6 +60,9 @@ class Entity(pygame.sprite.Sprite):
 
             dx = player.rect.centerx - self.rect.centerx
             dy = player.rect.centery - self.rect.centery
+
+            # pythagoreans theorem????
+            
             distance = math.sqrt(dx**2 + dy**2) 
 
             if distance > 0: 
