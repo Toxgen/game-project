@@ -61,6 +61,7 @@ class Game:
         main running function that holds all components
         """
         while True:
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.level.save()
@@ -82,6 +83,6 @@ class Game:
             self.evnt(plrInfo, mapInfo, dt)
  
             pygame.display.update()
-            
+
 if __name__ == "__main__":
     pass
