@@ -5,7 +5,7 @@ import os
 import pathlib
 
 from src.game import Game
-    
+     
 def main():
     try:  
         path = pathlib.Path(__file__).parent.resolve()
@@ -22,6 +22,6 @@ def main():
     
     game = Game()
     game.run()
-    
+
 if __name__ == "__main__":
     main()

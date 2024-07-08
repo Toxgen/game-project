@@ -60,8 +60,8 @@ def printingInv(inv: dict) -> None: # change this into blitting
         
 def returnMob(hp: int, location: str) -> list:
     
-    if location not in allowed_areas:
-        return None
+    # if location not in allowed_areas:
+    #     return None
 
     if hp > 50:
         _hp_multi = round(hp/50* 0.5) 

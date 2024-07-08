@@ -21,8 +21,6 @@ class Level(pygame.sprite.Sprite):
         self.surf = self.map.make_map()        
         self.all_sprites = CameraGroup()
 
-        self.map_prop = MapInformation(str(self.tiled_maps[1])) # gotta save what map they're in
-
         self.setup()
 
     def setup(self) -> None:

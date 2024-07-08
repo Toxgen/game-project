@@ -62,6 +62,7 @@ class Game:
         main running function that holds all components
         """
         while True:
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.level.save()
@@ -94,5 +95,8 @@ class EventHandler():
         """
         pass
 
-    def 
+    def idk():
+        pass
 
+if __name__ == "__main__":
+    pass
