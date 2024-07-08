@@ -84,5 +84,15 @@ class Game:
  
             pygame.display.update()
             
-if __name__ == "__main__":
-    pass
+class EventHandler():
+    def __init__(self):
+        """
+        Initalizes the Event Handler
+        Handles Events duh
+
+        notes: handle userInput and whatever is happening on map ig
+        """
+        pass
+
+    def 
+

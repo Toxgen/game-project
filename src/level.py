@@ -77,20 +77,27 @@ class CameraGroup(pygame.sprite.Group):
             offset_rect.center -= self.offset
             self.display_surface.blit(sprite.image, offset_rect)
             
+class ClassService():
+    def __init__():
+        """
+        Initalize ClassService
+        Deals with conflictions with player and other entities
+        """
 
-class MapInformation():
+        pass
 
+    def player_draw(self):
+        """
+        Draws the player
 
-    def __init__(self, name: str) -> None:
-        self.name = name
-        # self.teleports = {
+        Return: ?
+        """
+        pass
 
-                # "test": {
-                    # "pnt1": Rect((200, 200), (300, 200)),
-                    # "pnt2": Rect((100, 100), (100, 100))# (far x?, far y?) (length?, width?)
-                # }
+    def other_draw(self):
+        """
+        Draws entities (other than player)
 
-          #  }
-        
-    def __str__(self):
-        return self.name
+        Return: ?
+        """
+        pass
