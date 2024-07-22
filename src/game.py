@@ -3,8 +3,19 @@ from sys import exit
 import pygame
 import logging
 
+class EventHandler():
+    def __init__(self):
+        """
+        Initalizes the Event Handler
+        Handles Events duh
 
-class Game:
+        notes: handle userInput and whatever is happening on map ig
+        """
+        pass
+
+    def idk():
+        pass
+class Game(EventHandler):
     def __init__(self):
         """
         initalize game class
@@ -32,7 +43,7 @@ class Game:
 
         #just have to check what map it is
     
-    def evnt(self, plrFlags, mapInfo, dt) -> None:
+    def evnt(self, plrFlags, dt) -> None:
         """
         return None
         loops through events that i made, not pygame
@@ -79,24 +90,11 @@ class Game:
 
             dt = self.clock.tick(60) / 1000
 
-            plrInfo, mapInfo = self.level.run(dt, self.keys, self.flags)
+            plrInfo = self.level.run(dt, self.keys, self.flags)
 
-            self.evnt(plrInfo, mapInfo, dt)
+            self.evnt(plrInfo, dt)
  
             pygame.display.update()
-            
-class EventHandler():
-    def __init__(self):
-        """
-        Initalizes the Event Handler
-        Handles Events duh
-
-        notes: handle userInput and whatever is happening on map ig
-        """
-        pass
-
-    def idk():
-        pass
 
 if __name__ == "__main__":
     pass

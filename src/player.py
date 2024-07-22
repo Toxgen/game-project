@@ -1,5 +1,6 @@
 import json
 import logging
+from typing import overload
 
 import pygame
 from pygame import Vector2
@@ -61,30 +62,30 @@ class Player(pygame.sprite.Sprite):
         """
 
         super().__init__(group)
-        self.in_Attack = False
-        self.in_Roll = False
+        self.in_Attack: bool = False
+        self.in_Roll: bool = False
 
         self.import_assets()
 
-        self.status = "down"
-        self.frame_index = 0
+        self.status: str = "down"
+        self.frame_index: int = 0
 
-        self.selected_tool = selected_tool
-        self.tool_index = tool_index
-        self.tools_inv = tools_inv
-        self.items_inv = items_inv
-        self.location = location
+        self.selected_tool: Item = selected_tool
+        self.tool_index: int = tool_index
+        self.tools_inv: tuple = tools_inv
+        self.items_inv: tuple = items_inv
+        self.location: dict = location
 
         self.defense = 0  # maybe make method to find the total defense here
 
         self.load()
 
         self.image = self.animations[self.status][self.frame_index]
-        self.rect = self.image.get_rect(center = (self.location["x"], self.location["y"]))
+        self.rect: pygame.Rect = self.image.get_rect(center = (self.location["x"], self.location["y"]))
 
         self.direction = Vector2()
         self.pos = Vector2(self.rect.center)
-        self.speed = 300
+        self.speed: int = 300
 
         self.roll_var = {
             "frame_index": 1,
@@ -170,8 +171,6 @@ class Player(pygame.sprite.Sprite):
         return None \n
         shows if the player is idle or nah
         """
-        if self.in_Roll:
-            return None
             
         try:
             if self.direction.magnitude() == 0:
@@ -183,7 +182,7 @@ class Player(pygame.sprite.Sprite):
                 f"getting status went wrong, {self._log}, error: {error}")
             raise Exception
 
-    def update(self, dt: float, keys: dict) -> None:
+    def update(self, dt: float, keys: dict) -> (None | pygame.Rect):
         """
         returns the swords hitbox
         where all player events are held
@@ -192,8 +191,7 @@ class Player(pygame.sprite.Sprite):
         keys: keys pressed
         mapInfo: information about the maps teleport places
         """
-        if keys is None: # this is to prevent the player from updating again
-            return
+        if keys is None: return None # this is to prevent the player from updating again
         
         if self.in_Roll:
             self.roll()
@@ -208,7 +206,7 @@ class Player(pygame.sprite.Sprite):
         self.move()
         self.animation()
 
-        if self.sword_hitbox != None: return self.sword_hitbox 
+        if self.sword_hitbox != None: return self.sword_hitbox
 
     def input(self, events) -> None:
         """
@@ -240,7 +238,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.direction.x = 0
 
-            self.movement_check()
+            self.direction_to_status()
 
             if events["mouse_down"]:
                 self.timer["weapon use"].activate()
@@ -258,7 +256,7 @@ class Player(pygame.sprite.Sprite):
                 logging.log(logging.INFO, "clicked shift")
                 self.action(roll=True)
 
-    def movement_check(self):
+    def direction_to_status(self):
         a = self.direction.x
         b = self.direction.y
         
@@ -268,11 +266,56 @@ class Player(pygame.sprite.Sprite):
         elif a == 1 and b == -1:
             self.status = "up_right"
 
-        elif a == 1 and b == -1:
+        elif a == -1 and b == 1:
             self.status = "down_left"
 
         elif a == 1 and b == 1:
             self.status = "down_right"
+
+    def status_to_direction(self, _A: str, twoMore: bool = False):
+
+        if twoMore:
+            if _A == "up_left":
+                self.direction.x = -1
+                self.direction.y = -1
+            elif _A == "up_right":
+                self.direction.x = 1
+                self.direction.y = -1
+            elif _A == "down_left":
+                self.direction.x = -1
+                self.direction.y = 1
+            elif _A == "down_right":
+                self.direction.x = 1
+                self.direction.y = 1
+
+        if _A == "up":
+            self.direction.y = -1
+        elif _A == "down":
+            self.direction.y = 1
+
+        if _A == "left":
+            self.direction.x = -1
+        elif _A == "right":
+            self.direction.x = 1
+
+    def _move_help(self) -> None:
+        self.rect.centerx = self.pos.x
+        self.rect.centery = self.pos.y
+
+        self.location["x"] = self.pos.x
+        self.location["y"] = self.pos.y
+
+    def _move(self, roll=False) -> None:
+        if roll:
+            _a = self.status.split("_idle")[0]
+            # if it's more complex than up, down, left, right
+            if len(_a.split("_")) >= 2:
+                self.statusToDirection(_a, True)
+            else:
+                self.status_to_direction(_a)
+                
+        self.pos.x += self.direction.x * self.speed * self.dt
+        self.pos.y += self.direction.y * self.speed * self.dt
 
     def move(self) -> None:
         """
@@ -283,14 +326,9 @@ class Player(pygame.sprite.Sprite):
             if self.direction.magnitude() > 0:
                 self.direction = self.direction.normalize()
     
-            self.pos.x += self.direction.x * self.speed * self.dt
-            self.pos.y += self.direction.y * self.speed * self.dt
-
-        self.rect.centerx = self.pos.x
-        self.rect.centery = self.pos.y
-
-        self.location["x"] = self.pos.x
-        self.location["y"] = self.pos.y
+            self._move()
+        
+        self._move_help()
 
     def update_timers(self) -> None:
         """
@@ -310,7 +348,7 @@ class Player(pygame.sprite.Sprite):
         TODO: ? do this for when going diagonal 
         """
 
-        self.sword_hitbox = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
+        self.sword_hitbox: pygame.Rect = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
         # polish this so the square goes inside character
         # for diagonals just find the center of the diagnol
         # very easy
@@ -344,12 +382,10 @@ class Player(pygame.sprite.Sprite):
         easing the roll/ tweening
         use the self.direction vector to help go where to go in direction ig lol
         """
-        # logging.log(10, f"bruh: {self.rect.center}")
-        self.rect.center += (self.roll_var["to_where"] / self.roll_var["frame_index"])# * self.dt
-        # logging.log(10, f"sigma: {self.rect.center}")
+        self._move(roll=True)
+        self._move_help()
 
         self.roll_var["frame_index"] += 1
-        # logging.log(logging.INFO, f"where: {self.rect.center}, \n frame: {self.roll_var},")
         
         if self.roll_var["frame_index"] > 10:
             self.roll_var["frame_index"] = 1 # cant be 0 because of division of zero :(
