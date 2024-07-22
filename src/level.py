@@ -52,7 +52,7 @@ class Level(pygame.sprite.Sprite):
         if not flagTrue:
             self.all_sprites.custom_draw(self.player, self.map)
             player_flags = self.player.update(dt, keys)
-            # player flags are just the hitbox rects
+            # player flags are just the hitbox rect
             self.all_sprites.update(player_flags, keys=None)
         return flags
 

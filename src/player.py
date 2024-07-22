@@ -375,12 +375,8 @@ class Player(pygame.sprite.Sprite):
     def roll(self) -> None:
         """
         return None
-        WIP
         what if player rolls into teleport -> stop rolling ig
         what if player hits border
-        gotta make the animation
-        easing the roll/ tweening
-        use the self.direction vector to help go where to go in direction ig lol
         """
         self._move(roll=True)
         self._move_help()
