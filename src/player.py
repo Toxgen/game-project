@@ -1,6 +1,5 @@
 import json
 import logging
-from typing import overload
 
 import pygame
 from pygame import Vector2
@@ -87,10 +86,7 @@ class Player(pygame.sprite.Sprite):
         self.pos = Vector2(self.rect.center)
         self.speed: int = 300
 
-        self.roll_var = {
-            "frame_index": 1,
-            "to_where": Vector2()
-        }
+        self.roll_frame = 1
 
         self.timer = {
             "tool swap": Timer(200),
@@ -108,7 +104,6 @@ class Player(pygame.sprite.Sprite):
 
         """
         if roll:
-            self.roll_var["to_where"] = Vector2(self.rect.copy().x, self.rect.copy().y) + Vector2(50, 50)
             self.roll()
             self.in_Roll = True
             return
@@ -308,8 +303,8 @@ class Player(pygame.sprite.Sprite):
     def _move(self, roll=False) -> None:
         if roll:
             _a = self.status.split("_idle")[0]
-            # if it's more complex than up, down, left, right
-            if len(_a.split("_")) >= 2:
+            
+            if len(_a.split("_")) >= 2: # if it's more complex than up, down, left, right
                 self.statusToDirection(_a, True)
             else:
                 self.status_to_direction(_a)
@@ -381,10 +376,10 @@ class Player(pygame.sprite.Sprite):
         self._move(roll=True)
         self._move_help()
 
-        self.roll_var["frame_index"] += 1
+        self.roll_frame += 1
         
-        if self.roll_var["frame_index"] > 10:
-            self.roll_var["frame_index"] = 1 # cant be 0 because of division of zero :(
+        if self.roll_frame > 10:
+            self.roll_frame = 1 # cant be 0 because of division of zero :(
             self.in_Roll = False
 
         """
@@ -394,7 +389,11 @@ class Player(pygame.sprite.Sprite):
         y-axis should be a lil more complicated but shouldne be hard
         lambda x: self.whatever i dont really know
         """
-    
+
+if __name__ == "__main__":
+    pass
+
+
 
     # def check_teleport(self, mapProp) -> (str | None):
     #     """
@@ -411,6 +410,3 @@ class Player(pygame.sprite.Sprite):
     # #            return k
             
     #     return None
-
-if __name__ == "__main__":
-    pass

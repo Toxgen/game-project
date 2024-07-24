@@ -8,7 +8,7 @@ from src.components.support import import_folder
 from src.constants import *
 from src.components.surfaces import *
 
-class Level(pygame.sprite.Sprite):
+class Level:
     def __init__(self):
         """
         initalize level
@@ -29,13 +29,6 @@ class Level(pygame.sprite.Sprite):
         setups up the player
         """
         self.player = Player(group=self.all_sprites)
-
-    def save(self) -> None:
-        """
-        return None
-        saves current player data
-        """
-        self.player.save()
 
     def run(self, dt: float, keys: dict, flags: dict) -> tuple:
         """
