@@ -33,39 +33,7 @@ class Game(EventHandler):
         from src.level import Level
         self.level = Level()
 
-        from src.components.transition import Transition
-        self.events = {
-            "transitioning": Transition(),
-        }
-        self.flags = {
-            "transition": False,
-        }
-
-        #just have to check what map it is
-    
-    def evnt(self, plrFlags, dt) -> None:
-        """
-        return None
-        loops through events that i made, not pygame
-        """
-        if plrFlags: # do we need len?
-            self.flags["transition"] = True
-
-        for event in self.events.values():
-            if event.__name__ == "transition":
-
-                logging.info("transitioning rn")
-                try:
-                    if self.flags["transition"] and not event.transitioning:
-                        event.update(dt)
-                        #should save after probably
-                except Exception as e:
-                    logging.log(logging.WARNING, f"transition fail msg: {e}")
-                    raise Exception
-        else:
-            for flag in self.flags:
-                self.flags[flag] = False
-            
+        #just have to check what map it is       
 
     def run(self) -> None:
         """
@@ -76,9 +44,12 @@ class Game(EventHandler):
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.level.save()
-                    pygame.quit()
-                    exit()
+                    try:
+                        self.level.save()
+                        pygame.quit()
+                        exit()
+                    except Exception as e:
+                        logging.log(logging.CRITICAL, f"ESCAPING ERROR {e}")
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     self.keys["mouse_down"] = True

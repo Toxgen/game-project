@@ -23,6 +23,13 @@ class Level:
 
         self.setup()
 
+    def save(self):
+        """
+        Saves the player's data when escape happens
+        """
+
+        self.player.save()
+
     def setup(self) -> None:
         """
         return None
