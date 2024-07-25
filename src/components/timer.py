@@ -8,7 +8,6 @@ class Timer:
         init for timer class
         duration: how long
         func: what function to execute
-        first: if you want to execute it before the timer
         """
         
         self.duration = duration
@@ -31,8 +30,15 @@ class Timer:
 class UntilTimer(Timer):
 
     def __init__(self, until: bool = True):
-        super().__init__()
+        """
+        Init for UntilTimer
+        """
+        super().__init__(duration=0)
         self.until = until
 
     def activate(self):
-        return super().activate()
+        self.active = True
+
+    def update(self, finished: bool = False):
+        if finished:
+            self.active = False

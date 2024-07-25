@@ -45,12 +45,18 @@ class Level:
         if not flagTrue:
             self.all_sprites.custom_draw(self.player, self.map)
             player_flags = self.player.update(dt, keys)
+
+            if player_flags is not None:
+                print(f"rect: {player_flags}")
             # player flags are just the hitbox rect
             self.all_sprites.update(player_flags, keys=None)
         return flags
 
 class CameraGroup(pygame.sprite.Group):
-    def __init__(self):
+    def __init__(self) -> None:
+        """
+        Initalizes the camera for the player
+        """
         super().__init__()
         self.display_surface = pygame.display.get_surface()
         self.offset = pygame.math.Vector2()
@@ -60,7 +66,7 @@ class CameraGroup(pygame.sprite.Group):
         self.offset.y = player.rect.centery - screen_dim[1] / 2
 
         self.display_surface.fill((0, 0, 0))
-        self.surf = map.make_map(self.offset)
+        self.surf = map.make_map(self.offset) # ???
         self.display_surface.blit(self.surf, (0, 0))
     
         for sprite in self.sprites():

@@ -6,7 +6,7 @@ from pygame import Vector2
 
 from src.constants import *
 from src.components.support import *
-from src.components.timer import Timer
+from src.components.timer import *
 
 class Player(pygame.sprite.Sprite):
 
@@ -45,6 +45,58 @@ class Player(pygame.sprite.Sprite):
         with open("save/data.json", "w") as file:
             json.dump(obj, file, indent=4)
 
+    def _move_help(self) -> None:
+        self.rect.centerx = self.pos.x
+        self.rect.centery = self.pos.y
+
+        self.location["x"] = self.pos.x
+        self.location["y"] = self.pos.y
+
+    def _move(self, roll=False) -> None:
+        if roll:
+            _a = self.status.split("_idle")[0]
+            
+            if len(_a.split("_")) >= 2: # if it's more complex than up, down, left, right
+                self.statusToDirection(_a, True)
+            else:
+                self.status_to_direction(_a)
+                
+        self.pos.x += self.direction.x * self.speed * self.dt
+        self.pos.y += self.direction.y * self.speed * self.dt
+
+    def _get_hitboxes(self) -> None:
+        """
+        return None
+        gets the hitboxes for the sword
+        TODO: ? maybe return rect locations bc how it gonna check
+        if it hit the enemy ??
+        TODO: ? do this for when going diagonal 
+        """
+
+        self.sword_hitbox: pygame.Rect = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
+        # polish this so the square goes inside character
+        # for diagonals just find the center of the diagnol
+        # very easy
+        match self.status.split("_")[0]:
+            case "up":
+                self.sword_hitbox.x += 2
+                self.sword_hitbox.y -= 9
+                self.sword_hitbox.width += 19
+            case 'down':
+                self.sword_hitbox.x += 4
+                self.sword_hitbox.y += 38
+                self.sword_hitbox.width += 19
+            case 'left':
+                self.sword_hitbox.x -= 8
+                self.sword_hitbox.y += 8
+                self.sword_hitbox.height += 20
+            case 'right':
+                self.sword_hitbox.x += 29
+                self.sword_hitbox.y += 7
+                self.sword_hitbox.height += 20
+
+        self._test.fill("red", self.sword_hitbox)
+
     def __init__(self,
                  group,
                  selected_tool = Fist,
@@ -62,7 +114,7 @@ class Player(pygame.sprite.Sprite):
 
         super().__init__(group)
         self.in_Attack: bool = False
-        self.in_Roll: bool = False
+        self.in_roll: bool = False
 
         self.import_assets()
 
@@ -91,7 +143,7 @@ class Player(pygame.sprite.Sprite):
         self.timer = {
             "tool swap": Timer(200),
             "weapon use": Timer(250),
-            "roll": Timer(500),
+            "roll": UntilTimer()
         }
 
         # testing
@@ -105,7 +157,7 @@ class Player(pygame.sprite.Sprite):
         """
         if roll:
             self.roll()
-            self.in_Roll = True
+            self.in_roll = True
             return
         
         if attack:
@@ -177,32 +229,6 @@ class Player(pygame.sprite.Sprite):
                 f"getting status went wrong, {self._log}, error: {error}")
             raise Exception
 
-    def update(self, dt: float, keys: dict) -> (None | pygame.Rect):
-        """
-        returns the swords hitbox
-        where all player events are held
-
-        dt: delta time
-        keys: keys pressed
-        mapInfo: information about the maps teleport places
-        """
-        if keys is None: return None # this is to prevent the player from updating again
-        
-        if self.in_Roll:
-            self.roll()
-
-        self.dt = dt
-        self.sword_hitbox = None # might mess things up??
-        
-        self.get_status()
-        self.input(keys)
-
-        self.update_timers()
-        self.move()
-        self.animation()
-
-        if self.sword_hitbox != None: return self.sword_hitbox
-
     def input(self, events) -> None:
         """
         return None
@@ -237,6 +263,7 @@ class Player(pygame.sprite.Sprite):
 
             if events["mouse_down"]:
                 self.timer["weapon use"].activate()
+                self.action(attack=True)
                 self.direction = Vector2()
                 self.frame_index = 0
 
@@ -251,7 +278,11 @@ class Player(pygame.sprite.Sprite):
                 logging.log(logging.INFO, "clicked shift")
                 self.action(roll=True)
 
-    def direction_to_status(self):
+    def direction_to_status(self) -> None:
+        """
+        Takes the direction and sets the status to whatever it
+        is
+        """
         a = self.direction.x
         b = self.direction.y
         
@@ -293,31 +324,12 @@ class Player(pygame.sprite.Sprite):
         elif _A == "right":
             self.direction.x = 1
 
-    def _move_help(self) -> None:
-        self.rect.centerx = self.pos.x
-        self.rect.centery = self.pos.y
-
-        self.location["x"] = self.pos.x
-        self.location["y"] = self.pos.y
-
-    def _move(self, roll=False) -> None:
-        if roll:
-            _a = self.status.split("_idle")[0]
-            
-            if len(_a.split("_")) >= 2: # if it's more complex than up, down, left, right
-                self.statusToDirection(_a, True)
-            else:
-                self.status_to_direction(_a)
-                
-        self.pos.x += self.direction.x * self.speed * self.dt
-        self.pos.y += self.direction.y * self.speed * self.dt
-
     def move(self) -> None:
         """
         return None
         calculates the movement for player
         """
-        if not self.in_Roll:
+        if not self.in_roll:
             if self.direction.magnitude() > 0:
                 self.direction = self.direction.normalize()
     
@@ -334,39 +346,6 @@ class Player(pygame.sprite.Sprite):
             if timer.active:
                 timer.update()
 
-    def _get_hitboxes(self) -> None:
-        """
-        return None
-        gets the hitboxes for the sword
-        TODO: ? maybe return rect locations bc how it gonna check
-        if it hit the enemy ??
-        TODO: ? do this for when going diagonal 
-        """
-
-        self.sword_hitbox: pygame.Rect = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
-        # polish this so the square goes inside character
-        # for diagonals just find the center of the diagnol
-        # very easy
-        match self.status.split("_")[0]:
-            case "up":
-                self.sword_hitbox.x += 2
-                self.sword_hitbox.y -= 9
-                self.sword_hitbox.width += 19
-            case 'down':
-                self.sword_hitbox.x += 4
-                self.sword_hitbox.y += 38
-                self.sword_hitbox.width += 19
-            case 'left':
-                self.sword_hitbox.x -= 8
-                self.sword_hitbox.y += 8
-                self.sword_hitbox.height += 20
-            case 'right':
-                self.sword_hitbox.x += 29
-                self.sword_hitbox.y += 7
-                self.sword_hitbox.height += 20
-
-        self._test.fill("red", self.sword_hitbox)
-
     def roll(self) -> None:
         """
         return None
@@ -380,7 +359,7 @@ class Player(pygame.sprite.Sprite):
         
         if self.roll_frame > 10:
             self.roll_frame = 1 # cant be 0 because of division of zero :(
-            self.in_Roll = False
+            self.in_roll = False
 
         """
         for tiled make a trees pixel image 64 by 64 -> 128x
@@ -389,24 +368,32 @@ class Player(pygame.sprite.Sprite):
         y-axis should be a lil more complicated but shouldne be hard
         lambda x: self.whatever i dont really know
         """
+ 
+    def update(self, dt: float, keys: dict) -> (None | pygame.Rect):
+        """
+        returns the swords hitbox
+        where all player events are held
+
+        dt: delta time
+        keys: keys pressed
+        mapInfo: information about the maps teleport places
+        """
+        if keys is None: return None # this is to prevent the player from updating again
+        # TODO: Keys cant never be None?
+        
+        if self.in_roll: self.roll()
+
+        self.dt = dt
+        self.sword_hitbox = None # might mess things up??
+        
+        self.get_status()
+        self.input(keys)
+
+        self.update_timers()
+        self.move()
+        self.animation()
+
+        if self.sword_hitbox != None: return self.sword_hitbox
 
 if __name__ == "__main__":
     pass
-
-
-
-    # def check_teleport(self, mapProp) -> (str | None):
-    #     """
-    #     return str, (the name of the teleport point)
-
-    #     checks if the player rect collides with a map teleport pnt
-    #     """
-
-    #    # cc_map: dict = mapProp.teleports[str(mapProp)]
-
-    # #    for k, rect in cc_map.items():
-    #   #      self._test.fill("blue", rect)
-    # #        if self.rect.colliderect(rect):
-    # #            return k
-            
-    #     return None
