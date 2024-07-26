@@ -71,7 +71,7 @@ class Player(pygame.sprite.Sprite):
         TODO: ? do this for when going diagonal 
         """
 
-        self.sword_hitbox: pygame.Rect = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
+        self.sword_hitbox = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
         # polish this so the square goes inside character
         # for diagonals just find the center of the diagnol
         # very easy
@@ -94,6 +94,8 @@ class Player(pygame.sprite.Sprite):
                 self.sword_hitbox.height += 20
 
         self._test.fill("red", self.sword_hitbox)
+
+        logging.log(logging.INFO, f"{self._test} rect-xy {self.rect.x}:{self.rect.y}")
 
     def __init__(self,
                  group,

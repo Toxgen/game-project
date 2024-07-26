@@ -20,9 +20,6 @@ def main():
         logger = logging.getLogger()
         logger.setLevel(logging.DEBUG)
         logger.addHandler(handler)
-
-    if (len(argv) > 1 and argv[1].lower() == "true"):
-        debug = True
     
     game = Game()
     game.run()

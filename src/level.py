@@ -1,5 +1,5 @@
 import logging
-import pytmx
+from sys import argv
 
 import pygame
 
@@ -22,6 +22,13 @@ class Level:
         self.all_sprites = CameraGroup()
 
         self.setup()
+
+        # This is for debugging
+        if (len(argv) > 1 and argv[1].lower() == "true"):
+            self._debug = True
+            logging.log(logging.info, "Debugging activated")
+        else:
+            self._debug = False
 
     def save(self):
         """
@@ -46,12 +53,8 @@ class Level:
         dt: delta time
         keys: keys pressed
         """
-
-        self.all_sprites.custom_draw(self.player, self.map)
         player_flags = self.player.update(dt, keys)
-
-        if player_flags is not None:
-            print(f"rect: {player_flags}")
+        self.all_sprites.custom_draw(self.player, self.map)
         # player flags are just the hitbox rect
         self.all_sprites.update(player_flags, keys=None)
 

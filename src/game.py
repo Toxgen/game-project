@@ -3,19 +3,7 @@ from sys import exit
 import pygame
 import logging
 
-class EventHandler():
-    def __init__(self):
-        """
-        Initalizes the Event Handler
-        Handles Events duh
-
-        notes: handle userInput and whatever is happening on map ig
-        """
-        pass
-
-    def idk():
-        pass
-class Game(EventHandler):
+class Game():
     def __init__(self):
         """
         initalize game class
