@@ -37,7 +37,7 @@ class Level:
         """
         self.player = Player(group=self.all_sprites)
 
-    def run(self, dt: float, keys: dict, flags: dict) -> tuple:
+    def run(self, dt: float, keys: dict) -> tuple:
         """
         return tuple (player flags, map properties -> teleport locations)
         secondary game function
@@ -45,19 +45,15 @@ class Level:
 
         dt: delta time
         keys: keys pressed
-        flags: flags to check if other events are happening, ex: teleportation
         """
 
-        flagTrue = [flag for flag in flags.values() if flag]
-        if not flagTrue:
-            self.all_sprites.custom_draw(self.player, self.map)
-            player_flags = self.player.update(dt, keys)
+        self.all_sprites.custom_draw(self.player, self.map)
+        player_flags = self.player.update(dt, keys)
 
-            if player_flags is not None:
-                print(f"rect: {player_flags}")
-            # player flags are just the hitbox rect
-            self.all_sprites.update(player_flags, keys=None)
-        return flags
+        if player_flags is not None:
+            print(f"rect: {player_flags}")
+        # player flags are just the hitbox rect
+        self.all_sprites.update(player_flags, keys=None)
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self) -> None:

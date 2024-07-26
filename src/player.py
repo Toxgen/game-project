@@ -68,8 +68,6 @@ class Player(pygame.sprite.Sprite):
         """
         return None
         gets the hitboxes for the sword
-        TODO: ? maybe return rect locations bc how it gonna check
-        if it hit the enemy ??
         TODO: ? do this for when going diagonal 
         """
 

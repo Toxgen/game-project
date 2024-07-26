@@ -61,9 +61,7 @@ class Game(EventHandler):
 
             dt = self.clock.tick(60) / 1000
 
-            plrInfo = self.level.run(dt, self.keys, self.flags)
-
-            self.evnt(plrInfo, dt)
+            plrInfo = self.level.run(dt, self.keys)
  
             pygame.display.update()
 
