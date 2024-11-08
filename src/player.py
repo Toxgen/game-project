@@ -282,16 +282,16 @@ class Player(pygame.sprite.Sprite):
         a = self.direction.x
         b = self.direction.y
         
-        if a == -1 and b == -1:
+        if (a == -1 and b == -1):
             self.status = "up_left"
 
-        elif a == 1 and b == -1:
+        elif (a == 1 and b == -1):
             self.status = "up_right"
 
-        elif a == -1 and b == 1:
+        elif (a == -1 and b == 1):
             self.status = "down_left"
 
-        elif a == 1 and b == 1:
+        elif (a == 1 and b == 1):
             self.status = "down_right"
 
     def status_to_direction(self, _A: str) -> None:
