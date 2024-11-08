@@ -1,7 +1,7 @@
 import pygame
 
 from src.components.support import import_folder
-class Item():
+class Item:
 
     def __init__(self, 
                  name: str, 

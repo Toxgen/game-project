@@ -14,7 +14,6 @@ def main():
 
     except Exception as e:
         logging.log(level=40, msg="Logging defining went wrong")
-        raise e
 
     finally:
         logger = logging.getLogger()

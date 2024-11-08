@@ -27,6 +27,10 @@ class Timer:
         if current_time - self.start_time >= self.duration:
             self.deactivate()   
 
+class Stopwatch(Timer):
+    def __init__(self, duration):
+        super().__init__(duration)
+        
 class UntilTimer(Timer):
 
     def __init__(self, until: bool = True):

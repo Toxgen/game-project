@@ -8,11 +8,19 @@ from src.constants import *
 from src.components.support import *
 from src.components.timer import *
 
+"""
+future me
+im working on a stopwatch and im going to put it in the timer
+update function so implement that
+also work on until timer there should be a comment there
+also fix that tween thing at key function thing
+"""
+
 class Player(pygame.sprite.Sprite):
 
     def load(self) -> None:
         """
-        returns None \n
+        returns None 
         loads player data
         sets variables
         """
@@ -44,31 +52,23 @@ class Player(pygame.sprite.Sprite):
 
         with open("save/data.json", "w") as file:
             json.dump(obj, file, indent=4)
-
-    def _move_help(self) -> None:
+    
+    def set_rect_and_location(self):
+        """
+        sets rect and location (for movement)
+        """
         self.rect.centerx = self.pos.x
         self.rect.centery = self.pos.y
 
         self.location["x"] = self.pos.x
         self.location["y"] = self.pos.y
-
-    def _move(self, roll=False) -> None:
-        if roll:
-            _a = self.status.split("_idle")[0]
-            
-            if len(_a.split("_")) >= 2: # if it's more complex than up, down, left, right
-                self.statusToDirection(_a, True)
-            else:
-                self.status_to_direction(_a)
-                
-        self.pos.x += self.direction.x * self.speed * self.dt
-        self.pos.y += self.direction.y * self.speed * self.dt
-
+        
     def _get_hitboxes(self) -> None:
         """
         return None
         gets the hitboxes for the sword
-        TODO: ? do this for when going diagonal 
+        TODO: ? do this for when going diagonal
+        Solution: hash table baby!!!
         """
 
         self.sword_hitbox = pygame.Rect((self.rect.x, self.rect.y), (10, 10))
@@ -97,16 +97,7 @@ class Player(pygame.sprite.Sprite):
 
         logging.log(logging.INFO, f"{self._test} rect-xy {self.rect.x}:{self.rect.y}")
 
-    def __init__(self,
-                 group,
-                 selected_tool = Fist,
-                 tool_index: int = 0,
-                 tools_inv: tuple = ("nothing",),
-                 items_inv: tuple = (),
-                 location: dict = {
-                     "x": 500,
-                     "y": 500
-                 }):
+    def __init__(self, group):
         
         """
         initalize all player elements
@@ -117,39 +108,35 @@ class Player(pygame.sprite.Sprite):
         self.in_roll: bool = False
 
         self.import_assets()
-
-        self.status: str = "down"
-        self.frame_index: int = 0
-
-        self.selected_tool: Item = selected_tool
-        self.tool_index: int = tool_index
-        self.tools_inv: tuple = tools_inv
-        self.items_inv: tuple = items_inv
-        self.location: dict = location
-
-        self.defense = 0  # maybe make method to find the total defense here
-
+        
         self.load()
+
+        self.frame_index: int = 0
+        self.roll_frame: int = 1
+        self.sprint_int: int = 0
+        self.sprint_decrease: int = False # group into a dict?
+        self.sprint_not_pressed: Stopwatch = Stopwatch()
 
         self.image = self.animations[self.status][self.frame_index]
         self.rect: pygame.Rect = self.image.get_rect(center = (self.location["x"], self.location["y"]))
 
         self.direction = Vector2()
         self.pos = Vector2(self.rect.center)
-        self.speed: int = 300
-
-        self.roll_frame = 1
+        self.speed: int = 100
+        self.base_speed: int = 100 # dictionary??
 
         self.timer = {
             "tool swap": Timer(200),
             "weapon use": Timer(250),
-            "roll": UntilTimer()
+            "roll": UntilTimer() # just pass in a boolean value
         }
+
+        self.Stopw
 
         # testing
         self._test = pygame.display.get_surface()
 
-    def action(self, attack=False, roll=False) -> None:
+    def action(self, attack: bool = False, roll: bool = False) -> None:
         """
         return None
         starts events for the player
@@ -267,16 +254,25 @@ class Player(pygame.sprite.Sprite):
                 self.direction = Vector2()
                 self.frame_index = 0
 
-            if keys[pygame.K_q] and not self.timer["tool swap"].active:
-                self.timer['tool swap'].activate()
-                self.tool_index += 1
-                self.tool_index = self.tool_index if self.tool_index > len(self.tools_inv) else 0
-                self.selected_tool = self.tools_inv[self.tool_index]
+            # if keys[pygame.K_q]:
+            #     self.timer['tool swap'].activate()
+            #     self.tool_index += 1
+            #     self.tool_index = self.tool_index if self.tool_index > len(self.tools_inv) else 0
+            #     self.selected_tool = self.tools_inv[self.tool_index]
             
-            if keys[pygame.K_LSHIFT] and not self.timer["roll"].active:
+            if keys[pygame.K_LCTRL]:
                 self.timer["roll"].activate()
                 logging.log(logging.INFO, "clicked shift")
                 self.action(roll=True)
+
+            if keys[pygame.K_LSHIFT]:
+                self.speed = easeInOutQuad(self.sprint_int, self.base_speed)
+
+                self.sprint_int += 0.01 if not self.sprint_decrease else -0.01
+                if (self.sprint_int > 0.99 and not self.sprint_decrease and self.sprint_not_pressed.get_status):
+                    self.sprint_decrease = True
+                elif (self.sprint_int < 0.01):
+                    self.sprint_decrease = False
 
     def direction_to_status(self) -> None:
         """
@@ -298,7 +294,18 @@ class Player(pygame.sprite.Sprite):
         elif a == 1 and b == 1:
             self.status = "down_right"
 
-    def status_to_direction(self, _A: str, twoMore: bool = False):
+    def status_to_direction(self, _A: str) -> None:
+        """
+        returns None
+        Changes status to the direction of the player
+
+        twoMore (bool): determines if the direction is more complex than n-w-s-e
+        _A (str): what the player is facing
+
+        # jst use a dict/hash tbl??
+        """
+        # this is such a bad idea lol
+        twoMore = True if len(_A) > 5 else False
 
         if twoMore:
             if _A == "up_left":
@@ -329,18 +336,22 @@ class Player(pygame.sprite.Sprite):
         return None
         calculates the movement for player
         """
-        if not self.in_roll:
-            if self.direction.magnitude() > 0:
-                self.direction = self.direction.normalize()
-    
-            self._move()
+
+        if self.in_roll: # maybe make this into a class (like timer)
+            return None
+
+        if self.direction.magnitude() > 0:
+            self.direction = self.direction.normalize()
         
-        self._move_help()
+        self.set_rect_and_location()
+                
+        self.pos.x += self.direction.x * self.speed * self.dt
+        self.pos.y += self.direction.y * self.speed * self.dt
 
     def update_timers(self) -> None:
         """
         return None
-        updates current ACTIVE timers 
+        updates current ACTIVE timers && stopwatches
         """
         for timer in self.timer.values():
             if timer.active:
@@ -349,11 +360,10 @@ class Player(pygame.sprite.Sprite):
     def roll(self) -> None:
         """
         return None
-        what if player rolls into teleport -> stop rolling ig
-        what if player hits border
         """
-        self._move(roll=True)
-        self._move_help()
+            
+        self.statusToDirection(self.status.split("_idle")[0])
+        self.set_rect_and_location()
 
         self.roll_frame += 1
         
@@ -369,25 +379,23 @@ class Player(pygame.sprite.Sprite):
         lambda x: self.whatever i dont really know
         """
  
-    def update(self, dt: float, keys: dict) -> (None | pygame.Rect):
+    def update(self, cls_args) -> (None | pygame.Rect):
         """
         returns the swords hitbox
         where all player events are held
 
         dt: delta time
         keys: keys pressed
-        mapInfo: information about the maps teleport places
+        first: to not make update function called twice per frame
         """
-        if keys is None: return None # this is to prevent the player from updating again
-        # TODO: Keys cant never be None?
-        
+        if cls_args["first"]: return None
         if self.in_roll: self.roll()
 
-        self.dt = dt
+        self.dt = cls_args["dt"]
         self.sword_hitbox = None # might mess things up??
         
         self.get_status()
-        self.input(keys)
+        self.input(cls_args["keys"])
 
         self.update_timers()
         self.move()
@@ -397,3 +405,6 @@ class Player(pygame.sprite.Sprite):
 
 if __name__ == "__main__":
     pass
+
+# class InterruptionsService:
+#     def __init__(self, roll, )

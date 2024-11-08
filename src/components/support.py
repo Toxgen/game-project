@@ -1,6 +1,6 @@
 from os import walk
+
 import pygame
-import logging
 
 def import_folder(path,
                   map=False):
@@ -24,3 +24,15 @@ def import_folder(path,
                 surface_list.append(image_surf)
 
     return surface_list
+
+def easeInOutQuad(perc_done: int, affect_val: int):
+    """
+    tweening function
+
+    perc_done: how much of the function is done 0-1
+    affect_val: affected value
+    """
+    if perc_done < 0.5:
+        return affect_val * ( 2 * perc_done * perc_done + 1)
+    else:
+        return affect_val * (1 - pow(-2 * perc_done + 2, 2) / 2 + 1)

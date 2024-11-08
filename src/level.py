@@ -22,6 +22,12 @@ class Level:
         self.all_sprites = CameraGroup()
 
         self.setup()
+        self._cls_args = {
+            "dt": 0.0,
+            "keys": {},
+            "player_flags": {},
+            "first": False
+        }
 
         # This is for debugging
         if (len(argv) > 1 and argv[1].lower() == "true"):
@@ -53,10 +59,18 @@ class Level:
         dt: delta time
         keys: keys pressed
         """
-        player_flags = self.player.update(dt, keys)
+        # assign cls_args to be used to update
+        for item in self._cls_args:
+            try:
+                self._cls_args[item] = locals()[f"{item}"]
+            except KeyError as ke:
+               continue
+        self._cls_args["player_flags"] = self.player.update(self._cls_args)
+
         self.all_sprites.custom_draw(self.player, self.map)
-        # player flags are just the hitbox rect
-        self.all_sprites.update(player_flags, keys=None)
+
+        # player flags are just the hitbox rect currently
+        self.all_sprites.update(self._cls_args)
 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self) -> None:
