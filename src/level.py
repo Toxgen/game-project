@@ -50,9 +50,8 @@ class Level:
         """
         self.player = Player(group=self.all_sprites)
 
-    def run(self, dt: float, keys: dict) -> tuple:
+    def run(self, dt: float, keys: dict) -> None:
         """
-        return tuple (player flags, map properties -> teleport locations)
         secondary game function
         draws map and sprites
 

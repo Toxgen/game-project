@@ -14,6 +14,7 @@ im working on a stopwatch and im going to put it in the timer
 update function so implement that
 also work on until timer there should be a comment there
 also fix that tween thing at key function thing
+make screen zoom in proportional to speed
 """
 
 class Player(pygame.sprite.Sprite):
@@ -115,7 +116,7 @@ class Player(pygame.sprite.Sprite):
         self.roll_frame: int = 1
         self.sprint_int: int = 0
         self.sprint_decrease: int = False # group into a dict?
-        self.sprint_not_pressed: Stopwatch = Stopwatch()
+        # self.sprint_not_pressed: Stopwatch = Stopwatch()
 
         self.image = self.animations[self.status][self.frame_index]
         self.rect: pygame.Rect = self.image.get_rect(center = (self.location["x"], self.location["y"]))
@@ -131,7 +132,7 @@ class Player(pygame.sprite.Sprite):
             "roll": UntilTimer() # just pass in a boolean value
         }
 
-        self.Stopw
+        # self.Stopw
 
         # testing
         self._test = pygame.display.get_surface()
@@ -269,7 +270,7 @@ class Player(pygame.sprite.Sprite):
                 self.speed = easeInOutQuad(self.sprint_int, self.base_speed)
 
                 self.sprint_int += 0.01 if not self.sprint_decrease else -0.01
-                if (self.sprint_int > 0.99 and not self.sprint_decrease and self.sprint_not_pressed.get_status):
+                if (self.sprint_int > 0.99 and not self.sprint_decrease): #and self.sprint_not_pressed.get_status):
                     self.sprint_decrease = True
                 elif (self.sprint_int < 0.01):
                     self.sprint_decrease = False
@@ -392,7 +393,6 @@ class Player(pygame.sprite.Sprite):
         if self.in_roll: self.roll()
 
         self.dt = cls_args["dt"]
-        self.sword_hitbox = None # might mess things up??
         
         self.get_status()
         self.input(cls_args["keys"])
@@ -400,6 +400,8 @@ class Player(pygame.sprite.Sprite):
         self.update_timers()
         self.move()
         self.animation()
+
+        self.sword_hitbox = None
 
         if self.sword_hitbox != None: return self.sword_hitbox
 
