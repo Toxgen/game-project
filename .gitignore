@@ -1,0 +1,7 @@
+# binary
+*.pyc
+
+# replit
+.pythonlibs
+.replit
+*.nix
