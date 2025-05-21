@@ -5,7 +5,7 @@ import logging
 from random import randint
 
 from src.components.support import import_folder
-from src.constants import *
+from src.constants import * 
 from src.components.timer import Timer
 
 class Entity(pygame.sprite.Sprite):
@@ -24,7 +24,6 @@ class Entity(pygame.sprite.Sprite):
 
         self.group = group
         self.image = self.getImage()
-        logging.log(logging.DEBUG, f"Image: {self.image}")
 
         self.rect: pygame.Rect = self.image[0].get_rect(center = pos)
         self.pos = pygame.math.Vector2(self.rect.center)
@@ -36,7 +35,7 @@ class Entity(pygame.sprite.Sprite):
         }
 
     def getImage(self):
-        _fullpath = "Assets/Resources/Mob/" + self.name
+        _fullpath = path + self.name
         logging.log(logging.DEBUG, f"Fullpath: {_fullpath}")
         return import_folder(_fullpath)
 

@@ -14,7 +14,7 @@ class Level:
         initalize level
         makes the map and sprite
         """
-        self.tiled_maps = import_folder("Assets/Resources/Maps", map=True)
+        self.tiled_maps = import_folder(path, map=True)
         self.display_surface = pygame.display.get_surface()
         
         self.map = self.tiled_maps[0]
