@@ -7,11 +7,20 @@ from typing import Final
 
 # pygame constants & other constants
 screen_dim: Final = (1152, 704)  # 36 by 22 (x32)
+scrx = screen_dim[0] / 100
+scry = screen_dim[1] / 100
 
 # constants
 layers = {"grass": 1, 
           "water": 2}
-path = pathlib.Path(__file__).parent.resolve()
+
+path = pathlib.Path(__file__ + "/../../Assets/Resources/Maps").resolve()
+
+if __name__ == "__main__":
+    pass
+
+
+
 # # enemies
 # mob_stats: tuple = ( 
 #     ("goblin", 8, 2, 3, 1,
@@ -67,6 +76,3 @@ path = pathlib.Path(__file__).parent.resolve()
 #                            buy=30,
 #                            sell=15,
 #                            effect=20)
-
-if __name__ == "__main__":
-    pass

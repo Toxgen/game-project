@@ -47,7 +47,7 @@ class Game():
                     for events in self.keys:
                         self.keys[events] = False
 
-            dt = self.clock.tick(60) / 1000
+            dt = self.clock.tick(120) / 1000    
 
             plrInfo = self.level.run(dt, self.keys)
  

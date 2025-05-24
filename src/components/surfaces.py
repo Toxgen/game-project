@@ -32,7 +32,7 @@ class Map(pygame.surface.Surface):
                     tile = ti(gid)
                     if tile:
                         surface.blit(tile, ((x - offset.x / self.tmxdata.tilewidth) * self.tmxdata.tilewidth , 
-                                            (y - offset.y / self.tmxdata.tileheight) *self.tmxdata.tileheight))
+                                            (y - offset.y / self.tmxdata.tileheight) * self.tmxdata.tileheight))
                         
                         
     def make_map(self, offset=pygame.Vector2(0, 0)):

@@ -30,12 +30,12 @@ class Player(pygame.sprite.Sprite):
             try:
                 data = json.load(file)
 
-                self.selected_tool = weapons[data[0]]
-                self.tool_index = data[1]
+                # self.selected_tool = weapons[data[0]]
+                self.tool_index = data[0]
+                self.items_inv = data[1]
                 self.items_inv = data[2]
-                self.items_inv = data[3]
-                self.location = data[4]
-                self.status = data[5]
+                self.location = data[3]
+                self.status = data[4]
 
             except json.decoder.JSONDecodeError as j:
                 logging.warning(f"json load error: {j}")
@@ -47,9 +47,10 @@ class Player(pygame.sprite.Sprite):
         TODO: save what map player is in
         """
 
-        obj = (self.selected_tool.name, self.tool_index,
-               [x.name for x in self.items_inv
-                ], self.items_inv, self.location, self.status)
+        # add this in the first index of obj self.selected_tool.name
+
+        obj = (self.tool_index, [x.name for x in self.items_inv], 
+               self.items_inv, self.location, self.status)
 
         with open("save/data.json", "w") as file:
             json.dump(obj, file, indent=4)
@@ -114,17 +115,18 @@ class Player(pygame.sprite.Sprite):
 
         self.frame_index: int = 0
         self.roll_frame: int = 0
-        self.sprint_int: int = 0
-        self.sprint_decrease: int = False # group into a dict?
-        # self.sprint_not_pressed: Stopwatch = Stopwatch()
+        self.sprint_collection: dict[str, object] = {
+            "sprint": 0,
+            "sprint_decrease": False
+        }
 
         self.image = self.animations[self.status][self.frame_index]
         self.rect: pygame.Rect = self.image.get_rect(center = (self.location["x"], self.location["y"]))
 
         self.direction = Vector2()
         self.pos = Vector2(self.rect.center)
-        self.speed: int = 100
-        self.base_speed: int = 100 # dictionary??
+        self.speed: int = 200
+        self.base_speed: int = 200 
 
         self.timer = {
             "tool swap": Timer(200),
@@ -132,7 +134,7 @@ class Player(pygame.sprite.Sprite):
             "roll": Timer(500) # just pass in a boolean value
         }
 
-        # self.Stopw
+        self.messsage_to_blit: dict[str, tuple] = {}
 
         # testing
         self._test = pygame.display.get_surface()
@@ -266,14 +268,30 @@ class Player(pygame.sprite.Sprite):
                 logging.log(logging.INFO, "clicked shift")
                 self.action(roll=True)
 
-            if keys[pygame.K_LSHIFT]:
-                self.speed = easeInOutQuad(self.sprint_int, self.base_speed)
+            # checks if the shift is pressed or sprint is bigger than 1e-3
+            if (keys[pygame.K_LSHIFT] or self.sprint_collection["sprint"] > 1e-3) and not self.in_roll:
+                # calculates speed
+                self.speed = easeOutQuad(self.sprint_collection["sprint"], self.base_speed)
+                
+                # if sprint is not pressed and sprint is bigger 0 (naturally decreases)
+                if (self.sprint_collection["sprint"] > 1e-3 and not keys[pygame.K_LSHIFT] and not self.sprint_collection["sprint_decrease"]):
+                    self.sprint_collection["sprint"] -= 0.01
+                    if self.sprint_collection["sprint"] > 1e-3:
+                        self.speed = self.base_speed
+                        self.sprint_collection["sprint_decrease"] = False
+                        logging.log(logging.INFO, "sprint ended")
+                    return
+                # decreases sprint if not sprint-bool is true
+                self.sprint_collection["sprint"] += 0.01 if not self.sprint_collection["sprint_decrease"] else -0.01
 
-                self.sprint_int += 0.01 if not self.sprint_decrease else -0.01
-                if (self.sprint_int > 0.99 and not self.sprint_decrease): #and self.sprint_not_pressed.get_status):
-                    self.sprint_decrease = True
-                elif (self.sprint_int < 0.01):
-                    self.sprint_decrease = False
+                # if sprint is max and sprint-bool is not false
+                if (self.sprint_collection["sprint"] > 0.99 and not self.sprint_collection["sprint_decrease"]):
+                    self.sprint_collection["sprint_decrease"] = True
+
+                elif (self.sprint_collection["sprint"] < 1e-3): 
+                    self.sprint_collection["sprint_decrease"] = False
+                    self.speed = self.base_speed
+                    logging.log(logging.INFO, "sprint ended")
 
     def direction_to_status(self) -> None:
         """
@@ -362,6 +380,9 @@ class Player(pygame.sprite.Sprite):
         """
         return None
         """
+        if not self.roll_frame:
+            self.base_speed = 300
+            self.speed = easeInOutExpo(self.roll_frame / 10, self.base_speed)
             
         self.status_to_direction(self.status.split("_idle")[0])
         
@@ -369,18 +390,20 @@ class Player(pygame.sprite.Sprite):
         logging.log(logging.INFO, f"roll_frame: {self.roll_frame}")
         
         if self.roll_frame > 10:
-            self.roll_frame = 0 # cant be 0 because of division of zero :(
+            self.roll_frame = 0
+            self.base_speed, self.speed = 200, 200
             self.in_roll = False
 
+    def display_information(self) -> None:
         """
-        for tiled make a trees pixel image 64 by 64 -> 128x
-        then just automically throw it into the map class
-        use the offset
-        y-axis should be a lil more complicated but shouldne be hard
-        lambda x: self.whatever i dont really know
+        returns None
+        displays information about the player
         """
+        
+        self.messsage_to_blit["speed"] = (str(round(self.speed, 1)), False)
+        
  
-    def update(self, cls_args) -> (None | pygame.Rect):
+    def update(self, cls_args) -> (None | dict[str, tuple]):
         """
         returns the swords hitbox
         where all player events are held
@@ -400,13 +423,17 @@ class Player(pygame.sprite.Sprite):
         self.update_timers()
         self.move()
         self.animation()
+        self.display_information()
 
-        self.sword_hitbox = None
-
-        if self.sword_hitbox != None: return self.sword_hitbox
+        return self.messsage_to_blit
 
 if __name__ == "__main__":
     pass
 
-# class InterruptionsService:
-#     def __init__(self, roll, )
+"""
+for tiled make a trees pixel image 64 by 64 -> 128x
+then just automically throw it into the map class
+use the offset
+y-axis should be a lil more complicated but shouldne be hard
+lambda x: self.whatever i dont really know
+"""

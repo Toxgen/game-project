@@ -20,6 +20,7 @@ class Level:
         self.map = self.tiled_maps[0]
         self.surf = self.map.make_map()        
         self.all_sprites = CameraGroup()
+        self.gui = GUI()
 
         self.setup()
         self._cls_args = {
@@ -58,18 +59,20 @@ class Level:
         dt: delta time
         keys: keys pressed
         """
-        # assign cls_args to be used to update\
-        # the first var for cls_args is literllay not changed??
+        # assign cls_args to be used to update
         for item in self._cls_args:
             try:
                 self._cls_args[item] = locals()[f"{item}"]
             except KeyError as ke:
                continue
+
+        self._cls_args["first"] = False
         self._cls_args["player_flags"] = self.player.update(self._cls_args)
+        self._cls_args["first"] = True
 
         self.all_sprites.custom_draw(self.player, self.map)
+        self.gui.text_render(self._cls_args)
 
-        # player flags are just the hitbox rect currently
         self.all_sprites.update(self._cls_args)
 
 class CameraGroup(pygame.sprite.Group):
@@ -86,10 +89,49 @@ class CameraGroup(pygame.sprite.Group):
         self.offset.y = player.rect.centery - screen_dim[1] / 2
 
         self.display_surface.fill((0, 0, 0))
-        self.surf = map.make_map(self.offset) # ???
+        self.surf = map.make_map(self.offset) # ??? (idk but it works)
         self.display_surface.blit(self.surf, (0, 0))
     
         for sprite in self.sprites():
             offset_rect = sprite.rect.copy()
             offset_rect.center -= self.offset
             self.display_surface.blit(sprite.image, offset_rect)
+
+class GUI(pygame.sprite.Sprite):
+    def __init__(self) -> None:
+        super().__init__()
+        pygame.font.init()
+
+        # {'dt': 0.008, 'keys': {'mouse_down': False}, 'player_flags': {'speed': ('200', 23.04, 21.12)}, 'first': True}
+
+        self.display_surface = pygame.display.get_surface()
+        self.font = pygame.font.SysFont("arial", 20, pygame.font.Font.bold)
+        self.successful_renders = 0
+
+    def text_render(self, cls_args: dict):
+        """
+        renders text to the display
+        cls_args[text, info] = [text, x, y]
+        """
+        if cls_args is None:
+            return
+
+        for i, (text, info) in enumerate(cls_args.items()):
+            if i not in [0, 1, 2]:
+                continue
+
+            if isinstance(info, tuple):
+                if isinstance(info[1], bool):
+                    return
+                elif not isinstance(info[0], str):
+                    info[0] = str(info)
+                text_surface = self.font.render(text + ': ' + info, True, (255, 255, 255))
+
+            else:
+                info = (str(info))
+                text_surface = self.font.render(text + ': ' + info, True, (255, 255, 255))
+
+            self.display_surface.blit(text_surface, (scrx * 2, scry * 3 * (self.successful_renders + 1)))
+            self.successful_renders += 1
+
+        self.successful_renders = 0
