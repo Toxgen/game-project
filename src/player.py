@@ -119,7 +119,10 @@ class Player(pygame.sprite.Sprite):
             "sprint": 0,
             "sprint_decrease": False
         }
-
+        self.roll_collection: dict[str, object] = {
+            "was_rolling": False,
+            "debounce_frames": 221
+        } 
         self.image = self.animations[self.status][self.frame_index]
         self.rect: pygame.Rect = self.image.get_rect(center = (self.location["x"], self.location["y"]))
 
@@ -130,8 +133,8 @@ class Player(pygame.sprite.Sprite):
 
         self.timer = {
             "tool swap": Timer(200),
-            "weapon use": Timer(250),
-            "roll": Timer(500) # just pass in a boolean value
+            "weapon use": Timer(2221),
+            "roll": Timer(2210) # just pass in a boolean value
         }
 
         self.messsage_to_blit: dict[str, tuple] = {}
@@ -225,6 +228,7 @@ class Player(pygame.sprite.Sprite):
         checks for user input
         timer checks for stuff
         """
+        global keys
         keys = pygame.key.get_pressed()
 
         timers_active = [timer for timer in self.timer.values() if timer.active]
@@ -356,9 +360,6 @@ class Player(pygame.sprite.Sprite):
         calculates the movement for player
         """
 
-        if self.in_roll: # maybe make this into a class (like timer)
-            return None
-
         if self.direction.magnitude() > 0:
             self.direction = self.direction.normalize()
         
@@ -380,18 +381,18 @@ class Player(pygame.sprite.Sprite):
         """
         return None
         """
-        if not self.roll_frame:
+        if self.roll_frame:
             self.base_speed = 300
-            self.speed = easeInOutExpo(self.roll_frame / 10, self.base_speed)
+            self.speed = easeInOutExpo(self.roll_frame / 25, self.base_speed)
+            self.move()
             
         self.status_to_direction(self.status.split("_idle")[0])
-        
         self.roll_frame += 1
-        logging.log(logging.INFO, f"roll_frame: {self.roll_frame}")
-        
-        if self.roll_frame > 10:
+
+        if self.roll_frame > 25:
             self.roll_frame = 0
             self.base_speed, self.speed = 200, 200
+            self.direction = Vector2()
             self.in_roll = False
 
     def display_information(self) -> None:
@@ -401,6 +402,8 @@ class Player(pygame.sprite.Sprite):
         """
         
         self.messsage_to_blit["speed"] = (str(round(self.speed, 1)), False)
+        self.messsage_to_blit["posx"] = (str(round(self.pos.x, 10)), False)
+        self.messsage_to_blit["direction"] = (str(self.direction.x), False)
         
  
     def update(self, cls_args) -> (None | dict[str, tuple]):
