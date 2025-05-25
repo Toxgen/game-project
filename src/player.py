@@ -134,7 +134,7 @@ class Player(pygame.sprite.Sprite):
         self.timer = {
             "tool swap": Timer(200),
             "weapon use": Timer(2221),
-            "roll": Timer(2210) # just pass in a boolean value
+            "roll": Timer(0) # just pass in a boolean value
         }
 
         self.messsage_to_blit: dict[str, tuple] = {}
