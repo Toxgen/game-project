@@ -165,7 +165,6 @@ class Player(pygame.sprite.Sprite):
         """
         return None
         imports all current animations for player
-        TODO: give credits
         """
         self.animations = {
             'up': [],
